@@ -163,11 +163,12 @@ UI functionality will be tested manually.
 * Shelf table id -> references a shelf table
 
 
-### Shelf table
+### Shelf table (Dynamically created, represents each shelf, named shelf_XX (shelf_A1 etc.))
 
 * ID
 * Item id -> references items table item id
 * Balance
+ON DELETE SET NULL; (When an item is deleted from items table, this will become null)
 
 
 ### Items table
