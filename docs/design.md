@@ -105,9 +105,21 @@ In this system, the same item can be in multiple different shelfs and shelf loca
 
 # 5. UI Prototypes
 
+![alt text](image.png)
 
+![alt text](image-1.png)
 
+![alt text](image-9.png)
 
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+![alt text](image-8.png)
+
+![alt text](image-6.png)
+
+![alt text](image-7.png)
 
 # 6. Technologies
 
@@ -131,14 +143,22 @@ In this system, the same item can be in multiple different shelfs and shelf loca
 * PostgreSQL is a requirement for the course
 * Relational database works well with the system design
 
+System uses http, https would be better but won't be used for this project
+
 # 7. Database structure
 
 
 ### Shelfs table
 
 * ID
-* Location id (A1, A2 etc.)
-* Item id -> references Items table item id
+* Shelf id (A1, A2 etc.)
+* Shelf table id -> references a shelf table
+
+
+### Shelf table
+
+* ID
+* Item id -> references items table item id
 * Balance
 
 
@@ -148,6 +168,33 @@ In this system, the same item can be in multiple different shelfs and shelf loca
 * Manufacturer
 * Model
 * S/N
+
+### Users table
+* ID 
+* username
+
+### Passords table
+
+* Username -> references users table ID
+* value (hashed password)
+* salt
+
+## Logic for querying data
+* Get specific shelfs items
+    * Query all from shelf table linked with shelfs table's shelf id (shelf id is specific shelf's id)
+    * Query each item's info from items table with item id from shelf table
+
+* Search function with user input
+    * Query id from all matching item names from items table
+    * Query each shelf table found in shelfs table with the found matching item id's
+
+## Database sanitation
+When querying database, all user input will be used in parameterized queries to avoid sql injection.
+Passwords will be hashed, so no plain passwords will be stored.
+Passwords will be salted with 10 random chars.
+
+Hashing and salting will use already existing libraries that are proved to be safe.
+
 
 # 8. Scheduling
 
