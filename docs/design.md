@@ -33,10 +33,10 @@
 
 * Delete item from a shelf space
     * Select item
-    * Delete from shelf
+    * Remove from shelf button
 
 * Delete shelf
-    * Shelf must be empty to be able to delete it
+    
 
 ### Requires minimum account level
 
@@ -70,6 +70,7 @@
 * Model
 * S/N
 * balance
+
 
 In this system, the same item can be in multiple different shelfs and shelf locations, but this isn't likely to happen, but it is taken into consideration when designing the system.
 
@@ -115,7 +116,7 @@ In this system, the same item can be in multiple different shelfs and shelf loca
 
 ![alt text](image-4.png)
 
-![alt text](image-8.png)
+![alt text](image-10.png)
 
 ![alt text](image-6.png)
 
@@ -143,7 +144,14 @@ In this system, the same item can be in multiple different shelfs and shelf loca
 * PostgreSQL is a requirement for the course
 * Relational database works well with the system design
 
-System uses http, https would be better but won't be used for this project
+## General system notes
+System uses http, https would be better but won't be used for this project.
+
+Unit tests are made for database queries.
+
+Backend must return appropriate result codes.
+
+UI functionality will be tested manually.
 
 # 7. Database structure
 
@@ -229,14 +237,14 @@ Hashing and salting will use already existing libraries that are proved to be sa
 
 ### Delete item
 * Search for an item
-* Item page is diplayed
+* Item page is displayed
 * Delete item
 * All balance of the item will be deleted and the shelf space will be empty (itemless)
 
 ### Delete shelf
 * Go to shelf browser
 * Delete shelf
-* Shelf can only be deleted if it's empty
+
 
 
 
