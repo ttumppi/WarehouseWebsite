@@ -12,4 +12,4 @@ jobs:
       - name: pull code
         run: |
           cd ~/WarehouseWebsite
-          git pull WarehouseWebsite main
+          git pull WarehouseWebsite master
