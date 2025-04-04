@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: pull code
         run: |
-          git pull WarehouseWebsite main
+          git pull /~/WarehouseWebsite WarehouseWebsite main
