@@ -1,0 +1,14 @@
+name: Auto update host machine
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  pull-new-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: pull code
+        run: |
+          git pull WarehouseWebsite main
