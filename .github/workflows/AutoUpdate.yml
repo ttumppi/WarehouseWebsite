@@ -3,7 +3,7 @@ name: Auto update host machine
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   pull-new-version:
     runs-on: self-hosted
