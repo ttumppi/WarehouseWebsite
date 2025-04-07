@@ -12,7 +12,7 @@ frontend/node_modules/
 dist/
 dist-ssr/
 *.local
-backend/src/db/*.spec
+**/*.spec
 
 # Editor directories and files
 .vscode/*
