@@ -6,5 +6,6 @@
   },
   "scripts":{
     "start": "node ./src/start.js"
-  }
+  },
+  "type": "module"
 }
