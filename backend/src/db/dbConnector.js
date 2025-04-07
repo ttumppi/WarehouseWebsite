@@ -4,7 +4,9 @@ import * as path from "path"
 
 
 
-const credentialsPath = path.join(__dirname, "creds.spec");
+const dbFolderPath = path.dirname(new URL(import.meta.url).pathname);
+
+const credentialsPath = path.join(dbFolderPath, "creds.spec")
 
 
 
