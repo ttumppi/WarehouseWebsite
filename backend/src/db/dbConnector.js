@@ -20,8 +20,7 @@ const ReadDBCreds = async () => {
     return new Promise( (resolve, reject) => {
         fs.readFile(credentialsPath, "utf8", (error, data) => {
             if (error){
-                console.log(`Failed to read credentials ${error}`);
-                reject( new Error("No db credentials file"));
+                reject( new Error("Failed to read db credentials"));
             }
             else{
                 resolve(data);
@@ -32,6 +31,10 @@ const ReadDBCreds = async () => {
     
 }
 
+
+
+const dbKeys = await ReadDBCreds();
+
 export const CreateDBConnection = async () => {
     return new Pool({
         user: dbKeys.user,
@@ -41,5 +44,3 @@ export const CreateDBConnection = async () => {
         port: 5432,
     });
 }
-
-const dbKeys = await ReadDBCreds();
