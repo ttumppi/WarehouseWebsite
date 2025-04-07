@@ -18,6 +18,7 @@ const SetupDatabase = async () => {
     try{
         const query = fs.readFileSync(sqlFilePath, "utf8");
 
+        console.log(query);
         await db.query(query);
     }
 
