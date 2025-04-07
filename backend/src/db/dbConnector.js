@@ -6,7 +6,7 @@ import * as fs from "node:fs"
 
 
 
-const dbKeys = await ReadDBCreds();
+
 
 
 
@@ -38,3 +38,5 @@ export const CreateDBConnection = async () => {
         port: 5432,
     });
 }
+
+const dbKeys = await ReadDBCreds();
