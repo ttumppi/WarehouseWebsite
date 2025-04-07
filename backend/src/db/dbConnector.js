@@ -1,8 +1,8 @@
-import { Pool } from "pg"
+import pkg from "pg"
 import * as fs from "node:fs"
 import * as path from "path"
 
-
+const { Pool } = pkg;
 
 const dbFolderPath = path.dirname(new URL(import.meta.url).pathname);
 
