@@ -1,3 +1,7 @@
 import * as dbConnector from "./dbConnector.js"
 
-await dbConnector.CreateDBConnection();
+const db = await dbConnector.CreateDBConnection();
+
+export const CreateItem = async () => {
+
+}

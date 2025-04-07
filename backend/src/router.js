@@ -1,4 +1,4 @@
-
+import * as dbHandler from "./db/dbHandler.js"
 
 export const RegisterRoutes = (server) => {
     server.get("/", (req, res) => {
