@@ -1,12 +1,8 @@
 import * as dbHandler from "../src/db/dbHandler.js"
 
 const parseFile = async () => {
-    return await dbHandler.GetSplitDBSetupQueries().then((query) => {
-        queries.forEach((query) => {
-            query.trim("");
-        });
-    });
-
+    return await dbHandler.GetSplitDBSetupQueries();
+    
 }
 
 test("Prints each query seperately", async () => {

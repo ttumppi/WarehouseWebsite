@@ -20,7 +20,16 @@ export const ConnectToDatabase = async () => {
 export const GetSplitDBSetupQueries = async () => {
     const query = fs.readFileSync(sqlFilePath, "utf8");
 
-    return query.split(";");
+    let queries = query.split(";");
+
+    const regex = /[^\s]/;
+    for (let i = queries.length -1 ; i > -1; i--){
+        if (!queries[i].match(regex)){
+            queries.splice(i, 1);
+        }
+    }
+
+    return queries;
 }
 
 export const SetupDatabase = async () => {
