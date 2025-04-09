@@ -8,5 +8,10 @@
   "scripts": {
     "start": "node ./src/start.js"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mock-fs": "^5.5.0",
+    "supertest": "^7.1.0"
+  }
 }
