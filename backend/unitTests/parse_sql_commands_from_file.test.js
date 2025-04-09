@@ -1,12 +1,16 @@
 import * as dbHandler from "../src/db/dbHandler.js"
 
 const parseFile = async () => {
-    console.log(await dbHandler.GetSplitDBSetupQueries());
+    return await dbHandler.GetSplitDBSetupQueries();
 
 }
 
 test("Prints each query seperately", async () => {
     const queries = await parseFile();
 
+    for (const query in queries){
+        console.log(query);
+    }
+    
     expect(queries.length).toBe(4);
 });
