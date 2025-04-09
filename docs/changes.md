@@ -1,7 +1,7 @@
 # Frontend
 
 * Installed axios for api calls.
-
+* changed npm package manager to yarn for lighter load on machine(npm freezes).
 
 # Backend
 
