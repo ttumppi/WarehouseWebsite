@@ -36,6 +36,7 @@ const ReadDBCreds = async () => {
 const dbKeys = await ReadDBCreds();
 
 export const CreateDBConnection = async () => {
+    console.log(dbKeys.password);
     return new Pool({
         user: dbKeys.user,
         host: dbKeys.host,
