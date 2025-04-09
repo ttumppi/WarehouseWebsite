@@ -13,17 +13,17 @@ export const CreateItem = async () => {
 
 }
 
-const ConnectToDatabase = async () => {
+export const ConnectToDatabase = async () => {
     db = await dbConnector.CreateDBConnection();
 }
 
-const GetSplitDBSetupQueries = async () => {
+export const GetSplitDBSetupQueries = async () => {
     const query = fs.readFileSync(sqlFilePath, "utf8");
 
     return query.split(";");
 }
 
-const SetupDatabase = async () => {
+export const SetupDatabase = async () => {
 
     try{
         const queries = await GetSplitDBSetupQueries();
