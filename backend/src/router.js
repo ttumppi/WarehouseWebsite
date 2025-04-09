@@ -11,3 +11,4 @@ export const RegisterRoutes = (server) => {
 
 
 await dbHandler.ConnectToDatabase();
+await dbHandler.SetupDatabase();
