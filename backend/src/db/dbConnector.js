@@ -33,15 +33,14 @@ const ReadDBCreds = async () => {
 
 
 
-const dbKeys = await ReadDBCreds();
+const dbKeys = JSON.parse(await ReadDBCreds());
 
 export const CreateDBConnection = async () => {
-    console.log(dbKeys["password"])
     return new Pool({
-        user: dbKeys["user"],
-        host: dbKeys["host"],
-        database: dbKeys["database"],
-        password: dbKeys["password"],
+        user: dbKeys.user,
+        host: dbKeys.host,
+        database: dbKeys.database,
+        password: dbKeys.password,
         port: 5432,
     });
 }
