@@ -3,7 +3,7 @@ import * as fs from "node:fs"
 import * as path from "path"
 
 
-const db = await dbConnector.CreateDBConnection();
+let db = null;
 
 const dbFolderPath = path.dirname(new URL(import.meta.url).pathname);
 
@@ -13,13 +13,25 @@ export const CreateItem = async () => {
 
 }
 
+const ConnectToDatabase = async () => {
+    db = await dbConnector.CreateDBConnection();
+}
+
+const GetSplitDBSetupQueries = async () => {
+    const query = fs.readFileSync(sqlFilePath, "utf8");
+
+    return query.split(";");
+}
+
 const SetupDatabase = async () => {
 
     try{
-        const query = fs.readFileSync(sqlFilePath, "utf8");
+        const queries = await GetSplitDBSetupQueries();
 
-        console.log(query);
-        await db.query(query);
+        for (const query of queries){
+            await db.query(query);
+        }
+        
     }
 
     catch(error){
