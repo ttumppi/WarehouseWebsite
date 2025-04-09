@@ -44,7 +44,7 @@ export const SetupDatabase = async () => {
     }
 
     catch(error){
-        console.log("Couldn't initialize database");
+        console.log(`Couldn't initialize database: ${error}`);
     }
    
 }
