@@ -44,4 +44,3 @@ const SetupDatabase = async () => {
 
 
 
-await SetupDatabase();
