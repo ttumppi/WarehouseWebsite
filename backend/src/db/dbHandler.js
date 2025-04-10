@@ -1,4 +1,5 @@
 import * as dbConnector from "./dbConnector.js"
+import * as testDBConnector from "./testDBConnector.js"
 import * as fs from "node:fs"
 import * as path from "path"
 
@@ -14,7 +15,21 @@ export const CreateItem = async () => {
 }
 
 export const ConnectToDatabase = async () => {
+
+    if (db != null){
+        throw new Error("DB handler is already connected to a db connector");
+    }
+
     db = await dbConnector.CreateDBConnection();
+}
+
+export const ConnectToTestDatabase = async () => {
+    
+    if (db != null){
+        throw new Error("DB handler is already connected to a db connector");
+    }
+    
+    db = await testDBConnector.CreateDBConnection();
 }
 
 export const GetSplitDBSetupQueries = async () => {
