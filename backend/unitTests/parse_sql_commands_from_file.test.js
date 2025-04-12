@@ -12,7 +12,7 @@ test("Prints each query seperately", async () => {
 });
 
 test("Create item and query it from db", async () => {
-    const item = Item("testMaker1", "testItem1", "TestSerial");
+    const item = new Item("testMaker1", "testItem1", "TestSerial");
 
     await dbHandler.CreateItem(item);
 
