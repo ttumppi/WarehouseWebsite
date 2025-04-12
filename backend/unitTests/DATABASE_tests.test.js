@@ -3,6 +3,7 @@ import {Item} from "../src/models/Item.js"
 
 await dbHandler.ConnectToTestDatabase();
 await dbHandler.SetupDatabase();
+await dbHandler.ClearAllTables();
 
 test("Prints each query seperately", async () => {
     const queries = await dbHandler.GetSplitDBSetupQueries();
@@ -17,7 +18,6 @@ test("Create item and query it from db", async () => {
     await dbHandler.CreateItem(item);
 
     const items = await dbHandler.GetItems();
-    console.log(items.rows);
 
     expect(items.rows.length).toBe(1);
 })

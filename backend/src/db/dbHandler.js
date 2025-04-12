@@ -30,6 +30,9 @@ const GetItemByIDQuery = `SELECT * FROM items WHERE id = $1`
 
 const GetItemsQuery = `SELECT * FROM items`
 
+const ClearAllTablesQuery = `TRUNCATE TABLE shelfs, items, users, passwords
+RESTART IDENTITY CASCADE`;
+
 
 const ThrowIfDBNotInit= async () => {
     if (db == null){
@@ -81,6 +84,16 @@ export const GetItemByID = async (id) => {
     }
 }
 
+export const ClearAllTables = async () => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(ClearAllTablesQuery);
+    }
+    catch(error){
+        console.log("Failed to clear all tables");
+    }
+}
 
 export const ConnectToDatabase = async () => {
 
