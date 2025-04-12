@@ -1,13 +1,23 @@
 import * as dbHandler from "../src/db/dbHandler.js"
+import {Item} from "../src/models/Item.js"
 
-const parseFile = async () => {
-    return await dbHandler.GetSplitDBSetupQueries();
-    
-}
+await dbHandler.ConnectToTestDatabase();
+await dbHandler.SetupDatabase();
 
 test("Prints each query seperately", async () => {
-    const queries = await parseFile();
+    const queries = await dbHandler.GetSplitDBSetupQueries();
 
 
     expect(queries.length).toBe(4);
 });
+
+test("Create item and query it from db", async () => {
+    const item = Item("testMaker1", "testItem1", "TestSerial");
+
+    await dbHandler.CreateItem(item);
+
+    const items = await dbHandler.GetItems();
+    console.log(items);
+
+    expect(items.length).toBe(1);
+})
