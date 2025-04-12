@@ -73,7 +73,7 @@ const CharResets = async (char) => {
 }
 
 const LastCharReset = (index) => {
-    return index = 0;
+    return index == 0;
 }
 
 export const GenerateNewShelfID = async (lastID) => {
