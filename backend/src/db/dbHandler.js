@@ -67,6 +67,11 @@ const ThrowIfDBInit = async () => {
     }
 }
 
+const CharResets = async (char) => {
+
+    return abcIndex[char] == abc.length -1; 
+}
+
 export const GenerateNewShelfID = async (lastID) => {
 
     
@@ -77,7 +82,7 @@ export const GenerateNewShelfID = async (lastID) => {
     }
 
     for (let i = newID.length - 1; i > -1; i--){
-        if (CharResets(newID[i])){
+        if (await (CharResets(newID[i]))){
             console.log("Char reset");
             newID = stringFunctions.ReplaceChar(newID, i, abc[0]);
             if (LastCharReset(i)){
@@ -96,14 +101,7 @@ export const GenerateNewShelfID = async (lastID) => {
     return newID;
 }
 
-const CharResets = async (char) => {
 
-    console.log(abcIndex);
-    console.log(abc.length);
-    console.log(abcIndex[char]);
-    console.log(char);
-    return abcIndex[char] == abc.length -1; 
-}
 
 const LastCharReset = (index) => {
     return index = 0;
