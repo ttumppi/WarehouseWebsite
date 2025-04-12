@@ -72,6 +72,10 @@ const CharResets = async (char) => {
     return abcIndex[char] == abc.length -1; 
 }
 
+const LastCharReset = (index) => {
+    return index = 0;
+}
+
 export const GenerateNewShelfID = async (lastID) => {
 
     
@@ -103,9 +107,7 @@ export const GenerateNewShelfID = async (lastID) => {
 
 
 
-const LastCharReset = (index) => {
-    return index = 0;
-}
+
 
 export const CreateItem = async (item) => {
 
