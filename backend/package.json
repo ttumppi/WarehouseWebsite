@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "yarn node --experimental-vm-modules $(yarn bin jest) && node ./src/start.js",
-    "test": "jest"
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
   },
   "type": "module",
   "devDependencies": {
