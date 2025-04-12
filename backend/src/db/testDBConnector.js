@@ -1,5 +1,6 @@
 import pkg from "pg"
 import * as readFile from "../readFile.js"
+import * as path from "path"
 
 const { Pool } = pkg;
 
