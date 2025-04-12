@@ -87,16 +87,13 @@ export const GenerateNewShelfID = async (lastID) => {
 
     for (let i = newID.length - 1; i > -1; i--){
         if (await (CharResets(newID[i]))){
-            console.log("Char reset");
             newID = stringFunctions.ReplaceChar(newID, i, abc[0]);
             if (LastCharReset(i)){
-                console.log("last char reset");
                 newID += abc[0];
                 break;
             }
             continue;
         }
-        console.log("Replacing char");
         newID = stringFunctions.ReplaceChar(newID,
              i, abc[abcIndex[newID[i]] + 1]);
         break;

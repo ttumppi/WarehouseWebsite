@@ -33,7 +33,9 @@ test("Create shelf and query it from db", async () => {
 
 
 let lastShelf = "a";
+let results = [];
 for (let i = 0; i < 100; i++){
     lastShelf = await dbHandler.GenerateNewShelfID(lastShelf);
-    console.log(lastShelf);
+    results.push(lastShelf);
 }
+console.log(lastShelf);
