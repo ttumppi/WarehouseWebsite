@@ -369,7 +369,7 @@ export const SetupDatabase = async () => {
 
 const GenerateABCIndexDictionary = () => {
     for (let i = 0; i < abc.length; i++){
-        abcIndex.abc[i] = i;
+        abcIndex[abc[i]] = i;
     }
 }
 
