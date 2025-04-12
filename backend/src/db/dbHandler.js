@@ -3,6 +3,7 @@ import * as testDBConnector from "./testDBConnector.js"
 import * as fs from "node:fs"
 import * as path from "path"
 import {Item} from "../models/Item.js"
+import * as stringFunctions from "../stringFunctions.js"
 
 let db = null;
 
@@ -77,8 +78,7 @@ const GenerateNewShelfID = async (lastID) => {
 
     for (let i = newID.length - 1; i > -1; i--){
         if (CharResets(newID[i])){
-            newID[i] = abc[0];
-
+            newID = stringFunctions.ReplaceChar(newID, i, abc[0]);
             if (LastCharReset(i)){
                 newID += abc[0];
                 break;
@@ -87,6 +87,8 @@ const GenerateNewShelfID = async (lastID) => {
         }
 
         newID[i] = abc[abcIndex[newID[i]] + 1]
+        newID = stringFunctions.ReplaceChar(newID,
+             i, abc[abcIndex[newID[i]] + 1]);
         break;
     }
 
