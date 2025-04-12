@@ -19,5 +19,5 @@ test("Create item and query it from db", async () => {
     const items = await dbHandler.GetItems();
     console.log(items);
 
-    expect(items.length).toBe(1);
+    expect(items.Result.rows.length).toBe(1);
 })
