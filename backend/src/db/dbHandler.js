@@ -67,7 +67,7 @@ const ThrowIfDBInit = async () => {
     }
 }
 
-const GenerateNewShelfID = async (lastID) => {
+export const GenerateNewShelfID = async (lastID) => {
 
     
     let newID = lastID;
