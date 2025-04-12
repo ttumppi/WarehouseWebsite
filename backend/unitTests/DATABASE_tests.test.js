@@ -32,9 +32,9 @@ test("Create shelf and query it from db", async () => {
 
 
 
-let lastShelf = "a";
+let lastShelf = null;
 let results = [];
-for (let i = 0; i < 100; i++){
+for (let i = 0; i < 1000; i++){
     lastShelf = await dbHandler.GenerateNewShelfID(lastShelf);
     results.push(lastShelf);
 }
