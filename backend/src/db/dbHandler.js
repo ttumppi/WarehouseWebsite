@@ -100,6 +100,8 @@ const CharResets = async (char) => {
 
     console.log(abcIndex);
     console.log(abc.length);
+    console.log(abcIndex[char]);
+    console.log(char);
     return abcIndex[char] == abc.length -1; 
 }
 
