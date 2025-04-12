@@ -82,7 +82,7 @@ export const GenerateNewShelfID = async (lastID) => {
     let newID = lastID;
 
     if (newID == null){
-        newID = abc[0];
+        return abc[0];
     }
 
     for (let i = newID.length - 1; i > -1; i--){
