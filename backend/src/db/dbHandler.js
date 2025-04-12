@@ -97,6 +97,9 @@ export const GenerateNewShelfID = async (lastID) => {
 }
 
 const CharResets = async (char) => {
+
+    console.log(abcIndex);
+    console.log(abc.length);
     return abcIndex[char] == abc.length -1; 
 }
 
