@@ -120,6 +120,19 @@ export const GetItemByModel = async (model) => {
     }
 }
 
+export const GetItem = async (item) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetItemByManufacturerAndModelAndSerialQuery,
+             [item.Manufacturer, item.Model, item.Serial]);
+    }
+    catch (error){
+        console.log("Failed to get item by model");
+        return {}
+    }
+}
+
 export const ClearAllTables = async () => {
     await ThrowIfDBNotInit();
 
