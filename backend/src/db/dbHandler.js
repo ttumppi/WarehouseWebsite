@@ -6,6 +6,14 @@ import {Item} from "../models/Item.js"
 
 let db = null;
 
+const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+    "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+]
+
+let abcIndex = {};
+
+
+
 const dbFolderPath = path.dirname(new URL(import.meta.url).pathname);
 
 const sqlFilePath = path.join(dbFolderPath, "init.sql")
@@ -26,12 +34,24 @@ const GetItemByManufacturerAndModelQuery = `SELECT * FROM items
 const GetItemByManufacturerAndModelAndSerialQuery = `SELECT * FROM items
  WHERE manufacturer = $1 AND model = $2 AND serial = $3`;
 
-const GetItemByIDQuery = `SELECT * FROM items WHERE id = $1`
+const GetItemByIDQuery = `SELECT * FROM items WHERE id = $1`;
 
-const GetItemsQuery = `SELECT * FROM items`
+const GetItemsQuery = `SELECT * FROM items`; 
 
 const ClearAllTablesQuery = `TRUNCATE TABLE shelfs, items, users, passwords
 RESTART IDENTITY CASCADE`;
+
+const AddShelfIntoShelfsTableQuery = `INSERT INTO shelfs (shelf_id, size)
+ VALUES ($1, $2)`;
+
+const GetLastShelfQuery = `SELECT shelf_id FROM shelfs ORDER BY id DESC LIMIT 1`;
+
+const GetAllShelfsQuery = `SELECT * FROM shelfs`;
+const GetShelfQuery = `SELECT * FROM shelfs WHERE shelf_id = $1`
+
+
+
+
 
 
 const ThrowIfDBNotInit= async () => {
@@ -44,6 +64,35 @@ const ThrowIfDBInit = async () => {
     if (db != null){
         throw new Error("DB handler is already connected to a db connector");
     }
+}
+
+const GenerateNewShelfID = async (lastID) => {
+    let newID = lastID;
+
+    for (let i = newID.length - 1; i > -1; i--){
+        if (CharResets(newID[i])){
+            newID[i] = abc[0];
+
+            if (LastCharReset(i)){
+                newID += abc[0];
+                break;
+            }
+            continue;
+        }
+
+        newID[i] = abc[abcIndex[newID[i]] + 1]
+        break;
+    }
+
+    return newID;
+}
+
+const CharResets = async (char) => {
+    return abcIndex[char] == abc.length -1; 
+}
+
+const LastCharReset = (index) => {
+    return index = 0;
 }
 
 export const CreateItem = async (item) => {
@@ -133,14 +182,140 @@ export const GetItem = async (item) => {
     }
 }
 
+export const GetAllShelfs = async () => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetAllShelfsQuery);
+    }
+
+    catch(error){
+        console.log("Failed to get shelfs");
+        return  {}
+    }
+}
+
+const DeleteShelfTable = async (shelfName) => {
+    await ThrowIfDBNotInit();
+
+    const query = `DROP TABLE "${shelfName}"`
+
+    try{
+        await db.query(query);
+    }
+    catch(error){
+        console.log("Failed to drop shelf table");
+    }
+
+}
+
 export const ClearAllTables = async () => {
     await ThrowIfDBNotInit();
+
+    const shelfs = await GetAllShelfs();
+
+    for (let i = 0; i < shelfs.rows.length; i++){
+        await DeleteShelfTable(shelfs.rows[i].shelf_id);
+    }
 
     try{
         return await db.query(ClearAllTablesQuery);
     }
     catch(error){
         console.log("Failed to clear all tables");
+    }
+}
+
+
+
+const GetLastShelfName = async () => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetLastShelfQuery);
+    }
+    catch(error){
+        console.log("Failed to clear all tables");
+    }
+}
+
+const AddShelf = async (shelfName, size) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        await db.query(AddShelfIntoShelfsTableQuery, [shelfName, size]);
+    }
+    catch(error){
+        console.log("Failed to add shelf to shelfs table");
+    }
+}
+
+export const CreateShelf = async (size) => {
+    const row = await GetLastShelfName();
+
+    const shelfName = await GenerateNewShelfID();
+
+    await AddShelf(shelfName, size);
+
+    const query = `CREATE TABLE "${shelfName}" 
+    (
+    id SERIAL PRIMARY KEY,
+    item_id INT, 
+    balance INT,
+    FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
+    )`;
+
+    try{
+        await db.query(query);
+    }
+    catch(error){
+        console.log("Failed to create shelf");
+        return "";
+    }
+
+    return shelfName;
+}
+
+const ShelfExists = async (shelfName) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return (await db.query(GetShelfQuery, [shelfName])).rows.length != 0;
+    }
+    catch(error){
+        console.log("Failed to query shelf");
+        return false;
+    }
+
+}
+
+export const GetShelfItems = async (shelfName) => {
+    
+    if (!(await ShelfExists(shelfName))){
+        console.log("Shelf does not exist");
+        return;
+    }
+
+    const query = `SELECT * FROM "${shelfName}"`
+
+    try{
+        return await db.query(query);
+    }
+    catch (error){
+        console.log("Couldn't get shelf items");
+        return {}
+    }
+}
+
+export const GetShelf = async (shelfName) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetShelfQuery, [shelfName]);
+    }
+    catch(error){
+        console.log("Failed to query shelf");
+        return {}
     }
 }
 
@@ -192,7 +367,13 @@ export const SetupDatabase = async () => {
    
 }
 
+const GenerateABCIndexDictionary = () => {
+    for (let i = 0; i < abc.length; i++){
+        abcIndex.abc[i] = i;
+    }
+}
 
 
+GenerateABCIndexDictionary();
 
 

@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS shelfs (
     id SERIAL PRIMARY KEY,
     shelf_id varchar(100) UNIQUE,
-    Shelf_table INT
+    size INT
 );
 
 CREATE TABLE IF NOT EXISTS items (

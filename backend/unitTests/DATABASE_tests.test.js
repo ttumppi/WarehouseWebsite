@@ -21,3 +21,11 @@ test("Create item and query it from db", async () => {
 
     expect(items.rows.length).toBe(1);
 })
+
+test("Create shelf and query it from db", async () => {
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    const row = await dbHandler.GetShelf(shelfName);
+
+    expect(row.rows[0].shelf_id).toBe(shelfName);
+})
