@@ -38,4 +38,4 @@ for (let i = 0; i < 1000; i++){
     lastShelf = await dbHandler.GenerateNewShelfID(lastShelf);
     results.push(lastShelf);
 }
-console.log(results);
+console.log(JSON.stringify(results));
