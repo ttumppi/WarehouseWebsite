@@ -87,7 +87,9 @@ export const GenerateNewShelfID = async (lastID) => {
 
     for (let i = newID.length - 1; i > -1; i--){
         if (await (CharResets(newID[i]))){
+
             newID = stringFunctions.ReplaceChar(newID, i, abc[0]);
+
             if (LastCharReset(i)){
                 newID += abc[0];
                 break;
@@ -328,6 +330,26 @@ export const GetShelf = async (shelfName) => {
         console.log("Failed to query shelf");
         return {}
     }
+}
+
+export const AddItemToShelf = async (shelfName, itemID, balance) => {
+    await ThrowIfDBNotInit();
+
+    if (/^[a-z]/.test(shelfName)){
+        console.log("Unsafe table name");
+        return;
+    }
+
+    const query = `INSERT INTO "${shelfName}" (item_id, balance) 
+    VALUES ($1, $2)` 
+
+    try{
+        await db.query(query, [itemID, balance])
+    }
+    catch(error){
+        console.log("Couldn't add item to shelf");
+    }
+
 }
 
 export const ConnectToDatabase = async () => {

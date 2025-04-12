@@ -5,7 +5,7 @@ await dbHandler.ConnectToTestDatabase();
 await dbHandler.SetupDatabase();
 await dbHandler.ClearAllTables();
 
-test("Prints each query seperately", async () => {
+test("Check that init query has 4 queries spliced up", async () => {
     const queries = await dbHandler.GetSplitDBSetupQueries();
 
 
@@ -30,6 +30,19 @@ test("Create shelf and query it from db", async () => {
     expect(row.rows[0].shelf_id).toBe(shelfName);
 })
 
+test("Create shelf and item and put item to shelf", async () => {
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+    const items = await dbHandler.GetItem(item);
+
+    await dbHandler.AddItemToShelf(shelfName, items.rows[0].id, 20);
+
+    const shelfItems = await dbHandler.GetShelfItems(shelfName);
+
+    expect(shelfItems.rows[0].item_id).toBe(items.rows[0].id);
+})
 
 
 let lastShelf = null;
