@@ -39,6 +39,8 @@ const GetItemByIDQuery = `SELECT * FROM items WHERE id = $1`;
 
 const GetItemsQuery = `SELECT * FROM items`; 
 
+const DeleteItemQuery = `DELETE FROM items WHERE id = $1`
+
 const ClearAllTablesQuery = `TRUNCATE TABLE shelfs, items, users, passwords
 RESTART IDENTITY CASCADE`;
 
@@ -46,11 +48,12 @@ const AddShelfIntoShelfsTableQuery = `INSERT INTO shelfs (shelf_id, size)
  VALUES ($1, $2)`;
 
 const GetLastShelfQuery = `SELECT shelf_id FROM shelfs ORDER BY id DESC LIMIT 1`;
+const DeleteShelfQuery = `DELETE FROM shelfs WHERE shelf_id = $1`;
 
 const GetAllShelfsQuery = `SELECT * FROM shelfs`;
 const GetShelfQuery = `SELECT * FROM shelfs WHERE shelf_id = $1`
-
-
+const GetShelfSizeByNameQuery = `SELECT size FROM shelfs WHERE shelf_id = $1`;
+const ChangeSelfSizeQuery = `UPDATE shelfs SET size = $1 WHERE shelf_id = $2`;
 
 
 
@@ -65,6 +68,14 @@ const ThrowIfDBInit = async () => {
     if (db != null){
         throw new Error("DB handler is already connected to a db connector");
     }
+}
+
+const ShelfNameValid = async (shelfName) => {
+    if (/[^a-z]/.test(shelfName)){
+        console.log("Unsafe table name");
+        return false;
+    }
+    return true;
 }
 
 const CharResets = async (char) => {
@@ -195,6 +206,39 @@ export const GetItem = async (item) => {
     }
 }
 
+export const DeleteItem = async (item) => {
+    await ThrowIfDBInit();
+
+    const itemRow = await GetItem(item);
+    try{
+        await db.query(DeleteItemQuery, [itemRow.rows[0].id]);
+    }
+    catch(error){
+        console.log("Failed to delete item");
+    }
+}
+
+export const DeleteItemFromShelf = async (shelfName, location) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return;
+    }
+
+    if (!(await ShelfLocationInBounds(shelfName, location))){
+        return;
+    }
+
+    const query = `DELETE FROM "${shelfName}" WHERE location = $1`;
+
+    try{
+        await db.query(query, [location]);
+    }
+    catch (error){
+        console.log("Failed to delete item from shelf");
+    }
+}
+
 export const GetAllShelfs = async () => {
     await ThrowIfDBNotInit();
 
@@ -210,6 +254,10 @@ export const GetAllShelfs = async () => {
 
 const DeleteShelfTable = async (shelfName) => {
     await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return;
+    }
 
     const query = `DROP TABLE "${shelfName}"`
 
@@ -239,6 +287,65 @@ export const ClearAllTables = async () => {
     }
 }
 
+export const DeleteShelf = async (shelfName) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return;
+    }
+
+    await DeleteShelfTable(shelfName);
+
+    try{
+        db.query(DeleteShelfQuery, [shelfName]);
+    }
+    catch(error){
+        console.log("Failed to delete shelf");
+    }
+    
+}
+
+export const TransferItem = async (currentShelfName, currentLocation,
+    targetShelfName, targetLocation) => {
+    
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(currentShelfName))){
+        return;
+    }
+
+    if (!(await ShelfNameValid(targetShelfName))){
+        return;
+    }
+
+    if (!(await ShelfLocationInBounds(targetShelfName, targetLocation))){
+        console.log("Transfer target does not have enough space")
+        return;
+    }
+
+    const currentShelfRow = await GetShelfItemByLocation(currentShelfName,
+        currentLocation);
+    
+    if (currentShelfRow.rows.length == 0){
+        return;
+    }
+
+    const targetShelfLocation = await GetShelfItemByLocation(targetShelfName,
+        targetLocation);
+    
+    if (targetShelfLocation.rows.length != 0){
+        return;
+    }
+
+    const item = await GetItemByID(currentShelfRow.rows[0].item_id);
+
+    await AddItemToShelf(targetShelfName, item.rows[0].id,
+         currentShelfRow.rows[0].balance, targetLocation);
+
+    await DeleteItemFromShelf(currentShelfName, currentLocation);
+
+
+}
 
 
 const GetLastShelfName = async () => {
@@ -275,6 +382,7 @@ export const CreateShelf = async (size) => {
     id SERIAL PRIMARY KEY,
     item_id INT, 
     balance INT,
+    location INT UNIQUE,
     FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
     )`;
 
@@ -332,11 +440,35 @@ export const GetShelf = async (shelfName) => {
     }
 }
 
-export const AddItemToShelf = async (shelfName, itemID, balance) => {
+const GetShelfSize = async (shelfName) => {
     await ThrowIfDBNotInit();
 
-    if (/^[a-z]/.test(shelfName)){
-        console.log("Unsafe table name");
+    try{
+        return await db.query(GetShelfSizeByNameQuery, [shelfName]);
+    }
+    catch(error){
+        console.log("Failed to get shelf size");
+        return {};
+    }
+
+}
+
+const ShelfLocationInBounds = async (shelfName, location) => {
+
+    const shelfSize = await GetShelfSize(shelfName);
+
+    return location >= 1 && location <= shelfSize;
+}
+
+export const AddItemToShelf = async (shelfName, itemID, balance, location) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return;
+    }
+
+    if (!(await ShelfLocationInBounds(shelfName, location))){
+        console.log("item location out of bounds");
         return;
     }
 
@@ -349,6 +481,105 @@ export const AddItemToShelf = async (shelfName, itemID, balance) => {
     catch(error){
         console.log("Couldn't add item to shelf");
     }
+
+}
+
+export const ChangeShelfSize = async (shelfName, newSize) => {
+
+    ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid())){
+        return;
+    }
+
+    const items = await GetShelfItems(shelfName);
+
+    if (newSize <= items){
+        console.log("Size is too small for existing items");
+        return;
+    }
+    
+    try{
+        await db.query(ChangeSelfSizeQuery, [newSize, shelfName]);
+    }
+    catch(error){
+        console.log("Couldn't change shelf size");
+        
+    }
+
+
+}
+
+export const GetShelfItem = async (shelfName, item) => {
+
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return;
+    }
+
+    const itemRow = await GetItem(item);
+
+    
+
+    const query = `SELECT * FROM "${shelfName}" WHERE item_id = $1`;
+
+    try{
+        const shelfItemRow = await db.query(query, [itemRow.rows[0].id]);
+        return shelfItemRow;
+    }
+    catch(error){
+        console.log("Failed to query shelf item");
+        return {}
+    }
+
+    
+}
+
+export const GetShelfItemByLocation = async (shelfName, location) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return {};
+    }
+
+    if (!(await ShelfLocationInBounds(shelfName, location))){
+        return {};
+    }
+
+    const query = `SELECT * FROM "${shelfName}" WHERE location = $1`;
+
+    try{
+        return await db.query(query, [location]);
+    }
+
+    catch(error){
+        console.log("Failed to get shelf item");
+        return {}
+    }
+}
+export const ChangeItemBalance = async (shelfName, amount, item) => {
+
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return;
+    }
+
+    const itemData = await GetShelfItem(shelfName, item);
+
+    const newBalance = itemData.rows[0].balance + amount;
+
+    const query = `UPDATE "${shelfName}" SET balance = $1 WHERE id = $2`;
+
+    try{
+        db.query(query, [newBalance, itemData.rows[0].id]);
+    }
+    catch(error){
+        console.log("Failed to change item balance");
+    }
+
+
 
 }
 
