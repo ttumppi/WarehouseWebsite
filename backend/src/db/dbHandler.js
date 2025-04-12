@@ -67,7 +67,13 @@ const ThrowIfDBInit = async () => {
 }
 
 const GenerateNewShelfID = async (lastID) => {
+
+    
     let newID = lastID;
+
+    if (newID == null){
+        newID = abc[0];
+    }
 
     for (let i = newID.length - 1; i > -1; i--){
         if (CharResets(newID[i])){
@@ -253,7 +259,7 @@ const AddShelf = async (shelfName, size) => {
 export const CreateShelf = async (size) => {
     const row = await GetLastShelfName();
 
-    const shelfName = await GenerateNewShelfID();
+    const shelfName = await GenerateNewShelfID(row.rows[0]);
 
     await AddShelf(shelfName, size);
 
