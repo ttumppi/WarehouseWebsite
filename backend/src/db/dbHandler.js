@@ -84,6 +84,42 @@ export const GetItemByID = async (id) => {
     }
 }
 
+export const GetItemBySerial = async (serial) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetItemBySerialQuery, [serial]);
+    }
+    catch (error){
+        console.log("Failed to get item by serial");
+        return {}
+    }
+}
+
+export const GetItemByManufacturer = async (manufacturer) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetItemByManufacturerQuery, [manufacturer]);
+    }
+    catch (error){
+        console.log("Failed to get item by manufacturer");
+        return {}
+    }
+}
+
+export const GetItemByModel = async (model) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetItemByModelQuery, [model]);
+    }
+    catch (error){
+        console.log("Failed to get item by model");
+        return {}
+    }
+}
+
 export const ClearAllTables = async () => {
     await ThrowIfDBNotInit();
 
