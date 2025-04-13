@@ -687,7 +687,6 @@ export const GetUser = async (username) => {
     }
     catch(error){
         console.log("Failed to query username");
-        console.log(error);
         return {};
     }
 }
@@ -727,13 +726,14 @@ export const SaveUser = async (user, salt) => {
 
     try{
         await db.query(SaveUsernameAndLevelQuery, [user.Username, user.Role]);
+
         const userRow = await GetUser(user.Username);
+        console.log(userRow.rows[0].id);
         await db.query(SavePasswordQuery, [user.Password, salt, 
             userRow.rows[0].id]);
     }
     catch (error){
         console.log("Failed to save user");
-        console.log(error);
     }
 }
 
@@ -752,7 +752,6 @@ export const UpdateUserPassword = async (user, salt) => {
     }
     catch(error){
         console.log("Failed to update password");
-        console.log(error);
     }
 }
 
@@ -786,7 +785,6 @@ export const DeleteUser = async (user) => {
     }
     catch (error){
         console.log("Couldn't delete user");
-        console.log(error);
     }
 }
 
