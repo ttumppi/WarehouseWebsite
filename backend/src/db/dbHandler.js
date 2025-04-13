@@ -342,6 +342,7 @@ export const TransferItem = async (currentShelfName, currentLocation,
         currentLocation);
     
     if (currentShelfRow.rows.length == 0){
+        console.log("origin shelf location empty");
         return;
     }
 
@@ -349,6 +350,7 @@ export const TransferItem = async (currentShelfName, currentLocation,
         targetLocation);
     
     if (targetShelfLocation.rows.length != 0){
+        console.log("target shelf location not empty");
         return;
     }
 
