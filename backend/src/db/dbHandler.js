@@ -590,6 +590,7 @@ export const GetShelfItemByLocation = async (shelfName, location) => {
     }
 
     if (!(await ShelfLocationInBounds(shelfName, location))){
+        console.log("Shelf location out of bounds");
         return {};
     }
 
