@@ -38,8 +38,11 @@ const Login = () => {
 
       if (loginData.success) {
         setMessage(`Welcome, ${loginData.role}`);
+        console.log("login success");
+
       } else {
         setMessage("Login failed");
+        console.log("login failed");
       }
 
     } catch (err) {
