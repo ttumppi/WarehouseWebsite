@@ -518,11 +518,11 @@ export const AddItemToShelf = async (shelfName, itemID, balance, location) => {
         return;
     }
 
-    const query = `INSERT INTO "${shelfName}" (item_id, balance) 
-    VALUES ($1, $2)` 
+    const query = `INSERT INTO "${shelfName}" (item_id, balance, location) 
+    VALUES ($1, $2, $3)` 
 
     try{
-        await db.query(query, [itemID, balance])
+        await db.query(query, [itemID, balance, location])
     }
     catch(error){
         console.log("Couldn't add item to shelf");
@@ -594,7 +594,6 @@ export const GetShelfItemByLocation = async (shelfName, location) => {
         return {};
     }
 
-    console.log(location);
     const query = `SELECT * FROM "${shelfName}" WHERE location = $1`;
 
     try{
