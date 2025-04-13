@@ -714,7 +714,7 @@ export const GetUserPasswordAndSaltWithUsername = async (username) => {
     }
     catch (error){
         console.log("Failed to retrieve user password and salt");
-        console.log(error);
+        
     }
 }
 
@@ -733,7 +733,7 @@ export const SaveUser = async (user, salt) => {
     }
     catch (error){
         console.log("Failed to save user");
-        
+        console.log(error);
     }
 }
 
@@ -752,6 +752,7 @@ export const UpdateUserPassword = async (user, salt) => {
     }
     catch(error){
         console.log("Failed to update password");
+        console.log(error);
     }
 }
 
@@ -785,6 +786,7 @@ export const DeleteUser = async (user) => {
     }
     catch (error){
         console.log("Couldn't delete user");
+        console.log(error);
     }
 }
 

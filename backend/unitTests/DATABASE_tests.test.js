@@ -234,7 +234,7 @@ test("User's password can be changed", async () => {
 
     await dbHandler.UpdateUserPassword(worker, "22222222");
 
-    const userRow = await dbHandler.GetUserPasswordAndSalt(worker.Username);
+    const userRow = await dbHandler.GetUserPasswordAndSaltWithUsername(worker.Username);
 
     expect(userRow.rows[0].password).toBe("admin");
 })
