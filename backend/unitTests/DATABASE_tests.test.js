@@ -135,7 +135,6 @@ test("Can't change self size to smaller than existing item's location",
 test("Get available locations from a shelf", async () => {
     const shelfName = await dbHandler.CreateShelf(50);
 
-    console.log((await dbHandler.GetAllShelfs()).rows);
 
     const item = new Item("testMaker1", "testItem1", "TestSerial");
 

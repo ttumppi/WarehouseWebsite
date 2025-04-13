@@ -381,6 +381,19 @@ const GetLastShelfName = async () => {
     }
 }
 
+const GetShelfSize = async (shelfName) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(GetShelfSizeByNameQuery, [shelfName]);
+    }
+    catch(error){
+        console.log("Failed to get shelf size");
+        return {};
+    }
+
+}
+
 export const GetAvailableShelfLocations = async (shelfName) => {
     await ThrowIfDBNotInit();
 
@@ -388,19 +401,16 @@ export const GetAvailableShelfLocations = async (shelfName) => {
         return {};
     }
 
-    const queryShelfSize = `SELECT size FROM shelfs WHERE
-     shelf_id = "${shelfName}"`;
+    const shelfSize = await GetShelfSize(shelfName);
 
     const queryFreeSpaces = `SELECT num FROM GENERATE_SERIES(1, $1, 1) As num WHERE 
     num NOT IN (SELECT location FROM "${shelfName}")`;
 
     try{
-        const shelfSize = await db.query(queryShelfSize);
         return await db.query(queryFreeSpaces, [shelfSize.rows[0].size]);
     }
     catch(error){
         console.log("Failed to get free spaces in a shelf");
-        console.log(error);
         return {};
     }
 }
@@ -492,18 +502,7 @@ export const GetShelf = async (shelfName) => {
     }
 }
 
-const GetShelfSize = async (shelfName) => {
-    await ThrowIfDBNotInit();
 
-    try{
-        return await db.query(GetShelfSizeByNameQuery, [shelfName]);
-    }
-    catch(error){
-        console.log("Failed to get shelf size");
-        return {};
-    }
-
-}
 
 const ShelfLocationInBounds = async (shelfName, location) => {
 
