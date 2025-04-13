@@ -153,7 +153,7 @@ test("Get available locations from a shelf", async () => {
             shelfName
         );
 
-        expect(availableLocations.length).toBe(48);
+        expect(availableLocations.rows.length).toBe(48);
 })
 
 test("Can't create two of the same item", async () => {
