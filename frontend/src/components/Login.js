@@ -24,7 +24,6 @@ const Login = () => {
       // 2. Hash password + salt using SHA-256
       const combined = password + salt;
       const hash = CryptoJS.SHA256(combined).toString();
-      console.log("first fetch done");
       // 3. Send login request
       const loginRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
