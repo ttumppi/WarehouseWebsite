@@ -616,15 +616,12 @@ export const ChangeItemBalance = async (shelfName, amount, item) => {
     const itemData = await GetShelfItem(shelfName, item);
 
 
-    console.log(itemData.rows[0].balance);
     const newBalance = itemData.rows[0].balance + amount;
-
-    console.log(newBalance);
 
     const query = `UPDATE "${shelfName}" SET balance = $1 WHERE id = $2`;
 
     try{
-        db.query(query, [newBalance, itemData.rows[0].id]);
+        await db.query(query, [newBalance, itemData.rows[0].id]);
     }
     catch(error){
         console.log("Failed to change item balance");
