@@ -20,32 +20,32 @@ const Login = () => {
         return setMessage(saltRes.message);
       }
 
-      const salt = saltData.salt; // should be like '8chrsalt'
+    //   const salt = saltData.salt; // should be like '8chrsalt'
 
-      // 2. Hash password + salt using SHA-256
-      const combined = password + salt;
-      const hash = CryptoJS.SHA256(combined).toString();
+    //   // 2. Hash password + salt using SHA-256
+    //   const combined = password + salt;
+    //   const hash = CryptoJS.SHA256(combined).toString();
 
-      // 3. Send login request
-      const loginRes = await fetch(`
-        http://ec2-54-204-100-237.compute-1.amazonaws.com/:5000/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password: hash }),
-      });
+    //   // 3. Send login request
+    //   const loginRes = await fetch(`
+    //     http://ec2-54-204-100-237.compute-1.amazonaws.com/:5000/api/login`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ username, password: hash }),
+    //   });
 
-      const loginData = await loginRes.json();
+    //   const loginData = await loginRes.json();
 
-      if (loginRes.success) {
-        setMessage(`Welcome, ${loginData.role}`);
-      } else {
-        setMessage("Login failed");
-      }
+    //   if (loginRes.success) {
+    //     setMessage(`Welcome, ${loginData.role}`);
+    //   } else {
+    //     setMessage("Login failed");
+    //   }
 
-    } catch (err) {
-      console.error(err);
-      setMessage("Error during login");
-    }
+    // } catch (err) {
+    //   console.error(err);
+    //   setMessage("Error during login");
+    // }
   };
 
   return (
