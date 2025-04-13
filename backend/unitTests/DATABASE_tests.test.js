@@ -95,7 +95,7 @@ test("Change balance of an item from 20 to 25", async () => {
 
     const shelfItem = await dbHandler.GetShelfItem(shelfName, item);    
 
-    expect(shelfItem.rows[0].balance).toBe(15);
+    expect(shelfItem.rows[0].balance).toBe(25);
 })
 
 
