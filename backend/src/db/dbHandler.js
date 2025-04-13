@@ -728,9 +728,9 @@ export const SaveUser = async (user, salt) => {
         await db.query(SaveUsernameAndLevelQuery, [user.Username, user.Role]);
 
         const userRow = await GetUser(user.Username);
-        console.log(userRow.rows[0].id);
-        await db.query(SavePasswordQuery, [user.Password, salt, 
-            userRow.rows[0].id]);
+        
+        await db.query(SavePasswordQuery, [
+            userRow.rows[0].id,user.Password, salt]);
     }
     catch (error){
         console.log("Failed to save user");
