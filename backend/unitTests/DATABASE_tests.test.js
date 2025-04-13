@@ -42,7 +42,6 @@ test("Create shelf and item and put the item to the shelf", async () => {
 
     const shelfItems = await dbHandler.GetShelfItems(shelfName.value);
 
-    console.log(shelfItems);
 
     expect(shelfItems.value.rows[0].item_id).toBe(itemRow.value.rows[0].id);
 })

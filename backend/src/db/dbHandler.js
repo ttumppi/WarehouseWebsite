@@ -599,7 +599,7 @@ const ShelfExists = async (shelfName) => {
 }
 
 export const GetShelfItems = async (shelfName) => {
-    
+    console.log(shelfName);
     if (!(await ShelfExists(shelfName))){
         console.log("Shelf does not exist");
         return {success: false,
