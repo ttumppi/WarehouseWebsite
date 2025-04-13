@@ -15,6 +15,8 @@ const Login = () => {
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
       const saltData = await saltRes.json();
 
+      console.log("GET to retrieve salt")
+
       if (!saltRes.success) {
         return setMessage(saltRes.message);
       }
@@ -25,6 +27,7 @@ const Login = () => {
       const combined = password + salt;
       const hash = CryptoJS.SHA256(combined).toString();
 
+      console.log("POST to send login creds");
       // 3. Send login request
       const loginRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
