@@ -530,6 +530,25 @@ export const AddItemToShelf = async (shelfName, itemID, balance, location) => {
 
 }
 
+export const GetLargestLocationInShelf = async (shelfName) => {
+    ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid())){
+        return;
+    }
+
+    const query = `SELECT MAX(location) AS max_location
+    FROM "${shelfName}"`
+
+    try{
+        return await db.query(query);
+    }
+    catch (error){
+        console.log("Couldn't find largest location in shelf");
+        return {};
+    }
+}
+
 export const ChangeShelfSize = async (shelfName, newSize) => {
 
     ThrowIfDBNotInit();
@@ -538,9 +557,9 @@ export const ChangeShelfSize = async (shelfName, newSize) => {
         return;
     }
 
-    const items = await GetShelfItems(shelfName);
+    const largestLocation = await GetLargestLocationInShelf(shelfName);
 
-    if (newSize <= items.rows.length){
+    if (newSize <= largestLocation.rows[0].max_location){
         console.log("Size is too small for existing items");
         return;
     }
