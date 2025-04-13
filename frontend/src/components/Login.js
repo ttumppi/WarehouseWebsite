@@ -16,7 +16,7 @@ const Login = () => {
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
       const saltData = await saltRes.json();
 
-
+        console.log(saltData);
       if (!saltData.success) {
         return setMessage(saltRes.message);
       }
