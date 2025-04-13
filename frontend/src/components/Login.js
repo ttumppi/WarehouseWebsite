@@ -11,7 +11,8 @@ const Login = () => {
 
     try {
       // 1. Fetch the salt for this username
-      const saltRes = await fetch(`http://localhost:5000/api/login/${username}`);
+      const saltRes = await fetch(
+        `http://ec2-54-204-100-237.compute-1.amazonaws.com/:5000/api/login/${username}`);
       const saltData = await saltRes.json();
 
       if (!saltRes.success) {
@@ -25,7 +26,8 @@ const Login = () => {
       const hash = CryptoJS.SHA256(combined).toString();
 
       // 3. Send login request
-      const loginRes = await fetch("http://localhost:5000/api/login", {
+      const loginRes = await fetch(`
+        http://ec2-54-204-100-237.compute-1.amazonaws.com/:5000/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password: hash }),
