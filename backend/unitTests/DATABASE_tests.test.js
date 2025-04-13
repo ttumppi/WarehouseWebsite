@@ -20,15 +20,15 @@ test("Create item and query it from db", async () => {
 
     const items = await dbHandler.GetItem(item);
 
-    expect(items.rows.length).toBe(1);
+    expect(items.value.rows.length).toBe(1);
 })
 
 test("Create shelf and query it from db", async () => {
     const shelfName = await dbHandler.CreateShelf(50);
 
-    const row = await dbHandler.GetShelf(shelfName);
+    const row = await dbHandler.GetShelf(shelfName.value);
 
-    expect(row.rows[0].shelf_id).toBe(shelfName);
+    expect(row.value.rows[0].shelf_id).toBe(shelfName.value);
 })
 
 test("Create shelf and item and put the item to the shelf", async () => {
@@ -38,11 +38,11 @@ test("Create shelf and item and put the item to the shelf", async () => {
 
     const itemRow = await dbHandler.GetItem(item);
 
-    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 15);
 
-    const shelfItems = await dbHandler.GetShelfItems(shelfName);
+    const shelfItems = await dbHandler.GetShelfItems(shelfName.value);
 
-    expect(shelfItems.rows[0].item_id).toBe(itemRow.rows[0].id);
+    expect(shelfItems.value.rows[0].item_id).toBe(itemRow.value.rows[0].id);
 })
 
 
@@ -55,13 +55,13 @@ test("Create an item and two shelfs, transfer item from one shelf to another",
 
         const itemRow = await dbHandler.GetItem(item);
 
-        await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+        await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 15);
 
-        await dbHandler.TransferItem(shelfName, 15, shelfName2, 10);
+        await dbHandler.TransferItem(shelfName.value, 15, shelfName2.value, 10);
 
-        const itemID = await dbHandler.GetShelfItem(shelfName2, item);
+        const itemID = await dbHandler.GetShelfItem(shelfName2.value, item);
 
-        expect(itemID.rows.length).toBe(1);
+        expect(itemID.value.rows.length).toBe(1);
 
 
      }
@@ -74,13 +74,13 @@ test("Change balance of an item from 20 to 15", async () => {
 
     const itemRow = await dbHandler.GetItem(item);
 
-    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 15);
 
-    await dbHandler.ChangeItemBalance(shelfName, -5, item);
+    await dbHandler.ChangeItemBalance(shelfName.value, -5, item);
 
-    const shelfItem = await dbHandler.GetShelfItem(shelfName, item);    
+    const shelfItem = await dbHandler.GetShelfItem(shelfName.value, item);    
 
-    expect(shelfItem.rows[0].balance).toBe(15);
+    expect(shelfItem.value.rows[0].balance).toBe(15);
 })
 
 test("Change balance of an item from 20 to 25", async () => {
@@ -90,24 +90,24 @@ test("Change balance of an item from 20 to 25", async () => {
 
     const itemRow = await dbHandler.GetItem(item);
 
-    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 15);
 
-    await dbHandler.ChangeItemBalance(shelfName, 5, item);
+    await dbHandler.ChangeItemBalance(shelfName.value, 5, item);
 
-    const shelfItem = await dbHandler.GetShelfItem(shelfName, item);    
+    const shelfItem = await dbHandler.GetShelfItem(shelfName.value, item);    
 
-    expect(shelfItem.rows[0].balance).toBe(25);
+    expect(shelfItem.value.rows[0].balance).toBe(25);
 })
 
 test("Change self size from 50 to 40", async () => {
 
     const shelfName = await dbHandler.CreateShelf(50);
 
-    await dbHandler.ChangeShelfSize(shelfName, 40);
+    await dbHandler.ChangeShelfSize(shelfName.value, 40);
 
-    const shelfRow = await dbHandler.GetShelf(shelfName);
+    const shelfRow = await dbHandler.GetShelf(shelfName.value);
 
-    expect(shelfRow.rows[0].size).toBe(40);
+    expect(shelfRow.value.rows[0].size).toBe(40);
 
 
 })
@@ -120,16 +120,16 @@ test("Can't change self size to smaller than existing item's location",
 
         const itemRow = await dbHandler.GetItem(item);
 
-        await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 50);
+        await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 50);
 
 
 
 
-        await dbHandler.ChangeShelfSize(shelfName, 40);
+        await dbHandler.ChangeShelfSize(shelfName.value, 40);
 
-        const shelfRow = await dbHandler.GetShelf(shelfName);
+        const shelfRow = await dbHandler.GetShelf(shelfName.value);
 
-        expect(shelfRow.rows[0].size).toBe(50);
+        expect(shelfRow.value.rows[0].size).toBe(50);
     }
 )
 
@@ -147,16 +147,16 @@ test("Get available locations from a shelf", async () => {
 
     const itemRow2 = await dbHandler.GetItem(item2);
 
-    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 50);
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 50);
 
-    await dbHandler.AddItemToShelf(shelfName, itemRow2.rows[0].id, 20, 49);
+    await dbHandler.AddItemToShelf(shelfName, itemRow2.value.rows[0].id, 20, 49);
 
     const availableLocations = await dbHandler.GetAvailableShelfLocations(
-        shelfName
+        shelfName.value
     );
 
 
-    expect(availableLocations.rows.length).toBe(48);
+    expect(availableLocations.value.rows.length).toBe(48);
 })
 
 test("Can't create two of the same item", async () => {
@@ -167,7 +167,7 @@ test("Can't create two of the same item", async () => {
 
     const itemRow = await dbHandler.GetItem(item);
 
-    expect(itemRow.rows.length).toBe(1);
+    expect(itemRow.value.rows.length).toBe(1);
 
 })
 
@@ -181,7 +181,7 @@ test("Create user with admin and worker roles", async () => {
     const adminRow = await dbHandler.GetUser(admin.Username);
     const workerRow = await dbHandler.GetUser(worker.Username);
 
-    expect(adminRow.rows.length == 1 && workerRow.rows.length == 1).toBe(true);
+    expect(adminRow.value.rows.length == 1 && workerRow.value.rows.length == 1).toBe(true);
 
 })
 
@@ -195,7 +195,7 @@ test("Cannot create two users with same name", async () => {
 
     const workerRow = await dbHandler.GetUser(worker.Username);
 
-    expect(workerRow.rows.length).toBe(1);
+    expect(workerRow.value.rows.length).toBe(1);
 
 })
 
@@ -208,7 +208,7 @@ test("Deleting user works", async () => {
 
     const userRow = await dbHandler.GetUser(worker.Username);
 
-    expect(userRow.rows.length).toBe(0);
+    expect(userRow.value.rows.length).toBe(0);
 })
 
 test("User's role can be changed", async () => {
@@ -222,7 +222,7 @@ test("User's role can be changed", async () => {
 
     const userRow = await dbHandler.GetUser(worker.Username);
 
-    expect(userRow.rows[0].role).toBe("admin");
+    expect(userRow.value.rows[0].role).toBe("admin");
 })
 
 test("User's password can be changed", async () => {
@@ -236,7 +236,7 @@ test("User's password can be changed", async () => {
 
     const userRow = await dbHandler.GetUserPasswordAndSaltWithUsername(worker.Username);
 
-    expect(userRow.rows[0].value).toBe("admin");
+    expect(userRow.value.rows[0].value).toBe("admin");
 })
 
 test("User's password deletes when user is deleted", async () => {
@@ -251,9 +251,9 @@ test("User's password deletes when user is deleted", async () => {
     const userRow = await dbHandler.GetUser(worker.Username);
     
     const passwordRow = await dbHandler.GetUserPasswordAndSaltWithID(
-        userRowBeforeDelete.rows[0].id)
+        userRowBeforeDelete.value.rows[0].id)
 
-    expect(userRow.rows.length == 0 && passwordRow.rows.length == 0).toBe(true);
+    expect(userRow.value.rows.length == 0 && passwordRow.value.rows.length == 0).toBe(true);
 })
 
 let lastShelf = null;

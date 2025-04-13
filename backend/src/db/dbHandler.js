@@ -140,12 +140,16 @@ export const GetItem = async (item) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetItemByManufacturerAndModelAndSerialQuery,
-             [item.Manufacturer, item.Model, item.Serial]);
+        const result = await db.query(GetItemByManufacturerAndModelAndSerialQuery,
+            [item.Manufacturer, item.Model, item.Serial]);
+        return {success: true,
+            value: result}
     }
     catch (error){
         console.log("Failed to get item by model");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -155,15 +159,23 @@ export const CreateItem = async (item) => {
 
     if ((await GetItem(item)).rows.length != 0){
         console.log("Item already exists");
-        return;
+        return {success: false,
+            reason : "Item already exists"
+        }
     }
 
     try{
-        await db.query(createItemQuery, 
+        const result = await db.query(createItemQuery, 
             [item.Manufacturer, item.Model, item.Serial]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to create item");
+        return {success: false,
+            reason : "db fail"
+        }
         
     }
 }
@@ -172,11 +184,16 @@ export const GetItems = async () => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetItemsQuery);
+        const result = await db.query(GetItemsQuery);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to get items from db");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -184,11 +201,16 @@ export const GetItemByID = async (id) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetItemByIDQuery, [id]);
+        const result = await db.query(GetItemByIDQuery, [id]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to get item by id");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -196,11 +218,16 @@ export const GetItemBySerial = async (serial) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetItemBySerialQuery, [serial]);
+        const result = await db.query(GetItemBySerialQuery, [serial]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to get item by serial");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -208,11 +235,17 @@ export const GetItemByManufacturer = async (manufacturer) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetItemByManufacturerQuery, [manufacturer]);
+        const result = await db.query(GetItemByManufacturerQuery, [manufacturer]);
+
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to get item by manufacturer");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -220,11 +253,16 @@ export const GetItemByModel = async (model) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetItemByModelQuery, [model]);
+        const result = await db.query(GetItemByModelQuery, [model]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to get item by model");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -235,10 +273,16 @@ export const DeleteItem = async (item) => {
 
     const itemRow = await GetItem(item);
     try{
-        await db.query(DeleteItemQuery, [itemRow.rows[0].id]);
+        const result = await db.query(DeleteItemQuery, [itemRow.rows[0].id]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to delete item");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -246,20 +290,30 @@ export const DeleteItemFromShelf = async (shelfName, location) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     if (!(await ShelfLocationInBounds(shelfName, location))){
-        return;
+        return {success: false,
+            reason : "Shelf location outside shelf size"
+        }
     }
 
     const query = `DELETE FROM "${shelfName}" WHERE location = $1`;
 
     try{
-        await db.query(query, [location]);
+        const result = await db.query(query, [location]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to delete item from shelf");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -267,12 +321,17 @@ export const GetAllShelfs = async () => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetAllShelfsQuery);
+        const result = await db.query(GetAllShelfsQuery);
+        return {success: true,
+            value: result
+        };
     }
 
     catch(error){
         console.log("Failed to get shelfs");
-        return  {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -280,16 +339,24 @@ const DeleteShelfTable = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     const query = `DROP TABLE "${shelfName}"`
 
     try{
-        await db.query(query);
+        const result = await db.query(query);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to drop shelf table");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 
 }
@@ -304,10 +371,16 @@ export const ClearAllTables = async () => {
     }
 
     try{
-        return await db.query(ClearAllTablesQuery);
+        const result = await db.query(ClearAllTablesQuery);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to clear all tables");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -315,16 +388,24 @@ export const DeleteShelf = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     await DeleteShelfTable(shelfName);
 
     try{
-        db.query(DeleteShelfQuery, [shelfName]);
+        const result = await db.query(DeleteShelfQuery, [shelfName]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to delete shelf");
+        return {success: false,
+            reason : "db fail"
+        }
     }
     
 }
@@ -335,16 +416,22 @@ export const TransferItem = async (currentShelfName, currentLocation,
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(currentShelfName))){
-        return;
+        return {success: false,
+            reason : "current shelf name not valid"
+        }
     }
 
     if (!(await ShelfNameValid(targetShelfName))){
-        return;
+        return {success: false,
+            reason : "target shelf name not valid"
+        }
     }
 
     if (!(await ShelfLocationInBounds(targetShelfName, targetLocation))){
         console.log("Transfer target does not have enough space")
-        return;
+        return {success: false,
+            reason : "target shelf location outside shelf size"
+        }
     }
 
     const currentShelfRow = await GetShelfItemByLocation(currentShelfName,
@@ -352,7 +439,9 @@ export const TransferItem = async (currentShelfName, currentLocation,
     
     if (currentShelfRow.rows.length == 0){
         console.log("origin shelf location empty");
-        return;
+        return {success: false,
+            reason : "item not found in current shelf location"
+        }
     }
 
     const targetShelfLocation = await GetShelfItemByLocation(targetShelfName,
@@ -360,7 +449,9 @@ export const TransferItem = async (currentShelfName, currentLocation,
     
     if (targetShelfLocation.rows.length != 0){
         console.log("target shelf location not empty");
-        return;
+        return {success: false,
+            reason : "target shelf location not empty"
+        }
     }
 
     const item = await GetItemByID(currentShelfRow.rows[0].item_id);
@@ -370,6 +461,8 @@ export const TransferItem = async (currentShelfName, currentLocation,
 
     await DeleteItemFromShelf(currentShelfName, currentLocation);
 
+    return {success: true};
+
 
 }
 
@@ -378,10 +471,16 @@ const GetLastShelfName = async () => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetLastShelfQuery);
+        const result = await db.query(GetLastShelfQuery);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to clear all tables");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -389,11 +488,16 @@ const GetShelfSize = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetShelfSizeByNameQuery, [shelfName]);
+        const result = await db.query(GetShelfSizeByNameQuery, [shelfName]);
+        return {success:true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to get shelf size");
-        return {};
+        return {success: false,
+            reason : "db fail"
+        }
     }
 
 }
@@ -402,7 +506,9 @@ export const GetAvailableShelfLocations = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return {};
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     const shelfSize = await GetShelfSize(shelfName);
@@ -411,11 +517,16 @@ export const GetAvailableShelfLocations = async (shelfName) => {
     num NOT IN (SELECT location FROM "${shelfName}")`;
 
     try{
-        return await db.query(queryFreeSpaces, [shelfSize.rows[0].size]);
+        const result = await db.query(queryFreeSpaces, [shelfSize.rows[0].size]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to get free spaces in a shelf");
-        return {};
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -423,10 +534,16 @@ const AddShelf = async (shelfName, size) => {
     await ThrowIfDBNotInit();
 
     try{
-        await db.query(AddShelfIntoShelfsTableQuery, [shelfName, size]);
+        const result = await db.query(AddShelfIntoShelfsTableQuery, [shelfName, size]);
+        return {success:true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to add shelf to shelfs table");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -453,14 +570,19 @@ export const CreateShelf = async (size) => {
     )`;
 
     try{
-        await db.query(query);
+        const result = await db.query(query);
+        return {success: true,
+            value: shelfName,
+        };
     }
     catch(error){
         console.log("Failed to create shelf");
-        return "";
+        return {success: false,
+            reason : "db fail",
+            value: shelfName
+        }
     }
 
-    return shelfName;
 }
 
 const ShelfExists = async (shelfName) => {
@@ -480,17 +602,24 @@ export const GetShelfItems = async (shelfName) => {
     
     if (!(await ShelfExists(shelfName))){
         console.log("Shelf does not exist");
-        return;
+        return {success: false,
+            reason : "shelf does not exist"
+        }
     }
 
     const query = `SELECT * FROM "${shelfName}"`
 
     try{
-        return await db.query(query);
+        const result = await db.query(query);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Couldn't get shelf items");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -498,11 +627,16 @@ export const GetShelf = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(GetShelfQuery, [shelfName]);
+        const result = await db.query(GetShelfQuery, [shelfName]);
+        return {success:true,
+            value: result
+        }
     }
     catch(error){
         console.log("Failed to query shelf");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -519,27 +653,39 @@ export const AddItemToShelf = async (shelfName, itemID, balance, location) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     if (!(await ShelfLocationInBounds(shelfName, location))){
         console.log("item location out of bounds");
-        return;
+        return {success: false,
+            reason : "item location out of bounds"
+        }
     }
 
     if ((await GetShelfItemByLocation(shelfName, location)).rows.length != 0){
         console.log("Shelf location is reserved");
-        return;
+        return {success: false,
+            reason : "shelf location is reserved"
+        }
     }
 
     const query = `INSERT INTO "${shelfName}" (item_id, balance, location) 
     VALUES ($1, $2, $3)` 
 
     try{
-        await db.query(query, [itemID, balance, location])
+        const result = await db.query(query, [itemID, balance, location]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Couldn't add item to shelf");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 
 }
@@ -548,18 +694,25 @@ export const GetLargestLocationInShelf = async (shelfName) => {
     ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid())){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     const query = `SELECT MAX(location) AS max_location
     FROM "${shelfName}"`
 
     try{
-        return await db.query(query);
+        const result = await db.query(query);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Couldn't find largest location in shelf");
-        return {};
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -568,22 +721,31 @@ export const ChangeShelfSize = async (shelfName, newSize) => {
     ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid())){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     const largestLocation = await GetLargestLocationInShelf(shelfName);
 
     if (newSize <= largestLocation.rows[0].max_location){
         console.log("Size is too small for existing items");
-        return;
+        return {success: false,
+            reason : "new size is too small for existing items"
+        }
     }
     
     try{
-        await db.query(ChangeSelfSizeQuery, [newSize, shelfName]);
+        const result = await db.query(ChangeSelfSizeQuery, [newSize, shelfName]);
+        return {success: true,
+            value: result
+        }
     }
     catch(error){
         console.log("Couldn't change shelf size");
-        
+        return {success: false,
+            reason : "db fail"
+        }
     }
 
 
@@ -594,7 +756,9 @@ export const GetShelfItem = async (shelfName, item) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return;
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     const itemRow = await GetItem(item);
@@ -604,12 +768,16 @@ export const GetShelfItem = async (shelfName, item) => {
     const query = `SELECT * FROM "${shelfName}" WHERE item_id = $1`;
 
     try{
-        const shelfItemRow = await db.query(query, [itemRow.rows[0].id]);
-        return shelfItemRow;
+        const result = await db.query(query, [itemRow.rows[0].id]);
+        return {success: true,
+            value: result
+        }
     }
     catch(error){
         console.log("Failed to query shelf item");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 
     
@@ -619,23 +787,32 @@ export const GetShelfItemByLocation = async (shelfName, location) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return {};
+        return {success: false,
+            reason : "shelf name not valid"
+        }
     }
 
     if (!(await ShelfLocationInBounds(shelfName, location))){
         console.log("Shelf location out of bounds");
-        return {};
+        return {success: false,
+            reason : "shelf location out of bounds"
+        }
     }
 
     const query = `SELECT * FROM "${shelfName}" WHERE location = $1`;
 
     try{
-        return await db.query(query, [location]);
+        const result = await db.query(query, [location]);
+        return {success: true,
+            value: result
+        };
     }
 
     catch(error){
         console.log("Failed to get shelf item");
-        return {}
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 export const ChangeItemBalance = async (shelfName, amount, item) => {
@@ -643,7 +820,9 @@ export const ChangeItemBalance = async (shelfName, amount, item) => {
     await ThrowIfDBNotInit();
 
     if (!(await ShelfNameValid(shelfName))){
-        return;
+        return {success: false,
+            reason : "shelf name is not valid"
+        }
     }
 
     const itemData = await GetShelfItem(shelfName, item);
@@ -654,10 +833,16 @@ export const ChangeItemBalance = async (shelfName, amount, item) => {
     const query = `UPDATE "${shelfName}" SET balance = $1 WHERE id = $2`;
 
     try{
-        await db.query(query, [newBalance, itemData.rows[0].id]);
+        const result = await db.query(query, [newBalance, itemData.rows[0].id]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to change item balance");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 
 
@@ -683,11 +868,16 @@ export const GetUser = async (username) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(FindUserByUsernameQuery, [username]);
+        const result = await db.query(FindUserByUsernameQuery, [username]);
+        return {success:true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to query username");
-        return {};
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -695,11 +885,16 @@ export const GetUserPasswordAndSaltWithID = async (userID) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(FindUserPasswordAndSaltQuery, [userID]);
+        const result = await db.query(FindUserPasswordAndSaltQuery, [userID]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to retrieve user password and salt");
-        console.log(error);
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -709,11 +904,16 @@ export const GetUserPasswordAndSaltWithUsername = async (username) => {
     const userRow = await GetUser(username);
 
     try{
-        return await db.query(FindUserPasswordAndSaltQuery, [userRow.rows[0].id]);
+        const result = await db.query(FindUserPasswordAndSaltQuery, [userRow.rows[0].id]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to retrieve user password and salt");
-        
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -721,19 +921,28 @@ export const SaveUser = async (user, salt) => {
     await ThrowIfDBNotInit();
 
     if ((await UserExists(user.Username))){
-        return;
+        return {success: false,
+            reason : "user exists"
+        }
     }
 
     try{
         await db.query(SaveUsernameAndLevelQuery, [user.Username, user.Role]);
 
         const userRow = await GetUser(user.Username);
-        
-        await db.query(SavePasswordQuery, [
+
+        const result = await db.query(SavePasswordQuery, [
             userRow.rows[0].id,user.Password, salt]);
+
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to save user");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -741,17 +950,25 @@ export const UpdateUserPassword = async (user, salt) => {
     await ThrowIfDBNotInit();
 
     if (!(await UserExists(user.Username))){
-        return;
+        return {success: false,
+            reason : "user does not exist"
+        }
     }
 
     const userRow = await GetUser(user.Username);
     try{
-        await db.query(UpdatePasswordQuery, [user.Password, salt, 
+        const result = await db.query(UpdatePasswordQuery, [user.Password, salt, 
             userRow.rows[0].id
         ]);
+        return {success: true,
+            value: result
+        };
     }
     catch(error){
         console.log("Failed to update password");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -759,15 +976,23 @@ export const UpdateUserRole = async (user) => {
     await ThrowIfDBNotInit();
 
     if (!(await UserExists(user.Username))){
-        return;
+        return {success: false,
+            reason : "user does not exist"
+        }
     }
 
     const userRow = await GetUser(user.Username);
     try{
-        await db.query(UpdateUserRoleQuery, [user.Role, userRow.rows[0].id]);
+        const result = await db.query(UpdateUserRoleQuery, [user.Role, userRow.rows[0].id]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Failed to update user role");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
@@ -776,15 +1001,23 @@ export const DeleteUser = async (user) => {
 
     if (!(await UserExists(user.Username))){
         console.log("User does not exist");
-        return;
+        return {success: false,
+            reason : "user does not exist"
+        }
     }
 
     const userID = (await GetUser(user.Username)).rows[0].id;
     try{
-        await db.query(DeleteUserQuery, [userID]);
+        const result = await db.query(DeleteUserQuery, [userID]);
+        return {success: true,
+            value: result
+        };
     }
     catch (error){
         console.log("Couldn't delete user");
+        return {success: false,
+            reason : "db fail"
+        }
     }
 }
 
