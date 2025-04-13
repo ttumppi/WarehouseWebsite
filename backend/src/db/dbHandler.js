@@ -782,7 +782,7 @@ export const DeleteUser = async (user) => {
 
     const userID = (await GetUser(user.Username)).rows[0].id;
     try{
-        await db.Query(DeleteUserQuery, [userID]);
+        await db.query(DeleteUserQuery, [userID]);
     }
     catch (error){
         console.log("Couldn't delete user");
