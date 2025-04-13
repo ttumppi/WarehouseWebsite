@@ -77,6 +77,7 @@ export const GetSalt = async (res, username) => {
         );
     }
 
+    console.log("Done");
     return res.status(200).json({success: true,
         salt: passwordResult.value.rows[0].salt
     });
