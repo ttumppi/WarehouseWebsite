@@ -150,7 +150,7 @@ test("Get available locations from a shelf", async () => {
 
     await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 50);
 
-    await dbHandler.AddItemToShelf(shelfName, itemRow2.value.rows[0].id, 20, 49);
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow2.value.rows[0].id, 20, 49);
 
     const availableLocations = await dbHandler.GetAvailableShelfLocations(
         shelfName.value
