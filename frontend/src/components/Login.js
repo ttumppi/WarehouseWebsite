@@ -18,6 +18,7 @@ const Login = () => {
       console.log("GET to retrieve salt")
 
       if (!saltRes.success) {
+        console.log("Success is false");
         return setMessage(saltRes.message);
       }
 
