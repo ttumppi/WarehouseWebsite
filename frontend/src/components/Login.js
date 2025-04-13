@@ -16,7 +16,8 @@ const Login = () => {
       const saltData = await saltRes.json();
 
       if (!saltData.success) {
-        return setMessage(saltRes.message);
+        setMessage(saltRes.message);
+        return;
       }
 
       const salt = saltData.salt; // should be like '8chrsalt'
