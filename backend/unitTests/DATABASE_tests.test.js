@@ -37,7 +37,7 @@ test("Create shelf and item and put item to shelf", async () => {
 
     const items = await dbHandler.GetItem(item);
 
-    await dbHandler.AddItemToShelf(shelfName, items.rows[0].id, 20);
+    await dbHandler.AddItemToShelf(shelfName, items.rows[0].id, 20, 15);
 
     const shelfItems = await dbHandler.GetShelfItems(shelfName);
 
