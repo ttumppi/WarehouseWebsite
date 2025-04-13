@@ -9,4 +9,4 @@
 | 07.04.2025 | 4   | Dev backend | Developing backend basic functions |
 | 09.04.2025 | 4   | unit test setup and vm troubleshooting | npm causing problems, initial unit testing environment set |
 | 12.04.2025 | 8   | Created backend functionalities for shelfs and items |
-| 13.04.2025 | 6   | Finished backend database functionalities|
+| 13.04.2025 | 11   | Finished backend database functionalities| Added frontend login page | 
