@@ -66,10 +66,43 @@ test("Create an item and two shelfs, transfer item from one shelf to another",
      }
 )
 
+test("Change balance of an item from 20 to 15", async () => {
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+    const itemRow = await dbHandler.GetItem(item);
+
+    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+
+    await dbHandler.ChangeItemBalance(shelfName, -5, item);
+
+    const shelfItem = await dbHandler.GetShelfItem(shelfName2, item);    
+
+    expect(shelfItem.rows[0].balance).toBe(15);
+})
+
+test("Change balance of an item from 20 to 25", async () => {
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+    const itemRow = await dbHandler.GetItem(item);
+
+    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+
+    await dbHandler.ChangeItemBalance(shelfName, 5, item);
+
+    const shelfItem = await dbHandler.GetShelfItem(shelfName2, item);    
+
+    expect(shelfItem.rows[0].balance).toBe(15);
+})
+
+
 let lastShelf = null;
 let results = [];
 for (let i = 0; i < 1000; i++){
     lastShelf = await dbHandler.GenerateNewShelfID(lastShelf);
     results.push(lastShelf);
 }
-console.log(JSON.stringify(results));
+console.log(`1000 generated shelf ids : ${JSON.stringify(results)}`);
