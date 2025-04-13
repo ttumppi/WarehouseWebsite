@@ -16,7 +16,10 @@ export const StartServer = () => {
 export const CreateServer = () => {
     server = express();
     server.use(express.urlencoded({ extended: true }));
-    server.use(cors());
+    server.use(cors({
+        origin: "http://ec2-54-204-100-237.compute-1.amazonaws.com",
+        credentials: false,
+    }));
     server.use(express.json());
     return server;
 }
