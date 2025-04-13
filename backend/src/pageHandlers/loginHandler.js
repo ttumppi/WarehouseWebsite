@@ -54,6 +54,7 @@ export const GetSalt = async (res, username) => {
     const usernameResult = await dbHandler.GetUser(username);
 
     if (!usernameResult.success){
+        console.log(usernameResult.reason);
         return res.status(404).json({
             success: false,
             message: usernameResult.reason}
@@ -61,6 +62,7 @@ export const GetSalt = async (res, username) => {
     }
 
     if (usernameResult.value.rows.length == 0){
+        console.log(usernameResult.reason);
         return res.status(404).json({
             success: false,
             message: "couldn't find username"}
