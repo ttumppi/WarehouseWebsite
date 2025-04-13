@@ -9,7 +9,7 @@ const PORT = 5000;
 
 export const StartServer = () => {
     server.listen(PORT, "0.0.0.0", () => {
-        console.log(`Backend running on http://localhost:${PORT}`);
+        console.log(`Backend running on port ${PORT}`);
     });
 
 }
