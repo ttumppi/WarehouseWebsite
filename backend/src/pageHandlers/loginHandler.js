@@ -5,43 +5,38 @@ export const CorrectLogin = async (req, res) => {
     const usernameResult = await dbHandler.GetUser(req.body.username);
 
     if (!usernameResult.success){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: usernameResult.reason,
-            status: 404}
+            message: usernameResult.reason}
         );
     }
 
     if (usernameResult.value.rows.length == 0){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: "couldn't find username",
-            status: 404}
+            message: "couldn't find username"}
         );
     }
 
     const passwordResult = await dbHandler.GetUserPasswordAndSaltWithUsername(req.body.username);
 
     if (!passwordResult.success){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: usernameResult.reason,
-            status: 404}
+            message: usernameResult.reason}
         );
     }
 
     if (passwordResult.value.rows.length == 0){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: "Couldn't find password",
-            status: 404}
+            message: "Couldn't find password"}
         );
     }
 
     if (passwordResult.value.rows[0].value == req.body.password){
-        return res.json({success: true,
-            role: usernameResult.value.rows[0].role,
-            status:200
+        return res.status(200).json({success: true,
+            role: usernameResult.value.rows[0].role
         });
     }
 
@@ -53,41 +48,36 @@ export const GetSalt = async (res, username) => {
     const usernameResult = await dbHandler.GetUser(username);
 
     if (!usernameResult.success){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: usernameResult.reason,
-            status: 404}
+            message: usernameResult.reason}
         );
     }
 
     if (usernameResult.value.rows.length == 0){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: "couldn't find username",
-            status: 404}
+            message: "couldn't find username"}
         );
     }
 
-    const passwordResult = dbHandler.GetUserPasswordAndSaltWithUsername(username);
+    const passwordResult = await dbHandler.GetUserPasswordAndSaltWithUsername(username);
 
     if (!passwordResult.success){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: usernameResult.reason,
-            status: 404}
+            message: usernameResult.reason}
         );
     }
 
     if (passwordResult.value.rows.length == 0){
-        return res.json({
+        return res.status(404).json({
             success: false,
-            message: "Couldn't find password",
-            status: 404}
+            message: "Couldn't find password"}
         );
     }
 
-    return res.json({success: true,
-        salt: passwordResult.value.rows[0].salt,
-        status: 200
+    return res.status(200).json({success: true,
+        salt: passwordResult.value.rows[0].salt
     });
 }
