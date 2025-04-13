@@ -236,7 +236,7 @@ test("User's password can be changed", async () => {
 
     const userRow = await dbHandler.GetUserPasswordAndSaltWithUsername(worker.Username);
 
-    expect(userRow.rows[0].password).toBe("admin");
+    expect(userRow.rows[0].value).toBe("admin");
 })
 
 test("User's password deletes when user is deleted", async () => {
