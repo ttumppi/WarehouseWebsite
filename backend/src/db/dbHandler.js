@@ -673,6 +673,7 @@ export const UserExists = async (username) => {
     }
     catch (error){
         console.log("Failed to query user existence");
+        console.log(error);
         return false;
     }
 
@@ -686,6 +687,7 @@ export const GetUser = async (username) => {
     }
     catch(error){
         console.log("Failed to query username");
+        console.log(error);
         return {};
     }
 }
@@ -698,6 +700,7 @@ export const GetUserPasswordAndSaltWithID = async (userID) => {
     }
     catch (error){
         console.log("Failed to retrieve user password and salt");
+        console.log(error);
     }
 }
 
@@ -711,6 +714,7 @@ export const GetUserPasswordAndSaltWithUsername = async (username) => {
     }
     catch (error){
         console.log("Failed to retrieve user password and salt");
+        console.log(error);
     }
 }
 
@@ -729,6 +733,7 @@ export const SaveUser = async (user, salt) => {
     }
     catch (error){
         console.log("Failed to save user");
+        
     }
 }
 

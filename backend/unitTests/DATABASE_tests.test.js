@@ -195,7 +195,7 @@ test("Cannot create two users with same name", async () => {
 
     const workerRow = await dbHandler.GetUser(worker.Username);
 
-    expect(workerRow.length).toBe(1);
+    expect(workerRow.rows.length).toBe(1);
 
 })
 
