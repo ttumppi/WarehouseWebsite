@@ -172,8 +172,8 @@ test("Can't create two of the same item", async () => {
 })
 
 test("Create user with admin and worker roles", async () => {
-    const admin = new User("admin", 1234, "admin");
-    const worker = new User("worker", 12345, "worker");
+    const admin = new User("admin", "1234", "admin");
+    const worker = new User("worker", "12345", "worker");
 
     await dbHandler.SaveUser(admin, "12345567");
     await dbHandler.SaveUser(worker, "1321435");
@@ -187,8 +187,8 @@ test("Create user with admin and worker roles", async () => {
 
 test("Cannot create two users with same name", async () => {
 
-    const worker = new User("worker2", 12345, "worker");
-    const worker2 = new User("worker2", 12345, "worker");
+    const worker = new User("worker2", "12345", "worker");
+    const worker2 = new User("worker2", "12345", "worker");
 
     await dbHandler.SaveUser(worker, "12345567");
     await dbHandler.SaveUser(worker2, "1321435");
@@ -200,7 +200,7 @@ test("Cannot create two users with same name", async () => {
 })
 
 test("Deleting user works", async () => {
-    const worker = new User("worker3", 12345, "worker");
+    const worker = new User("worker3", "12345", "worker");
 
     await dbHandler.SaveUser(worker, "11111111");
 
@@ -212,7 +212,7 @@ test("Deleting user works", async () => {
 })
 
 test("User's role can be changed", async () => {
-    const worker = new User("worker4", 12345, "worker");
+    const worker = new User("worker4", "12345", "worker");
 
     await dbHandler.SaveUser(worker, "11111111");
 
@@ -226,7 +226,7 @@ test("User's role can be changed", async () => {
 })
 
 test("User's password can be changed", async () => {
-    const worker = new User("worker4", 12345, "worker");
+    const worker = new User("worker4", "12345", "worker");
 
     await dbHandler.SaveUser(worker, "11111111");
 
@@ -240,7 +240,7 @@ test("User's password can be changed", async () => {
 })
 
 test("User's password deletes when user is deleted", async () => {
-    const worker = new User("worker3", 12345, "worker");
+    const worker = new User("worker3", "12345", "worker");
 
     await dbHandler.SaveUser(worker, "11111111");
     
