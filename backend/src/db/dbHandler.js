@@ -668,7 +668,7 @@ export const UserExists = async (username) => {
     await ThrowIfDBNotInit();
 
     try{
-        return await db.query(FindUserByUsernameQuery, [username])
+        return (await db.query(FindUserByUsernameQuery, [username]))
         .rows.length != 0; 
     }
     catch (error){
