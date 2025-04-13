@@ -46,7 +46,7 @@ const Login = () => {
     //   console.error(err);
     //   setMessage("Error during login");
     // }
-  };
+  //};
 
   return (
     <div>
