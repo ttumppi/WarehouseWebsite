@@ -77,7 +77,7 @@ test("Change balance of an item from 20 to 15", async () => {
 
     await dbHandler.ChangeItemBalance(shelfName, -5, item);
 
-    const shelfItem = await dbHandler.GetShelfItem(shelfName2, item);    
+    const shelfItem = await dbHandler.GetShelfItem(shelfName, item);    
 
     expect(shelfItem.rows[0].balance).toBe(15);
 })
@@ -93,7 +93,7 @@ test("Change balance of an item from 20 to 25", async () => {
 
     await dbHandler.ChangeItemBalance(shelfName, 5, item);
 
-    const shelfItem = await dbHandler.GetShelfItem(shelfName2, item);    
+    const shelfItem = await dbHandler.GetShelfItem(shelfName, item);    
 
     expect(shelfItem.rows[0].balance).toBe(15);
 })
