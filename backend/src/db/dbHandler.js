@@ -87,7 +87,7 @@ const ThrowIfDBInit = async () => {
 
 const ShelfNameValid = async (shelfName) => {
     if (/[^a-z]/.test(shelfName)){
-        console.log("Unsafe table name");
+        console.log(`Unsafe table name ${shelfName}`);
         return false;
     }
     return true;
