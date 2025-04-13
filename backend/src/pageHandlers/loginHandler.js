@@ -34,8 +34,6 @@ export const CorrectLogin = async (req, res) => {
         );
     }
 
-    console.log(passwordResult.value.rows[0].value);
-    console.log(req.body.password);
     if (passwordResult.value.rows[0].value == req.body.password){
         return res.status(200).json({success: true,
             role: usernameResult.value.rows[0].role
