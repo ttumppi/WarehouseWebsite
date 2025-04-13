@@ -411,7 +411,7 @@ const AddShelf = async (shelfName, size) => {
 export const CreateShelf = async (size) => {
     const row = await GetLastShelfName();
 
-    const shelfName = await GenerateNewShelfID(row.rows[0]);
+    const shelfName = await GenerateNewShelfID(row.rows[0].shelf_id);
 
     await AddShelf(shelfName, size);
 
