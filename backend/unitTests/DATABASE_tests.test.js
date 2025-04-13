@@ -98,6 +98,40 @@ test("Change balance of an item from 20 to 25", async () => {
     expect(shelfItem.rows[0].balance).toBe(25);
 })
 
+test("Change self size from 50 to 40", async () => {
+
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    await dbHandler.ChangeShelfSize(shelfName, 40);
+
+    const shelfRow = await dbHandler.GetShelf(shelfName);
+
+    expect(shelfRow.rows[0].size).toBe(40);
+
+
+})
+
+test("Can't change self size to smaller than existing item's location", 
+    async () => {
+        const shelfName = await dbHandler.CreateShelf(50);
+
+        const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+        const itemRow = await dbHandler.GetItem(item);
+
+        await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 50);
+
+
+
+
+        await dbHandler.ChangeShelfSize(shelfName, 40);
+
+        const shelfRow = await dbHandler.GetShelf(shelfName);
+
+        expect(shelfRow.rows[0].size).toBe(40);
+    }
+)
+
 
 let lastShelf = null;
 let results = [];

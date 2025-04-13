@@ -540,7 +540,7 @@ export const ChangeShelfSize = async (shelfName, newSize) => {
 
     const items = await GetShelfItems(shelfName);
 
-    if (newSize <= items){
+    if (newSize <= items.rows.length){
         console.log("Size is too small for existing items");
         return;
     }
