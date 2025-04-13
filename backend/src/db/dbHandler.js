@@ -366,8 +366,8 @@ export const ClearAllTables = async () => {
 
     const shelfs = await GetAllShelfs();
 
-    for (let i = 0; i < shelfs.rows.length; i++){
-        await DeleteShelfTable(shelfs.rows[i].shelf_id);
+    for (let i = 0; i < shelfs.value.rows.length; i++){
+        await DeleteShelfTable(shelfs.value.rows[i].shelf_id);
     }
 
     try{
