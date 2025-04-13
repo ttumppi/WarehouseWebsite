@@ -132,11 +132,27 @@ export const GenerateNewShelfID = async (lastID) => {
 
 
 
+export const GetItem = async (item) => {
+    await ThrowIfDBNotInit();
 
+    try{
+        return await db.query(GetItemByManufacturerAndModelAndSerialQuery,
+             [item.Manufacturer, item.Model, item.Serial]);
+    }
+    catch (error){
+        console.log("Failed to get item by model");
+        return {}
+    }
+}
 
 export const CreateItem = async (item) => {
 
     await ThrowIfDBNotInit();
+
+    if ((await GetItem(item)).rows.length != 0){
+        console.log("Item already exists");
+        return;
+    }
 
     try{
         await db.query(createItemQuery, 
@@ -208,18 +224,7 @@ export const GetItemByModel = async (model) => {
     }
 }
 
-export const GetItem = async (item) => {
-    await ThrowIfDBNotInit();
 
-    try{
-        return await db.query(GetItemByManufacturerAndModelAndSerialQuery,
-             [item.Manufacturer, item.Model, item.Serial]);
-    }
-    catch (error){
-        console.log("Failed to get item by model");
-        return {}
-    }
-}
 
 export const DeleteItem = async (item) => {
     await ThrowIfDBInit();
@@ -515,6 +520,11 @@ export const AddItemToShelf = async (shelfName, itemID, balance, location) => {
 
     if (!(await ShelfLocationInBounds(shelfName, location))){
         console.log("item location out of bounds");
+        return;
+    }
+
+    if ((await GetShelfItemByLocation(shelfName, location)).rows.length != 0){
+        console.log("Shelf location is reserved");
         return;
     }
 

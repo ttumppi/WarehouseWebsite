@@ -132,6 +132,42 @@ test("Can't change self size to smaller than existing item's location",
     }
 )
 
+test("Get available locations from a shelf", async () => {
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+        const item2 = new Item("testMaker2", "testItem2", "TestSerial2");
+
+        await dbHandler.CreateItem(item2);
+
+        const itemRow = await dbHandler.GetItem(item);
+
+        const itemRow2 = await dbHandler.GetItem(item2);
+
+        await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 50);
+
+        await dbHandler.AddItemToShelf(shelfName, itemRow2.rows[0].id, 20, 49);
+
+        const availableLocations = await dbHandler.GetAvailableShelfLocations(
+            shelfName
+        );
+
+        expect(availableLocations.length).toBe(48);
+})
+
+test("Can't create two of the same item", async () => {
+    const item = new Item("testMaker22", "testItem22", "TestSerial22");
+
+    await dbHandler.CreateItem(item);
+    await dbHandler.CreateItem(item);
+
+    const itemRow = await dbHandler.GetItem(item);
+
+    expect(itemRow.rows.length).toBe(1);
+
+})
+
 
 let lastShelf = null;
 let results = [];
