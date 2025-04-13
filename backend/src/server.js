@@ -1,4 +1,5 @@
 import express from "express"
+import cors from "cors"
 let server = null
 const PORT = 5000;
 
@@ -14,6 +15,9 @@ export const StartServer = () => {
 }
 export const CreateServer = () => {
     server = express();
+    server.use(express.urlencoded({ extended: true }));
+    server.use(cors());
+    server.use(express.json());
     return server;
 }
 
