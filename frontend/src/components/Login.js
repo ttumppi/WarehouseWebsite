@@ -19,7 +19,7 @@ const Login = () => {
       if (!saltRes.success) {
         return setMessage(saltRes.message);
       }
-    
+
     //   const salt = saltData.salt; // should be like '8chrsalt'
 
     //   // 2. Hash password + salt using SHA-256
@@ -46,7 +46,7 @@ const Login = () => {
       console.error(err);
       setMessage("Error during login");
     }
-  //};
+  };
 
   return (
     <div>
