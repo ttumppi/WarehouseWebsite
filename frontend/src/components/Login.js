@@ -12,7 +12,7 @@ const Login = () => {
     try {
       // 1. Fetch the salt for this username
       const saltRes = await fetch(
-        `http://ec2-54-204-100-237.compute-1.amazonaws.com/:5000/api/login/${username}`);
+        `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
       const saltData = await saltRes.json();
 
       console.log(saltRes);
@@ -28,7 +28,7 @@ const Login = () => {
 
     //   // 3. Send login request
     //   const loginRes = await fetch(`
-    //     http://ec2-54-204-100-237.compute-1.amazonaws.com/:5000/api/login`, {
+    //     http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
     //     method: "POST",
     //     headers: { "Content-Type": "application/json" },
     //     body: JSON.stringify({ username, password: hash }),
