@@ -4,6 +4,7 @@ import * as fs from "node:fs"
 import * as path from "path"
 import {Item} from "../models/Item.js"
 import * as stringFunctions from "../stringFunctions.js"
+import {User} from "../models/User.js"
 
 let db = null;
 
@@ -55,6 +56,20 @@ const GetShelfQuery = `SELECT * FROM shelfs WHERE shelf_id = $1`
 const GetShelfSizeByNameQuery = `SELECT size FROM shelfs WHERE shelf_id = $1`;
 const ChangeSelfSizeQuery = `UPDATE shelfs SET size = $1 WHERE shelf_id = $2`;
 
+const SaveUsernameAndLevelQuery = `INSERT INTO users (username, role)
+VALUES ($1, $2)`;
+
+const SavePasswordQuery = `INSERT INTO passwords (id, value, salt)
+VALUES ($1, $2, $3)`;
+
+const UpdateUserRoleQuery = `UPDATE users SET role = $1 WHERE id = $2`;
+
+const UpdatePasswordQuery = `UPDATE passwords SET value = $1 AND 
+salt = $2 WHERE id = $3`
+
+const DeleteUsersQuery = `DELETE FROM users WHERE id = $1`
+
+const FindUserByUsernameQuery = `SELECT * FROM users WHERE id = $1`;
 
 
 
@@ -604,6 +619,84 @@ export const ChangeItemBalance = async (shelfName, amount, item) => {
 
 
 
+}
+
+export const UserExists = async (username) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(FindUserByUsernameQuery, [username])
+        .rows.length != 0; 
+    }
+    catch (error){
+        console.log("Failed to query user existence");
+        return false;
+    }
+
+}
+
+export const GetUser = async (username) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(FindUserByUsernameQuery, [username]);
+    }
+    catch(error){
+        console.log("Failed to query username");
+        return {};
+    }
+}
+
+export const SaveUser = async (user, salt) => {
+    await ThrowIfDBNotInit();
+
+    if ((await UserExists(user.Username))){
+        return;
+    }
+
+    try{
+        await db.query(SaveUsernameAndLevelQuery, [user.Username, user.Role]);
+        const userRow = await GetUser(user.Username);
+        await db.query(SavePasswordQuery, [user.Password, salt, 
+            userRow.rows[0].id]);
+    }
+    catch (error){
+        console.log("Failed to save user");
+    }
+}
+
+export const UpdateUserPassword = async (user, salt) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await UserExists(user.Username))){
+        return;
+    }
+
+    const userRow = await GetUser(user.Username);
+    try{
+        await db.query(UpdatePasswordQuery, [user.Password, salt, 
+            userRow.rows[0].id
+        ]);
+    }
+    catch(error){
+        console.log("Failed to update password");
+    }
+}
+
+export const UpdateUserRole = async (user) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await UserExists(user.Username))){
+        return;
+    }
+
+    const userRow = await GetUser(user.Username);
+    try{
+        await db.query(UpdateUserRoleQuery, [user.Role, userRow.rows[0].id]);
+    }
+    catch (error){
+        console.log("Failed to update user role");
+    }
 }
 
 export const ConnectToDatabase = async () => {

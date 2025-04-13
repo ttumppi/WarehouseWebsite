@@ -15,12 +15,13 @@ CREATE TABLE IF NOT EXISTS items (
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username varchar(100),
+    username varchar(100) UNIQUE,
     role varchar(50)
 );
 
 CREATE TABLE IF NOT EXISTS passwords (
-    id INT REFERENCES users(id),
+    id INT PRIMARY KEY,
     value varchar(200),
-    salt varchar(8)
+    salt varchar(8),
+    FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
 );
