@@ -34,6 +34,7 @@ export const CorrectLogin = async (req, res) => {
         );
     }
 
+    console.log("Done");
     if (passwordResult.value.rows[0].value == req.body.password){
         return res.status(200).json({success: true,
             role: usernameResult.value.rows[0].role
@@ -77,7 +78,7 @@ export const GetSalt = async (res, username) => {
         );
     }
 
-    console.log("Done");
+    
     return res.status(200).json({success: true,
         salt: passwordResult.value.rows[0].salt
     });
