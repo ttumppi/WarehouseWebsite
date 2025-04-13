@@ -594,6 +594,7 @@ export const GetShelfItemByLocation = async (shelfName, location) => {
         return {};
     }
 
+    console.log(location);
     const query = `SELECT * FROM "${shelfName}" WHERE location = $1`;
 
     try{
