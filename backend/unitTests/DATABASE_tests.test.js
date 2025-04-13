@@ -30,20 +30,41 @@ test("Create shelf and query it from db", async () => {
     expect(row.rows[0].shelf_id).toBe(shelfName);
 })
 
-test("Create shelf and item and put item to shelf", async () => {
+test("Create shelf and item and put the item to the shelf", async () => {
     const shelfName = await dbHandler.CreateShelf(50);
 
     const item = new Item("testMaker1", "testItem1", "TestSerial");
 
-    const items = await dbHandler.GetItem(item);
+    const itemRow = await dbHandler.GetItem(item);
 
-    await dbHandler.AddItemToShelf(shelfName, items.rows[0].id, 20, 15);
+    await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
 
     const shelfItems = await dbHandler.GetShelfItems(shelfName);
 
-    expect(shelfItems.rows[0].item_id).toBe(items.rows[0].id);
+    expect(shelfItems.rows[0].item_id).toBe(itemRow.rows[0].id);
 })
 
+
+test("Create an item and two shelfs, transfer item from one shelf to another",
+     async () => {
+        const shelfName = await dbHandler.CreateShelf(50);
+        const shelfName2 = await dbHandler.CreateShelf(50);
+
+        const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+        const itemRow = await dbHandler.GetItem(item);
+
+        await dbHandler.AddItemToShelf(shelfName, itemRow.rows[0].id, 20, 15);
+
+        await dbHandler.TransferItem(shelfName, 15, shelfName2, 10);
+
+        const itemID = await dbHandler.GetShelfItem(shelfName2, item);
+
+        expect(itemID.rows.length).toBe(1);
+
+
+     }
+)
 
 let lastShelf = null;
 let results = [];
