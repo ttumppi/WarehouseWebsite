@@ -400,6 +400,7 @@ export const GetAvailableShelfLocations = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to get free spaces in a shelf");
+        console.log(error);
         return {};
     }
 }

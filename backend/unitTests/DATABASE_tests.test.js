@@ -153,7 +153,6 @@ test("Get available locations from a shelf", async () => {
         shelfName
     );
 
-    console.log(availableLocations.rows);
 
     expect(availableLocations.rows.length).toBe(48);
 })
