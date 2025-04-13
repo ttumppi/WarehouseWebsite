@@ -16,8 +16,7 @@ const Login = () => {
       const saltData = await saltRes.json();
 
       if (!saltData.success) {
-        console.log(saltRes.message);
-        setMessage(saltRes.message);
+        setMessage(saltData.message);
         return;
       }
 
