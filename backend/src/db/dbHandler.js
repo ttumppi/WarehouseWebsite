@@ -64,7 +64,7 @@ VALUES ($1, $2, $3)`;
 
 const UpdateUserRoleQuery = `UPDATE users SET role = $1 WHERE id = $2`;
 
-const UpdatePasswordQuery = `UPDATE passwords SET value = $1 AND 
+const UpdatePasswordQuery = `UPDATE passwords SET value = $1, 
 salt = $2 WHERE id = $3`
 
 const DeleteUserQuery = `DELETE FROM users WHERE id = $1`
