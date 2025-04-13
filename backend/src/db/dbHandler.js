@@ -853,7 +853,7 @@ export const UserExists = async (username) => {
 
     try{
         return (await db.query(FindUserByUsernameQuery, [username]))
-        .value.rows.length != 0; 
+        .rows.length != 0; 
     }
     catch (error){
         console.log("Failed to query user existence");
