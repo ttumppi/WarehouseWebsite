@@ -26,8 +26,8 @@ const Login = () => {
       const hash = CryptoJS.SHA256(combined).toString();
 
       // 3. Send login request
-      const loginRes = await fetch(`
-        http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
+      const loginRes = await fetch(
+        `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password: hash }),
@@ -35,7 +35,7 @@ const Login = () => {
 
       const loginData = await loginRes.json();
 
-      if (loginRes.success) {
+      if (loginData.success) {
         setMessage(`Welcome, ${loginData.role}`);
       } else {
         setMessage("Login failed");
