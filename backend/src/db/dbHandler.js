@@ -67,9 +67,11 @@ const UpdateUserRoleQuery = `UPDATE users SET role = $1 WHERE id = $2`;
 const UpdatePasswordQuery = `UPDATE passwords SET value = $1 AND 
 salt = $2 WHERE id = $3`
 
-const DeleteUsersQuery = `DELETE FROM users WHERE id = $1`
+const DeleteUserQuery = `DELETE FROM users WHERE id = $1`
 
 const FindUserByUsernameQuery = `SELECT * FROM users WHERE id = $1`;
+
+const FindUserPasswordAndSaltQuery = `SELECT * FROM passwords WHERE id = $1`;
 
 
 
@@ -686,6 +688,30 @@ export const GetUser = async (username) => {
     }
 }
 
+export const GetUserPasswordAndSaltWithID = async (userID) => {
+    await ThrowIfDBNotInit();
+
+    try{
+        return await db.query(FindUserPasswordAndSaltQuery, [userID]);
+    }
+    catch (error){
+        console.log("Failed to retrieve user password and salt");
+    }
+}
+
+export const GetUserPasswordAndSaltWithUsername = async (username) => {
+    await ThrowIfDBNotInit();
+
+    const userRow = await GetUser(username);
+
+    try{
+        return await db.query(FindUserPasswordAndSaltQuery, [userRow.rows[0].id]);
+    }
+    catch (error){
+        console.log("Failed to retrieve user password and salt");
+    }
+}
+
 export const SaveUser = async (user, salt) => {
     await ThrowIfDBNotInit();
 
@@ -735,6 +761,23 @@ export const UpdateUserRole = async (user) => {
     }
     catch (error){
         console.log("Failed to update user role");
+    }
+}
+
+export const DeleteUser = async (user) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await UserExists(user.Username))){
+        console.log("User does not exist");
+        return;
+    }
+
+    const userID = (await GetUser(user.Username)).rows[0].id;
+    try{
+        await db.Query(DeleteUserQuery, [userID]);
+    }
+    catch (error){
+        console.log("Couldn't delete user");
     }
 }
 
