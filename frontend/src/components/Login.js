@@ -10,13 +10,11 @@ const Login = () => {
     e.preventDefault();
 
     try {
-        console.log("button pressed");
       // 1. Fetch the salt for this username
       const saltRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
       const saltData = await saltRes.json();
 
-        console.log(saltData);
       if (!saltData.success) {
         return setMessage(saltRes.message);
       }
@@ -36,17 +34,13 @@ const Login = () => {
       });
 
       const loginData = await loginRes.json();
-      console.log("second fetch done");
       if (loginData.success) {
         setMessage(`Welcome, ${loginData.role}`);
-        console.log("login success");
 
       } else {
         setMessage("Login failed");
-        console.log("login failed");
       }
 
-      console.log("done");
 
     } catch (err) {
       console.error(err);

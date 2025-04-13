@@ -34,12 +34,17 @@ export const CorrectLogin = async (req, res) => {
         );
     }
 
-    console.log("RRRR");
     if (passwordResult.value.rows[0].value == req.body.password){
         return res.status(200).json({success: true,
             role: usernameResult.value.rows[0].role
         });
     }
+
+    return res.status(404).json({
+        success: false,
+        message: "Incorrect password"});
+
+
 
 
 
