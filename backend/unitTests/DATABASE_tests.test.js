@@ -128,7 +128,7 @@ test("Can't change self size to smaller than existing item's location",
 
         const shelfRow = await dbHandler.GetShelf(shelfName);
 
-        expect(shelfRow.rows[0].size).toBe(40);
+        expect(shelfRow.rows[0].size).toBe(50);
     }
 )
 
