@@ -69,7 +69,9 @@ salt = $2 WHERE id = $3`
 
 const DeleteUserQuery = `DELETE FROM users WHERE id = $1`
 
-const FindUserByUsernameQuery = `SELECT * FROM users WHERE id = $1`;
+const FindUserByUsernameQuery = `SELECT * FROM users WHERE username = $1`;
+
+const FindUserByIDQuery = `SELECT * FROM users WHERE id = $1`;
 
 const FindUserPasswordAndSaltQuery = `SELECT * FROM passwords WHERE id = $1`;
 
