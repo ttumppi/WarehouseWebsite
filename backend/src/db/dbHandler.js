@@ -589,7 +589,7 @@ const ShelfExists = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     try{
-        return (await db.query(GetShelfQuery, [shelfName])).value.rows.length != 0;
+        return (await db.query(GetShelfQuery, [shelfName])).rows.length != 0;
     }
     catch(error){
         console.log("Failed to query shelf");
