@@ -593,7 +593,6 @@ const ShelfExists = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to query shelf");
-        console.log(error);
         return false;
     }
 
