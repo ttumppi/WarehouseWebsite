@@ -6,7 +6,7 @@
     "pg": "^8.14.1"
   },
   "scripts": {
-    "start": "yarn node --experimental-vm-modules $(yarn bin jest) && node ./src/start.js",
+    "start": "node ./src/start.js",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
   },
   "type": "module",
