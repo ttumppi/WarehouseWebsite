@@ -593,13 +593,13 @@ const ShelfExists = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to query shelf");
+        console.log(error);
         return false;
     }
 
 }
 
 export const GetShelfItems = async (shelfName) => {
-    console.log(shelfName);
     if (!(await ShelfExists(shelfName))){
         console.log("Shelf does not exist");
         return {success: false,
