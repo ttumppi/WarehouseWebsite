@@ -10,6 +10,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
+        console.log("button pressed");
       // 1. Fetch the salt for this username
       const saltRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
@@ -25,7 +26,7 @@ const Login = () => {
       // 2. Hash password + salt using SHA-256
       const combined = password + salt;
       const hash = CryptoJS.SHA256(combined).toString();
-
+      console.log("first fetch done");
       // 3. Send login request
       const loginRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
@@ -35,7 +36,7 @@ const Login = () => {
       });
 
       const loginData = await loginRes.json();
-
+      console.log("second fetch done");
       if (loginData.success) {
         setMessage(`Welcome, ${loginData.role}`);
         console.log("login success");
@@ -44,6 +45,8 @@ const Login = () => {
         setMessage("Login failed");
         console.log("login failed");
       }
+
+      console.log("done");
 
     } catch (err) {
       console.error(err);
