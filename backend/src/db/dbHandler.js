@@ -157,7 +157,7 @@ export const CreateItem = async (item) => {
 
     await ThrowIfDBNotInit();
 
-    if ((await GetItem(item)).rows.length != 0){
+    if ((await GetItem(item)).value.rows.length != 0){
         console.log("Item already exists");
         return {success: false,
             reason : "Item already exists"
@@ -273,7 +273,7 @@ export const DeleteItem = async (item) => {
 
     const itemRow = await GetItem(item);
     try{
-        const result = await db.query(DeleteItemQuery, [itemRow.rows[0].id]);
+        const result = await db.query(DeleteItemQuery, [itemRow.value.rows[0].id]);
         return {success: true,
             value: result
         };
@@ -437,7 +437,7 @@ export const TransferItem = async (currentShelfName, currentLocation,
     const currentShelfRow = await GetShelfItemByLocation(currentShelfName,
         currentLocation);
     
-    if (currentShelfRow.rows.length == 0){
+    if (currentShelfRow.value.rows.length == 0){
         console.log("origin shelf location empty");
         return {success: false,
             reason : "item not found in current shelf location"
@@ -447,17 +447,17 @@ export const TransferItem = async (currentShelfName, currentLocation,
     const targetShelfLocation = await GetShelfItemByLocation(targetShelfName,
         targetLocation);
     
-    if (targetShelfLocation.rows.length != 0){
+    if (targetShelfLocation.value.rows.length != 0){
         console.log("target shelf location not empty");
         return {success: false,
             reason : "target shelf location not empty"
         }
     }
 
-    const item = await GetItemByID(currentShelfRow.rows[0].item_id);
+    const item = await GetItemByID(currentShelfRow.value.rows[0].item_id);
 
-    await AddItemToShelf(targetShelfName, item.rows[0].id,
-         currentShelfRow.rows[0].balance, targetLocation);
+    await AddItemToShelf(targetShelfName, item.value.rows[0].id,
+         currentShelfRow.value.rows[0].balance, targetLocation);
 
     await DeleteItemFromShelf(currentShelfName, currentLocation);
 
@@ -517,7 +517,7 @@ export const GetAvailableShelfLocations = async (shelfName) => {
     num NOT IN (SELECT location FROM "${shelfName}")`;
 
     try{
-        const result = await db.query(queryFreeSpaces, [shelfSize.rows[0].size]);
+        const result = await db.query(queryFreeSpaces, [shelfSize.value.rows[0].size]);
         return {success: true,
             value: result
         };
@@ -551,11 +551,11 @@ export const CreateShelf = async (size) => {
     const row = await GetLastShelfName();
 
     let shelfName = null;
-    if (row.rows[0] == null){
+    if (row.value.rows[0] == null){
         shelfName = await GenerateNewShelfID(null);
     }
     else{
-        shelfName = await GenerateNewShelfID(row.rows[0].shelf_id);
+        shelfName = await GenerateNewShelfID(row.value.rows[0].shelf_id);
     }
 
     await AddShelf(shelfName, size);
@@ -589,7 +589,7 @@ const ShelfExists = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     try{
-        return (await db.query(GetShelfQuery, [shelfName])).rows.length != 0;
+        return (await db.query(GetShelfQuery, [shelfName])).value.rows.length != 0;
     }
     catch(error){
         console.log("Failed to query shelf");
@@ -644,7 +644,7 @@ export const GetShelf = async (shelfName) => {
 
 const ShelfLocationInBounds = async (shelfName, location) => {
 
-    const shelfSize = (await GetShelfSize(shelfName)).rows[0].size;
+    const shelfSize = (await GetShelfSize(shelfName)).value.rows[0].size;
 
     return location >= 1 && location <= shelfSize;
 }
@@ -665,7 +665,7 @@ export const AddItemToShelf = async (shelfName, itemID, balance, location) => {
         }
     }
 
-    if ((await GetShelfItemByLocation(shelfName, location)).rows.length != 0){
+    if ((await GetShelfItemByLocation(shelfName, location)).value.rows.length != 0){
         console.log("Shelf location is reserved");
         return {success: false,
             reason : "shelf location is reserved"
@@ -728,7 +728,7 @@ export const ChangeShelfSize = async (shelfName, newSize) => {
 
     const largestLocation = await GetLargestLocationInShelf(shelfName);
 
-    if (newSize <= largestLocation.rows[0].max_location){
+    if (newSize <= largestLocation.value.rows[0].max_location){
         console.log("Size is too small for existing items");
         return {success: false,
             reason : "new size is too small for existing items"
@@ -768,7 +768,7 @@ export const GetShelfItem = async (shelfName, item) => {
     const query = `SELECT * FROM "${shelfName}" WHERE item_id = $1`;
 
     try{
-        const result = await db.query(query, [itemRow.rows[0].id]);
+        const result = await db.query(query, [itemRow.value.rows[0].id]);
         return {success: true,
             value: result
         }
@@ -828,12 +828,12 @@ export const ChangeItemBalance = async (shelfName, amount, item) => {
     const itemData = await GetShelfItem(shelfName, item);
 
 
-    const newBalance = itemData.rows[0].balance + amount;
+    const newBalance = itemData.value.rows[0].balance + amount;
 
     const query = `UPDATE "${shelfName}" SET balance = $1 WHERE id = $2`;
 
     try{
-        const result = await db.query(query, [newBalance, itemData.rows[0].id]);
+        const result = await db.query(query, [newBalance, itemData.value.rows[0].id]);
         return {success: true,
             value: result
         };
@@ -854,7 +854,7 @@ export const UserExists = async (username) => {
 
     try{
         return (await db.query(FindUserByUsernameQuery, [username]))
-        .rows.length != 0; 
+        .value.rows.length != 0; 
     }
     catch (error){
         console.log("Failed to query user existence");
@@ -904,7 +904,7 @@ export const GetUserPasswordAndSaltWithUsername = async (username) => {
     const userRow = await GetUser(username);
 
     try{
-        const result = await db.query(FindUserPasswordAndSaltQuery, [userRow.rows[0].id]);
+        const result = await db.query(FindUserPasswordAndSaltQuery, [userRow.value.rows[0].id]);
         return {success: true,
             value: result
         };
@@ -932,7 +932,7 @@ export const SaveUser = async (user, salt) => {
         const userRow = await GetUser(user.Username);
 
         const result = await db.query(SavePasswordQuery, [
-            userRow.rows[0].id,user.Password, salt]);
+            userRow.value.rows[0].id,user.Password, salt]);
 
         return {success: true,
             value: result
@@ -958,7 +958,7 @@ export const UpdateUserPassword = async (user, salt) => {
     const userRow = await GetUser(user.Username);
     try{
         const result = await db.query(UpdatePasswordQuery, [user.Password, salt, 
-            userRow.rows[0].id
+            userRow.value.rows[0].id
         ]);
         return {success: true,
             value: result
@@ -983,7 +983,7 @@ export const UpdateUserRole = async (user) => {
 
     const userRow = await GetUser(user.Username);
     try{
-        const result = await db.query(UpdateUserRoleQuery, [user.Role, userRow.rows[0].id]);
+        const result = await db.query(UpdateUserRoleQuery, [user.Role, userRow.value.rows[0].id]);
         return {success: true,
             value: result
         };
@@ -1006,7 +1006,7 @@ export const DeleteUser = async (user) => {
         }
     }
 
-    const userID = (await GetUser(user.Username)).rows[0].id;
+    const userID = (await GetUser(user.Username)).value.rows[0].id;
     try{
         const result = await db.query(DeleteUserQuery, [userID]);
         return {success: true,
