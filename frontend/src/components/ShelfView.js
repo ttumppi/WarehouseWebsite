@@ -38,8 +38,13 @@ const ShelfView = ({ loginNeeded} ) => {
         
     }
 
-    useEffect( async () => {
-        await getShelfs();
+    useEffect(() => {
+
+        const getShelfsWrapper = async () => {
+            await getShelfs();
+        }
+        
+        getShelfsWrapper();
     }, []);
 
     return (
