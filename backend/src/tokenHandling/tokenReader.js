@@ -19,7 +19,7 @@ export const VerifyAndGetToken = async (headers) => {
 
 
 const GetTokenFromHeader = (header) => {
-    return ParseCookie(header, "Bearer ")
+    return ParseCookie(header, "Bearer;")
 }
 
 const ParseCookie = (cookieHeader, stringToSplitOn) => {
