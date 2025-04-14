@@ -37,6 +37,14 @@ const Login = () => {
       if (loginData.success) {
         setMessage(`Welcome, ${loginData.role}`);
 
+        const shelfsRes = await fetch(
+          `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        console.log(await shelfsRes.json());
+
       } else {
         setMessage("Login failed");
       }

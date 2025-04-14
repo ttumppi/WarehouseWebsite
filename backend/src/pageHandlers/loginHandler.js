@@ -1,4 +1,5 @@
 import * as dbHandler from "../db/dbHandler.js"
+import * as tokenSystem from "../tokenHandling/tokenSystem.js"
 
 export const CorrectLogin = async (req, res) => {
 
@@ -35,6 +36,15 @@ export const CorrectLogin = async (req, res) => {
     }
 
     if (passwordResult.value.rows[0].value == req.body.password){
+
+        const token = await tokenSystem.CreateToken(req.body.username, 3600);
+
+        res.cookie("bearer ", token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "Lax",
+        });
+
         return res.status(200).json({success: true,
             role: usernameResult.value.rows[0].role
         });

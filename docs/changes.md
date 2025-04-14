@@ -7,6 +7,7 @@
 # Backend
 
 * Installed cors.
+* Installed jsonwebtoken for auth.
 
 
 # Database

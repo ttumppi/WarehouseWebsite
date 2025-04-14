@@ -1,28 +1,38 @@
+import * as tokenReader from "./tokenReader.js"
 import * as tokenGranter from "./tokenGranter.js"
 
-export const VerifyAndGetToken = async (headers) => {
-    const cookie = headers.get("Cookie")
+const unvalidatedTokens = []
 
-    if (!cookie){
+export const VerifyAndGetTokenFromHeaders = async (headers) => {
+
+    const result = await tokenReader.VerifyAndGetToken(headers)
+
+    if (!result.success){
         return {success:false}
     }
 
-    const token = GetTokenFromHeader(cookie)
-
-    if (!token){
+    if (unvalidatedTokens.indexOf(result.token.id) != -1){
         return {success:false}
     }
 
-    return tokenGranter.VerifyAndGetToken(token)
-
+    return result
 }
 
+export const CreateToken = async (username, expiration) => {
 
-const GetTokenFromHeader = (header) => {
-    return ParseCookie(header, "Bearer ")
+    return await tokenGranter.CreateToken(username, expiration)
 }
 
-const ParseCookie = (cookieHeader, stringToSplitOn) => {
-    const index = cookieHeader.indexOf(stringToSplitOn[stringToSplitOn.length -1])
-    return cookieHeader.slice(index +1)
+export const VerifyAndGetToken = async (token) => {
+
+    if (unvalidatedTokens.indexOf(token.id) != -1){
+        return {success:false, message:"login required"}
+    }
+
+    return await tokenGranter.VerifyAndGetToken(token)
+}
+
+export const InvalidateToken = async (token) => {
+
+    unvalidatedTokens.push(token.id)
 }

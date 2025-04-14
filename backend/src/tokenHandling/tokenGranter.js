@@ -1,31 +1,40 @@
-import { create, verify, decode, getNumericDate } from "https://deno.land/x/djwt@v3.0.2/mod.ts"
+import jwt from "jsonwebtoken"
+import * as readFile from "../readFile.js"
+import * as path from "path"
 
-const secretKey = await crypto.subtle.generateKey(
-    { name: "HMAC", hash: "SHA-512" },
-    true,
-    ["sign", "verify"],
-  )
+
+const tokenFolderPath = path.dirname(new URL(import.meta.url).pathname);
+
+const signKeyPath = path.join(tokenFolderPath, "key.spec")
+
+const signKey = await readFile(signKeyPath);
+
+
+
+
 
 let tokenID = 0
 
 
 
-export const CreateToken = async (username, expiration) => {
+export const CreateToken = async (username, expirationSeconds) => {
 
-    const ID = tokenID
-    tokenID = tokenID + 1
+    const ID = tokenID;
+    tokenID++;
 
-    return await create({ alg: "HS512", typ: "JWT" },
-         { username: `${username}`,
-        exp: getNumericDate(expiration),
-        id: ID },
-          secretKey);
+    return jwt.sign(
+        {
+        username,
+        ID
+        }, 
+    signKey,
+     { expiresIn: expirationSeconds});
 }
 
 export const VerifyAndGetToken = async (token) => {
 
     try{
-        const decodedToken = await verify(token, secretKey)
+        const decodedToken = jwt.verify(token, signKey);
         return {success: true, token: decodedToken}
     }
 
