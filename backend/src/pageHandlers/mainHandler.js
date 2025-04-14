@@ -33,12 +33,7 @@ export const CreateShelf = async (req, res) => {
         );
     }
 
-    if (result.value.rows.length == 0){
-        return res.status(404).json({
-            success: false,
-            message: "no shelf created"}
-        );
-    }
+    
 
     return res.status(200).json({success: true
     });
