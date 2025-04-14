@@ -10,6 +10,7 @@ const ShelfView = ({ loginNeeded }) => {
     const getShelfs = async () => {
 
         try{
+            console.log("starting fetching of shelfs");
             const shelfsRes = await fetch(
                 `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
                 method: "GET",
