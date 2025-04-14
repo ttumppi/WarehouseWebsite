@@ -21,10 +21,30 @@ function App() {
     setLoginState(false);
   }
 
+  const CheckAuth = async () => {
+    const shelfsRes = await fetch(
+    `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include"
+    });
+
+
+    if (shelfsRes.status == 401){
+      setLoginNeeded();
+      return;
+    }
+    setLoginSuccessfull();
+
+  }
 
 
   useEffect( () => {
-    setLoginSuccessfull();
+    const CheckAuthWrapper = async () => {
+      await CheckAuth();
+    }
+    CheckAuthWrapper();
+    
   }, []);
 
   return (
@@ -38,7 +58,8 @@ function App() {
 
             <Route
               path="/home"
-              element={<ShelfView loginNeeded={setLoginNeeded}/> }>
+              element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
+              <Navigate to="/"/> }>
             </Route>
 
         </Routes>
