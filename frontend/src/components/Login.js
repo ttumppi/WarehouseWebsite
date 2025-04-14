@@ -30,6 +30,7 @@ const Login = () => {
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ username, password: hash }),
       });
 
