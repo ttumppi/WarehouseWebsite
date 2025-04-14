@@ -80,7 +80,8 @@ const ShelfView = ({ loginNeeded }) => {
         <div>
             <div className="shelf-header">
                 <h2>Shelves</h2>
-                <button onClick={handleAddShelf}>Add Shelf</button>
+                <button className="header-button" 
+                onClick={handleAddShelf}>Add Shelf</button>
             </div>
 
             {message && <p>{message}</p>}

@@ -6,3 +6,7 @@
   gap: 1rem;
   justify-content: flex-start;
 }
+
+.header-button{
+  margin-left: auto;
+}
