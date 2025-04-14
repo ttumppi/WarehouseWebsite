@@ -39,6 +39,11 @@ export const RegisterRoutes = (server) => {
         console.log("/api/shelf POST");
         return await mainHandler.CreateShelf(req, res);
     })
+
+    server.delete("/api/shelf", CheckAuth, async (req, res) => {
+        console.log("/api/shelf DELETE");
+        return await mainHandler.DeleteShelf(req, res);
+    })
 }
 
 

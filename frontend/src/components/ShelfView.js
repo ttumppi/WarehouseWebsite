@@ -61,7 +61,7 @@ const ShelfView = ({ loginNeeded }) => {
     
             const shelfData = await shelfRes.json();
     
-            if (!shelfRes.success){
+            if (!shelfData.success){
                 setMessage(shelfData.message);
             }
 
@@ -75,6 +75,31 @@ const ShelfView = ({ loginNeeded }) => {
         
     }
 
+    const handleDeleteShelf = async (shelfName) => {
+        try{
+            const shelfRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: {shelf: shelfName}
+                });
+    
+            const shelfData = await shelfRes.json();
+    
+            if (!shelfData.success){
+                setMessage(shelfData.message);
+            }
+
+            await getShelfs();
+
+        }
+        catch(error){
+            setMessage(`Failed to create a shelf: ${error}`);
+
+        }
+    }
+
     return (
         <div>
             <div className="shelf-header">
@@ -86,8 +111,13 @@ const ShelfView = ({ loginNeeded }) => {
             {message && <p>{message}</p>}
 
             <ul>
-                {shelfs.map((shelf, index) => (
-                <li key={index}>{shelf.shelf_id}</li>
+                {shelfs.map((shelf) => (
+                <li key={shelf.id}>{shelf.shelf_id}
+                    <button onClick={ () => {
+                        handleDeleteShelf
+                        }
+                        }>Delete</button>
+                </li>
                 ))}
             </ul>
         </div>
