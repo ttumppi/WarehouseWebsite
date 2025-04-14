@@ -29,7 +29,7 @@ const ShelfView = ({ loginNeeded }) => {
                 return;
             }
             
-            
+            setMessage("");
             setShelfs(shelfData.data)
         }
 
