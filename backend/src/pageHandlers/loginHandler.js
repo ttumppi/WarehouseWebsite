@@ -40,7 +40,7 @@ export const CorrectLogin = async (req, res) => {
         const token = await tokenSystem.CreateToken(req.body.username, 3600);
 
         res.cookie("bearer", token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: false,
             sameSite: "None",
         });
