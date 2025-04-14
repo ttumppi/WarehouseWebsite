@@ -23,7 +23,6 @@ function App() {
   }
 
   const CheckAuth = async () => {
-    console.log("checking auth");
     const shelfsRes = await fetch(
     `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
     method: "GET",

@@ -10,7 +10,6 @@ const ShelfView = ({ loginNeeded }) => {
     const getShelfs = async () => {
 
         try{
-            console.log("starting fetching of shelfs");
             const shelfsRes = await fetch(
                 `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
                 method: "GET",
@@ -19,9 +18,7 @@ const ShelfView = ({ loginNeeded }) => {
                 });
     
             const shelfData = await shelfsRes.json();
-            console.log(`Fetching shelfs, status = ${shelfsRes.status}`);
             if (shelfsRes.status == 401){
-                console.log("not logged in");
                 setMessage("Not logged in");
                 loginNeeded();
                 return;
