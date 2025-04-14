@@ -4,14 +4,14 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Login from './components/Login';
 import ShelfView from "./components/ShelfView";
 
 function App() {
 
   const [loggedIn, setLoginState] = useState()
-  setLoginState(true);
+  
 
   const setLoginSuccessfull = () => {
     setLoginState(true);
@@ -21,6 +21,11 @@ function App() {
     setLoginState(false);
   }
 
+
+
+  useEffect( () => {
+    setLoginSuccessfull();
+  }, []);
 
   return (
     <Router>
@@ -35,7 +40,7 @@ function App() {
               path="/home"
               element={<ShelfView loginNeeded={setLoginNeeded}/> }>
             </Route>
-            
+
         </Routes>
     </Router>
   );
