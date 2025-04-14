@@ -41,7 +41,7 @@ export const CorrectLogin = async (req, res) => {
 
         res.cookie("bearer", token, {
             httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: "None",
         });
 
