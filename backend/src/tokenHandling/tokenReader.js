@@ -1,7 +1,7 @@
 import * as tokenGranter from "./tokenGranter.js"
 
 export const VerifyAndGetToken = async (headers) => {
-    const cookie = headers.get("Cookie")
+    const cookie = headers.cookie;
 
     if (!cookie){
         return {success:false}
@@ -19,7 +19,7 @@ export const VerifyAndGetToken = async (headers) => {
 
 
 const GetTokenFromHeader = (header) => {
-    return ParseCookie(header, "Bearer")
+    return ParseCookie(header, "Bearer;")
 }
 
 const ParseCookie = (cookieHeader, stringToSplitOn) => {
