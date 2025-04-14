@@ -17,7 +17,7 @@ export const CreateServer = () => {
     server = express();
     server.use(express.urlencoded({ extended: true }));
     server.use(cors({
-        origin: "http://ec2-54-204-100-237.compute-1.amazonaws.com",
+        origin: "http://ec2-54-204-100-237.compute-1.amazonaws.com:80",
         credentials: true,
     }));
     server.use(express.json());
