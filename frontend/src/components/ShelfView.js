@@ -91,6 +91,12 @@ const ShelfView = ({ loginNeeded }) => {
                 setMessage(shelfData.message);
             }
 
+            let modifiedShelfs = shelfs;
+            modifiedShelfs.splice(
+                modifiedShelfs.indexOf(shelfName), 1);
+            
+            setShelfs(modifiedShelfs);
+            
             await getShelfs();
 
         }
