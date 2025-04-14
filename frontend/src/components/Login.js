@@ -41,7 +41,7 @@ const Login = () => {
           `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
-          credentials: "same-origin"
+          credentials: "include"
         });
 
         console.log(await shelfsRes.json());
