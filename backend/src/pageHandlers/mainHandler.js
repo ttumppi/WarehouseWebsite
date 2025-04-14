@@ -41,7 +41,7 @@ export const CreateShelf = async (req, res) => {
 }
 
 export const DeleteShelf = async (req, res) => {
-    const result = await dbHandler.DeleteShelf(req.body.shelfName);
+    const result = await dbHandler.DeleteShelf(req.body.shelf);
 
     if (!result.success){
         return res.status(404).json({
