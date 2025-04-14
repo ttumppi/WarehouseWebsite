@@ -10,3 +10,4 @@
 | 09.04.2025 | 4   | unit test setup and vm troubleshooting | npm causing problems, initial unit testing environment set |
 | 12.04.2025 | 8   | Created backend functionalities for shelfs and items |
 | 13.04.2025 | 11   | Finished backend database functionalities| Added frontend login page | 
+| 14.04.2025 | 9    | Added homepage with get post delete for shelfs | UI has been progressed, and website uses tokens | 
