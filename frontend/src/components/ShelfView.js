@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const ShelfView = ({ loginNeeded} ) => {
 
-    const [shelfs, setShelfs] = useState();
+    const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
 
     const getShelfs = async () => {
