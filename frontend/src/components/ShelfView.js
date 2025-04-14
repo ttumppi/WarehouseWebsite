@@ -48,10 +48,41 @@ const ShelfView = ({ loginNeeded }) => {
         getShelfsWrapper();
     }, []);
 
+    const handleAddShelf = async () => {
+
+        try{
+            const shelfRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+                });
+    
+            const shelfData = await shelfRes.json();
+    
+            if (!shelfRes.success){
+                setMessage(shelfData.message);
+            }
+
+            await getShelfs();
+
+        }
+        catch(error){
+            setMessage(`Failed to create a shelf: ${error}`);
+
+        }
+        
+    }
+
     return (
         <div>
-          <h2>Shelves</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h2>Shelves</h2>
+            <button onClick={handleAddShelf}>Add Shelf</button>
+          </div>
+      
           {message && <p>{message}</p>}
+      
           <ul>
             {shelfs.map((shelf, index) => (
               <li key={index}>{shelf.shelf_id}</li>
@@ -59,6 +90,7 @@ const ShelfView = ({ loginNeeded }) => {
           </ul>
         </div>
       );
+      
 }
 
 export default ShelfView;

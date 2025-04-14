@@ -22,3 +22,25 @@ export const GetShelfs = async (req, res) => {
     });
 
 }
+
+export const CreateShelf = async (req, res) => {
+    const result = await dbHandler.CreateShelf(50);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason}
+        );
+    }
+
+    if (result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "no shelf created"}
+        );
+    }
+
+    return res.status(200).json({success: true
+    });
+
+}
