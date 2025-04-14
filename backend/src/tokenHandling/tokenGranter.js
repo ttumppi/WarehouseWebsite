@@ -7,7 +7,7 @@ const tokenFolderPath = path.dirname(new URL(import.meta.url).pathname);
 
 const signKeyPath = path.join(tokenFolderPath, "key.spec")
 
-const signKey = await readFile(signKeyPath);
+const signKey = await readFile.ReadTextFile(signKeyPath);
 
 
 
