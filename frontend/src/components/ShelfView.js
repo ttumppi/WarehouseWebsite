@@ -82,7 +82,7 @@ const ShelfView = ({ loginNeeded }) => {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: {shelf: shelfName}
+                body: JSON.stringify({shelf: shelfName})
                 });
     
             const shelfData = await shelfRes.json();
