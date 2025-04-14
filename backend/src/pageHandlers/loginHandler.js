@@ -46,7 +46,7 @@ export const CorrectLogin = async (req, res) => {
         });
 
         res.setHeader("Access-Control-Allow-Origin",
-             "http://ec2-54-204-100-237.compute-1.amazonaws.com:");
+             "http://ec2-54-204-100-237.compute-1.amazonaws.com");
         
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
