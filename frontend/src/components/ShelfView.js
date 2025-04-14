@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+
+
 const ShelfView = ({ loginNeeded }) => {
 
     const [shelfs, setShelfs] = useState([]);
@@ -76,7 +78,7 @@ const ShelfView = ({ loginNeeded }) => {
 
     return (
         <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div className="shelf-header">
                 <h2>Shelves</h2>
                 <button onClick={handleAddShelf}>Add Shelf</button>
             </div>
