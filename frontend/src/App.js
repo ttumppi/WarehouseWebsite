@@ -11,7 +11,7 @@ import "./App.css";
 
 function App() {
 
-  const [loggedIn, setLoginState] = useState()
+  const [loggedIn, setLoginState] = useState(true);
   
 
   const setLoginSuccessfull = () => {
