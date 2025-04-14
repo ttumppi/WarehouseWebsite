@@ -50,12 +50,7 @@ export const DeleteShelf = async (req, res) => {
         );
     }
 
-    if (result.value.rows.length == 0){
-        return res.status(404).json({
-            success: false,
-            message: "Couldn't delete shelf"
-        });
-    }
+    
 
     return res.status(200).json({
         success: true,
