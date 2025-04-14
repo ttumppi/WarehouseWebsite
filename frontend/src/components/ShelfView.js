@@ -76,18 +76,18 @@ const ShelfView = ({ loginNeeded }) => {
 
     return (
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h2>Shelves</h2>
-            <button onClick={handleAddShelf}>Add Shelf</button>
-          </div>
-      
-          {message && <p>{message}</p>}
-      
-          <ul>
-            {shelfs.map((shelf, index) => (
-              <li key={index}>{shelf.shelf_id}</li>
-            ))}
-          </ul>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <h2>Shelves</h2>
+                <button onClick={handleAddShelf}>Add Shelf</button>
+            </div>
+
+            {message && <p>{message}</p>}
+
+            <ul>
+                {shelfs.map((shelf, index) => (
+                <li key={index}>{shelf.shelf_id}</li>
+                ))}
+            </ul>
         </div>
       );
       
