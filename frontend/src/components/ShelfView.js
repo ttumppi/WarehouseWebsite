@@ -18,6 +18,7 @@ const ShelfView = ({ loginNeeded} ) => {
             const shelfData = await shelfsRes.json();
     
             if (shelfsRes.status == 401){
+                setMessage("Not logged in");
                 loginNeeded();
                 return;
             }
