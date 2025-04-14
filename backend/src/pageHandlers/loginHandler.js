@@ -45,10 +45,6 @@ export const CorrectLogin = async (req, res) => {
             sameSite: "Lax",
         });
 
-        res.setHeader("Access-Control-Allow-Origin",
-             "http://ec2-54-204-100-237.compute-1.amazonaws.com");
-        
-        res.setHeader("Access-Control-Allow-Credentials", "true");
 
         return res.status(200).json({success: true,
             role: usernameResult.value.rows[0].role
