@@ -18,7 +18,7 @@ export const GetShelfs = async (req, res) => {
     }
 
     return res.status(200).json({success: true,
-        role: usernameResult.value.rows
+        data: shelfsResult.value.rows
     });
 
 }

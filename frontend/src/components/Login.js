@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 
-const Login = () => {
+const Login = ({ loginSuccessfull }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -37,15 +37,8 @@ const Login = () => {
       const loginData = await loginRes.json();
       if (loginData.success) {
         setMessage(`Welcome, ${loginData.role}`);
+        loginSuccessfull();
 
-        const shelfsRes = await fetch(
-          `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include"
-        });
-
-        console.log(await shelfsRes.json());
 
       } else {
         setMessage("Login failed");
