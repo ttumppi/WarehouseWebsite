@@ -222,7 +222,12 @@ const ShelfItem = ({ loginNeeded }) => {
                 <option value="" disabled>
                     -- Select a location --
                 </option>
-                {(locations == null) ? {} : locations[currentShelf].map((loc) => (
+                {(locations == null) ? 
+                    <option value="" disabled>
+                        
+                    </option>
+                
+                : locations[currentShelf].map((loc) => (
                     <option key={loc.num} value={loc.num}>
                         {loc.num}
                     </option>
