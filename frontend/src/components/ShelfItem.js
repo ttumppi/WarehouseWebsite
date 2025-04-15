@@ -76,7 +76,7 @@ const ShelfItem = ({ loginNeeded }) => {
         shelfData.item["model"] = itemData.item.model;
         shelfData.item["serial"] = itemData.item.serial;
 
-        setItem(shelfData);
+        setItem(shelfData.item);
 
         setMessage("");
 
