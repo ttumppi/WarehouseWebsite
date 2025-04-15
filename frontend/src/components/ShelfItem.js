@@ -114,7 +114,7 @@ const ShelfItem = ({ loginNeeded }) => {
             setShelfs(shelfData.data)
 
             for (let i = 0; i < shelfData.data.length; i++){
-                queue.Enqueue(shelfData.data[i]);
+                queue.current.Enqueue(shelfData.data[i]);
             }
         }
 
@@ -253,7 +253,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
     useEffect(() => {
         const wrapper = async () => {
-                await GetAvailableLocations(queue.Dequeue().shelf_id);
+                await GetAvailableLocations(queue.current.Dequeue().shelf_id);
         }
 
         wrapper();
@@ -263,7 +263,7 @@ const ShelfItem = ({ loginNeeded }) => {
     useEffect( () => {
         const wrapper = async () => {
            if (!queue.Empty()){
-                await GetAvailableLocations(queue.Dequeue().shelf_id);
+                await GetAvailableLocations(queue.current.Dequeue().shelf_id);
             }
         }
         wrapper();
