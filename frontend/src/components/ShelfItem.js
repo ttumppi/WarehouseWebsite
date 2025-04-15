@@ -253,7 +253,11 @@ const ShelfItem = ({ loginNeeded }) => {
 
     useEffect(() => {
         const wrapper = async () => {
-                await GetAvailableLocations(queue.current.Dequeue().shelf_id);
+            const item = queue.current.Dequeue();
+            console.log(item);
+            if (!(!item || !item.item_id)){
+                await GetAvailableLocations();
+            }
         }
 
         wrapper();
@@ -262,8 +266,13 @@ const ShelfItem = ({ loginNeeded }) => {
 
     useEffect( () => {
         const wrapper = async () => {
-           if (!queue.Empty()){
-                await GetAvailableLocations(queue.current.Dequeue().shelf_id);
+           if (!queue.current.Empty()){
+                const item = queue.current.Dequeue();
+                console.log(item);
+                if (!(!item || !item.item_id)){
+                    await GetAvailableLocations();
+                }
+                
             }
         }
         wrapper();
