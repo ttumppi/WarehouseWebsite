@@ -241,7 +241,7 @@ const ShelfItem = ({ loginNeeded }) => {
             await GetShelfs();
 
             for (let i = 0; i < shelfs.length; i++){
-                await GetAvailableLocations(shelfs[i]);
+                await GetAvailableLocations(shelfs[i].shelf_id);
             }
         }
 
