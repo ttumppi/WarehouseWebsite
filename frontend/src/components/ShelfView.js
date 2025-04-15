@@ -40,6 +40,7 @@ const ShelfView = ({ loginNeeded }) => {
            
     
             if (!shelfData.success){
+                setItems([]);
                 setMessage(shelfData.message);
                 return;
             }
