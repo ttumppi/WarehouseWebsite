@@ -272,10 +272,8 @@ test("Test getting shelf's item info from items table", async () => {
 
     await dbHandler.AddItemToShelf(shelfName.value, itemRow2.value.rows[0].id, 20, 49);
 
-    console.log(shelfName);
-    const itemInfo = await dbHandler.GetItemInfoForShelfItems(shelfName);
+    const itemInfo = await dbHandler.GetItemInfoForShelfItems(shelfName.value);
 
-    console.log(itemInfo.reason);
 
     const itemInfoRows = itemInfo.value.rows;
 
