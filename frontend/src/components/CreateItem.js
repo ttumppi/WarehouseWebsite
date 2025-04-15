@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateItem = ({ loginNeeded }) => {
     const [manufacturer, setManufacturer] = useState("");
     const [model, setModel] = useState("");
     const [serial, setSerial] = useState("");
     const [message, setMessage] = useState("");
+
+    const navigate = useNavigate();
 
 
     const handleCreation = async (e) => {
@@ -41,9 +44,16 @@ const CreateItem = ({ loginNeeded }) => {
         setSerial("");
     }
 
+    const redirectToHomePage = () => {
+        navigate("/home");
+    }
+
     return (
 
         <div>
+            <div>
+            <button onClick={redirectToHomePage}>Back</button>
+            </div>
             <form onSubmit={handleCreation}>
                 <input
                 type="text"
