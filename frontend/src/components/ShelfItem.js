@@ -339,9 +339,9 @@ const ShelfItem = ({ loginNeeded }) => {
 
             <br /><br />
             <button
-                disabled={initialBalance === balance
-                     && initialLocation === location
-                      && initialShelf === shelf}
+                disabled={initialBalance.current === balance
+                     && initialLocation.current === location
+                      && initialShelf.current === shelf}
                 onClick={UpdateItem}>
                     Save
             </button>
