@@ -513,7 +513,6 @@ const GetShelfSize = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to get shelf size");
-        console.log(error);
         return {success: false,
             reason : "db fail"
         }
@@ -543,7 +542,6 @@ export const GetAvailableShelfLocations = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to get free spaces in a shelf");
-        console.log(error);
         return {success: false,
             reason : "db fail"
         }
@@ -857,7 +855,7 @@ export const GetShelfItemViaID = async (shelfName, id) => {
 
 
     
-    console.log(id);
+
     const query = `SELECT * FROM "${shelfName}" WHERE id = $1`;
 
     try{
@@ -868,7 +866,6 @@ export const GetShelfItemViaID = async (shelfName, id) => {
     }
     catch(error){
         console.log("Failed to query shelf item");
-        console.log(error);
         return {success: false,
             reason : "db fail"
         }
@@ -986,7 +983,6 @@ export const UserExists = async (username) => {
     }
     catch (error){
         console.log("Failed to query user existence");
-        console.log(error);
         return false;
     }
 

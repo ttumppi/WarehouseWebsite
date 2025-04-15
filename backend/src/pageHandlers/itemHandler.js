@@ -46,7 +46,6 @@ export const GetItems = async (req, res) => {
 }
 
 export const GetItem = async (req, res, id) => {
-    console.log(id);
     const result = await dbHandler.GetItemByID(id);
 
     if (!result.success){
