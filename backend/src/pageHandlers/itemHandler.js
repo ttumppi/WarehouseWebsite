@@ -21,3 +21,26 @@ export const CreateItem = async (req, res) => {
     });
 
 }
+
+export const GetItems = async (req, res) => {
+    const result = await dbHandler.GetItems();
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason}
+        );
+    }
+
+    if (result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No items"
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        items: result.value.rows
+    });
+}

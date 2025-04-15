@@ -66,6 +66,11 @@ export const RegisterRoutes = (server) => {
         console.log("/api/item POST");
         return await itemHandler.CreateItem(req, res);
     })
+
+    server.get("/api/item", CheckAuth, async (req, res) => {
+        console.log("/api/item GET");
+        return await itemHandler.GetItems(req, res);
+    })
 }
 
 

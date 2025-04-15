@@ -15,10 +15,10 @@ const AddItemView = ({ loginNeeded }) => {
     
 
 
-    const GetShelfItems = async (shelfName) => {
+    const GetItems = async (shelfName) => {
         try{
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include"
