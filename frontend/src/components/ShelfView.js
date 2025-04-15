@@ -84,15 +84,30 @@ const ShelfView = ({ loginNeeded }) => {
             </div>
 
             <div>
-                <ul>
-                    
-                    {items.map((item) => (
-                        <li key={item.location}>
-                            {item.manufacturer} - {item.model} - {item.serial} - {item.balance} - {item.location}
-                        </li>
-                    ))}
-                    
-                </ul>
+
+                <table border="1" cellPadding="8">
+                    <thead>
+                        <tr>
+                            <th>Manufacturer</th>
+                            <th>Model</th>
+                            <th>Serial</th>
+                            <th>Balance</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.map((item) => (
+                            <tr key={item.location}>
+                                <td>{item.manufacturer}</td>
+                                <td>{item.model}</td>
+                                <td>{item.serial}</td>
+                                <td>{item.balance}</td>
+                                <td>{item.location}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            
             </div>
 
             <div>
