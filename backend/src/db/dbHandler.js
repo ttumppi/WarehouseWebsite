@@ -454,6 +454,12 @@ export const TransferItem = async (currentShelfName, currentLocation,
 
     const currentShelfRow = await GetShelfItemByLocation(currentShelfName,
         currentLocation);
+
+    if (!currentShelfRow.success){
+        return {success: false,
+            reason : currentShelfRow.reason
+        }
+    }
     
     if (currentShelfRow.value.rows.length == 0){
         console.log("origin shelf location empty");
@@ -706,6 +712,7 @@ const ShelfLocationInBounds = async (shelfName, location) => {
 
     const shelfSize = (await GetShelfSize(shelfName)).value.rows[0].size;
 
+    console.log(location, shelfSize);
     return location >= 1 && location <= shelfSize;
 }
 
