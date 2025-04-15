@@ -1,48 +1,21 @@
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-
+import { GetShelf } from "../../../backend/src/db/dbHandler";
 
 const ShelfView = ({ loginNeeded }) => {
-
-    const [shelfs, setShelfs] = useState([]);
-    const [message, setMessage] = useState("");
-    const [items, setItems] = useState({});
-
+    const { shelf } = useParams();
     const navigate = useNavigate();
 
-    const getShelfs = async () => {
+    const [items, setItems] = useState([]);
+    const [message, setMessage] = useState("");
 
-        try{
-            const shelfsRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include"
-                });
-    
-            const shelfData = await shelfsRes.json();
-            if (shelfsRes.status == 401){
-                setMessage("Not logged in");
-                loginNeeded();
-                return;
-            }
-    
-            if (!shelfData.success){
-                setMessage(shelfData.message);
-                return;
-            }
-            
-            setMessage("");
-            setShelfs(shelfData.data)
-        }
 
-        catch(error){
-            setMessage("Failed to fetch shelfs");
-            console.log(`Failed to load page: ${error}`);
-        }
-        
+    const redirectToHomePage = () => {
+        navigate("/home");
     }
+
+
 
     const GetShelfItems = async (shelfName) => {
         try{
@@ -64,11 +37,9 @@ const ShelfView = ({ loginNeeded }) => {
             
             setMessage("");
             
-            let itemsCopy = items;
+           
 
-            itemsCopy[shelfName] = shelfData.items;
-
-            setItems(itemsCopy);
+            setItems(shelfData.items);
         }
 
         catch(error){
@@ -79,117 +50,46 @@ const ShelfView = ({ loginNeeded }) => {
 
     useEffect(() => {
 
-        const getShelfsWrapper = async () => {
-            await getShelfs();
-
-            for (const shelf in shelfs){
-                await GetShelfItems(shelf.shelf_id);
-            }
+        const getShelfItemsWrapper = async () => {
+            await GetShelfItems(shelf);
         }
-        
-        getShelfsWrapper();
+
+        getShelfItemsWrapper();
     }, []);
 
-    const handleAddShelf = async () => {
-
-        try{
-            const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include"
-                });
-    
-            const shelfData = await shelfRes.json();
-    
-            if (!shelfData.success){
-                setMessage(shelfData.message);
-            }
-
-            await getShelfs();
-
-        }
-        catch(error){
-            setMessage(`Failed to create a shelf: ${error}`);
-
-        }
-        
-    }
-
-    const handleDeleteShelf = async (shelfName) => {
-        try{
-            const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify({shelf: shelfName})
-                });
-    
-            const shelfData = await shelfRes.json();
-    
-            if (!shelfData.success){
-                setMessage(shelfData.message);
-            }
-
-            let modifiedShelfs = shelfs;
-            modifiedShelfs.splice(
-                modifiedShelfs.indexOf(shelfName), 1);
-            
-            setShelfs(modifiedShelfs);
-            
-            await getShelfs();
-
-        }
-        catch(error){
-            setMessage(`Failed to create a shelf: ${error}`);
-
-        }
-    }
-
-
-
-    const redirectToCreateItem = () => {
-        navigate("/create-item");
-    }
 
     return (
         <div>
-            <button 
-                onClick={ redirectToCreateItem}>Create item
-            </button>
-
             <div className="shelf-header">
-                <h2>Shelves</h2>
+                <h2>shelf {shelf}</h2>
+
                 <button className="header-button" 
-                onClick={handleAddShelf}>Add Shelf</button>
+                onClick={ redirectToHomePage}>
+                    Create item
+                </button>
+
             </div>
 
-            {message && <p>{message}</p>}
-
-            <ul>
-                {shelfs.map((shelf) => (
-                <li key={shelf.id}>{shelf.shelf_id}
-                    <button onClick={ 
-                        () => {handleDeleteShelf
-                        (shelf.shelf_id);}}>Delete
-                    </button>
-                    <button onClick={ 
-                        () => {handleDeleteShelf
-                        (shelf.shelf_id);}}>Add Item
-                    </button>
-                    <ul>
-                        {items.shelf?.id?.map((item) => {
-                            <li key={item.id}>{item.model}</li>
-                        })}
-                    </ul>
+            <div>
+                <ul>
                     
-                </li>
-                ))}
-            </ul>
-        </div>
-      );
-      
-}
+                    {items.map((item) => {
+                        <li>
+                            {item.manufacturer}
+                            {item.model}
+                            {item.serial}
+                            {item.balance}
+                        </li>
+                    })}
+                    
+                </ul>
+            </div>
 
-export default ShelfView;
+            <div>
+                {message && <p>{message}</p>}
+            </div>
+        </div>
+    )
+
+
+}

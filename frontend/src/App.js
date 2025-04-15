@@ -6,8 +6,9 @@ import {
 } from "react-router-dom";
 import React, {useState, useEffect} from 'react';
 import Login from './components/Login';
-import ShelfView from "./components/ShelfView";
+import ShelfsView from "./components/ShelfsView";
 import CreateItem from "./components/CreateItem";
+import ShelfView from "./components/ShelfView";
 import "./App.css";
 
 function App() {
@@ -60,13 +61,19 @@ function App() {
 
             <Route
               path="/home"
-              element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
+              element={loggedIn ? <ShelfsView loginNeeded={setLoginNeeded} /> :
               <Navigate to="/"/> }>
             </Route>
 
             <Route
               path="/create-item"
               element={loggedIn ? <CreateItem loginNeeded={setLoginNeeded} /> :
+              <Navigate to="/"/> }>
+            </Route>
+
+            <Route
+              path="/shelf:shelf"
+              element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
               <Navigate to="/"/> }>
             </Route>
             

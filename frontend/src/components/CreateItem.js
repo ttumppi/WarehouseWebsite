@@ -52,7 +52,7 @@ const CreateItem = ({ loginNeeded }) => {
 
         <div>
             <div>
-            <button onClick={redirectToHomePage}>Back</button>
+            <button className="header-button" onClick={redirectToHomePage}>Back</button>
             </div>
             <form onSubmit={handleCreation}>
                 <input
@@ -78,7 +78,7 @@ const CreateItem = ({ loginNeeded }) => {
                 onChange={e => setSerial(e.target.value)}
                 required
                 /><br/>
-                <button type="submit">Create</button>
+                <button className="header-button" type="submit">Create</button>
       </form>
       <p>{message}</p>
         </div>

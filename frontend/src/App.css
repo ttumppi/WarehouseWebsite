@@ -8,3 +8,14 @@
 .header-button{
   margin-left: 7em;
 }
+
+.basic-button{
+  margin: 10px;
+}
+
+.clickable-shelf{
+  margin: 14px;
+  cursor: pointer;
+  color: turquoise;
+  text-decoration: underline;
+}
