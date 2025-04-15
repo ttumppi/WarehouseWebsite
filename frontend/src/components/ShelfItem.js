@@ -20,7 +20,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
 
     const RedirectToShelfView = () => {
-        navigate(`shelf/${currentShelf}`);
+        navigate(`/shelf/${currentShelf}`);
     }
 
   
