@@ -46,9 +46,9 @@ const ShelfItem = ({ loginNeeded }) => {
 
         setItem(shelfData.item);
 
-        initialBalance = item.balance;
-        initialLocation = item.location;
-        initialShelf = shelf;
+        initialBalance = shelfData.item.balance;
+        initialLocation = shelfData.item.location;
+        initialShelf = shelfData.shelf;
     }
     
     const GetItemInfo = async () => {
