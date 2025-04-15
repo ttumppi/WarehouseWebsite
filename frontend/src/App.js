@@ -72,7 +72,7 @@ function App() {
             </Route>
 
             <Route
-              path="/shelf:shelf"
+              path="/shelf/:shelf"
               element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
               <Navigate to="/"/> }>
             </Route>
