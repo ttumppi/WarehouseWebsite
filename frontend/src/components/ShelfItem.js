@@ -15,9 +15,9 @@ const ShelfItem = ({ loginNeeded }) => {
     const [item, setItem] = useState(null);
     const [message, setMessage] = useState("");
 
-    let initialBalance = null;
-    let initialShelf = shelf;
-    let initialLocation = null;
+    let initialBalance = useRef(null);
+    let initialShelf = useRef(shelf);
+    let initialLocation = useRef(null);
 
     const queue = useRef(new Queue());
 
@@ -57,9 +57,9 @@ const ShelfItem = ({ loginNeeded }) => {
         setLocation(shelfData.item.location);
         setBalance(shelfData.item.balance);
 
-        initialBalance = shelfData.item.balance;
-        initialLocation = shelfData.item.location;
-        initialShelf = shelf;
+        initialBalance.current = shelfData.item.balance;
+        initialLocation.current = shelfData.item.location;
+        initialShelf.current = shelf;
         
 
         const itemRes = await fetch(
