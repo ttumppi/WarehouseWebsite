@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {Queue} from "../queue.js";
 
 const ShelfItem = ({ loginNeeded }) => {
     const {shelf, id } = useParams();
@@ -17,6 +18,8 @@ const ShelfItem = ({ loginNeeded }) => {
     let initialBalance = null;
     let initialShelf = shelf;
     let initialLocation = null;
+
+    const queue = new Queue();
 
 
     const RedirectToShelfView = () => {
@@ -109,6 +112,10 @@ const ShelfItem = ({ loginNeeded }) => {
             
             setMessage("");
             setShelfs(shelfData.data)
+
+            for (let i = 0; i < shelfData.data.length; i++){
+                queue.Enqueue(shelfData.data[i]);
+            }
         }
 
         catch(error){
@@ -246,17 +253,21 @@ const ShelfItem = ({ loginNeeded }) => {
 
     useEffect(() => {
         const wrapper = async () => {
-            
-            for (let i = 0; i < shelfs.length; i++){
-                console.log(shelfs[i].shelf_id)
-                await GetAvailableLocations(shelfs[i].shelf_id);
-            }
-            console.log("Done");
+                await GetAvailableLocations(queue.Dequeue().shelf_id);
         }
 
         wrapper();
         
     }, [shelfs]);
+
+    useEffect( () => {
+        const wrapper = async () => {
+           if (!queue.Empty()){
+                await GetAvailableLocations(queue.Dequeue().shelf_id);
+            }
+        }
+        wrapper();
+    }, [locations])
 
     return (
         <div>
