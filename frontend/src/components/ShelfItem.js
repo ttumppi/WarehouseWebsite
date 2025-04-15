@@ -106,6 +106,7 @@ const ShelfItem = ({ loginNeeded }) => {
     
             if (!shelfData.success){
                 setMessage(shelfData.message);
+                setShelfs([]);
                 return;
             }
             
