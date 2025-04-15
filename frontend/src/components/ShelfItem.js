@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {Queue} from "../queue.js";
-console.log(Queue);
 
 const ShelfItem = ({ loginNeeded }) => {
     const {shelf, id } = useParams();
@@ -20,7 +19,7 @@ const ShelfItem = ({ loginNeeded }) => {
     let initialShelf = shelf;
     let initialLocation = null;
 
-    const queue = new Queue();
+    const queue = useRef(new Queue());
 
 
     const RedirectToShelfView = () => {
