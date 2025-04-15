@@ -277,10 +277,9 @@ test("Test getting shelf's item info from items table", async () => {
 
     const itemInfoRows = itemInfo.value.rows;
 
-    console.log(itemRow.value.rows[0]);
 
     const item1ID = itemRow.value.rows[0].id;
-    const item2ID = itemRow.value.rows[1].id;
+    const item2ID = itemRow2.value.rows[0].id;
 
 
     expect(itemInfoRows[0].id == item1ID && 
