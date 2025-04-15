@@ -513,6 +513,7 @@ const GetShelfSize = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to get shelf size");
+        console.log(error);
         return {success: false,
             reason : "db fail"
         }
@@ -542,6 +543,7 @@ export const GetAvailableShelfLocations = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to get free spaces in a shelf");
+        console.log(error);
         return {success: false,
             reason : "db fail"
         }
