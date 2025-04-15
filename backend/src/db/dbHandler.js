@@ -640,7 +640,7 @@ export const  GetItemInfoForShelfItems = async (shelfName) => {
     }
 
     const query = `SELECT * FROM items WHERE id IN
-    (SELECT item_id FROM "${shelfName})`
+    (SELECT item_id FROM "${shelfName}")`
 
 
     try{
