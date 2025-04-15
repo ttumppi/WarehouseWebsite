@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const ShelfView = ({ loginNeeded }) => {
     const { shelf } = useParams();
+    console.log(shelf);
     const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
