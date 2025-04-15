@@ -185,7 +185,7 @@ export const ChangeItemBalance = async (req, res, shelf) => {
     const balanceResult = await dbHandler.ChangeItemBalanceViaID(
         shelf, req.body.amount, req.body.id);
 
-        console.log(balanceResult.value.rows);
+        console.log(req.body.amount, req.body.id);
 
         if (!balanceResult.success){
             return res.status(404).json({

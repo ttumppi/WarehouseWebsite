@@ -958,7 +958,7 @@ export const ChangeItemBalanceViaID = async (shelfName, amount, id) => {
 
     const itemData = await GetShelfItemViaID(shelfName, id);
 
-
+    console.log(itemData.value);
     const newBalance = itemData.value.rows[0].balance + amount;
 
     const query = `UPDATE "${shelfName}" SET balance = $1 WHERE id = $2`;
