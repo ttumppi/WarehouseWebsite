@@ -8,6 +8,9 @@ const CreateItem = ({ loginNeeded }) => {
 
 
     const handleCreation = async () => {
+
+        e.preventDefault();
+        
         const creationRes = await fetch(
             `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item`, {
             method: "POST",
