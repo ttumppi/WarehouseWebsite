@@ -269,7 +269,7 @@ export const GetItemByModel = async (model) => {
 
 
 export const DeleteItem = async (item) => {
-    await ThrowIfDBInit();
+    await ThrowIfDBNotInit();
 
     const itemRow = await GetItem(item);
     try{
@@ -288,7 +288,7 @@ export const DeleteItem = async (item) => {
 
 export const DeleteItemViaID = async (id) => {
 
-    await ThrowIfDBInit();
+    await ThrowIfDBNotInit();
 
     try{
         const result = await db.query(DeleteItemQuery, [id]);
