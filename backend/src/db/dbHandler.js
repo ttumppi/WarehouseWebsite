@@ -286,6 +286,24 @@ export const DeleteItem = async (item) => {
     }
 }
 
+export const DeleteItemViaID = async (id) => {
+
+    await ThrowIfDBInit();
+
+    try{
+        const result = await db.query(DeleteItemQuery, [id]);
+        return {success: true,
+            value: result
+        };
+    }
+    catch(error){
+        console.log("Failed to delete item");
+        return {success: false,
+            reason : "db fail"
+        }
+    }
+}
+
 export const DeleteItemFromShelf = async (shelfName, location) => {
     await ThrowIfDBNotInit();
 

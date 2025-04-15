@@ -76,6 +76,11 @@ export const RegisterRoutes = (server) => {
         console.log("/api/item GET");
         return await itemHandler.GetItems(req, res);
     })
+
+    server.delete("/api/item/:id", CheckAuth, async (req, res) => {
+        console.log("/api/item/:id DELETE");
+        return await itemHandler.DeleteItem(req, res, req.params.id);
+    })
 }
 
 

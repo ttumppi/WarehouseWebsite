@@ -150,7 +150,7 @@ const ShelfsView = ({ loginNeeded }) => {
 
 
     const redirectToCreateItem = () => {
-        navigate("/create-item");
+        navigate("/items");
     }
 
     const redirectToShelf = (shelf) => {
@@ -161,7 +161,7 @@ const ShelfsView = ({ loginNeeded }) => {
         <div>
             <button className="header-button" 
                 onClick={ redirectToCreateItem}>
-                    Create item
+                    Item page
             </button>
 
             <div className="shelf-header">

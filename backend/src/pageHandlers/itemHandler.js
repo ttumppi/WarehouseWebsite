@@ -44,3 +44,18 @@ export const GetItems = async (req, res) => {
         items: result.value.rows
     });
 }
+
+export const DeleteItem = async (req, res, id) => {
+    const result = await dbHandler.DeleteItemViaID(id);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason
+        });
+    }
+
+    return res.status(200).json({
+        success: true
+    });
+}
