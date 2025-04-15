@@ -52,6 +52,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
         setItem(shelfData.item);
         setLocation(shelfData.item.location);
+        setBalance(shelfData.item.balance);
 
         initialBalance = shelfData.item.balance;
         initialLocation = shelfData.item.location;
