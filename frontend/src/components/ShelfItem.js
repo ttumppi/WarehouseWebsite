@@ -162,7 +162,7 @@ const ShelfItem = ({ loginNeeded }) => {
             locationCopy[shelfName] = shelfData.locations;
 
             if (shelfName == shelf){
-                locationCopy[shelfName].splice({"num":location-1}, 0, location);
+                locationCopy[shelfName].splice(location-1, 0, {"num":location-1});
             }
 
             setLocations(locationCopy);
