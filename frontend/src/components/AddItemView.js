@@ -15,7 +15,7 @@ const AddItemView = ({ loginNeeded }) => {
     
 
 
-    const GetItems = async (shelfName) => {
+    const GetItems = async () => {
         try{
             const shelfRes = await fetch(
                 `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item`, {
@@ -132,7 +132,7 @@ const AddItemView = ({ loginNeeded }) => {
     useEffect(() => {
     
         const getShelfItemsWrapper = async () => {
-            await GetShelfItems(shelf);
+            await GetItems();
             await GetAvailableLocations(shelf);
         }
     
