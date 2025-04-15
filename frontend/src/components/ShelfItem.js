@@ -44,8 +44,10 @@ const ShelfItem = ({ loginNeeded }) => {
             return;
         }
 
+        console.log(shelfData.item);
         setItem(shelfData.item);
 
+        console.log(item);
         initialBalance = item.balance;
         initialLocation = item.location;
         initialShelf = shelf;
@@ -256,11 +258,11 @@ const ShelfItem = ({ loginNeeded }) => {
             <br/>
 
             <h3>Manufacturer</h3>
-            <p>{(item == null) ? <p>--</p> : item?.manufacturer}</p>
+            <p>{(item == null) ? "--" : item?.manufacturer}</p>
             <h3>Model</h3>
-            <p>{(item == null) ? <p>--</p>  : item?.model}</p>
+            <p>{(item == null) ? "--"  : item?.model}</p>
             <h3>Serial</h3>
-            <p>{(item == null) ? <p>--</p> : item?.serial}</p>
+            <p>{(item == null) ? "--" : item?.serial}</p>
 
             <h3>Shelf</h3>
             <select
