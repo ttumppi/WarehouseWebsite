@@ -226,6 +226,7 @@ const ShelfItem = ({ loginNeeded }) => {
             <h3>Serial</h3>
             <p>{item?.serial}</p>
 
+            <h3>Shelf</h3>
             <select
                 value={currentShelf}
                 onChange={(e) => setCurrentShelf(e.target.value)}>
@@ -235,7 +236,8 @@ const ShelfItem = ({ loginNeeded }) => {
                     </option>
                 ))}
             </select>
-
+            
+            <h3>Location</h3>
             <select
                 onChange={(e) => setLocation(e.target.value)}>
                 
@@ -250,7 +252,7 @@ const ShelfItem = ({ loginNeeded }) => {
                 ))}
             </select>
 
-            <h3>Set Balance</h3>
+            <h3>Balance</h3>
             <input
                 type="number"
                 min="0"
