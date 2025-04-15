@@ -115,7 +115,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
             console.log("starting Enqueue");
             for (let i = 0; i < shelfData.data.length; i++){
-                console.log(`Enqueueuing ${shelfData.data[i]}`)
+                console.log("Enqueueuing", shelfData.data[i])
                 queue.current.Enqueue(shelfData.data[i]);
             }
         }
@@ -256,7 +256,7 @@ const ShelfItem = ({ loginNeeded }) => {
     useEffect(() => {
         const wrapper = async () => {
             const item = queue.current.Dequeue();
-            console.log(`shelfs ${item}`);
+            console.log("shelfs", item);
             if (!(!item || !item.item_id)){
                 console.log("Not null");
                 await GetAvailableLocations(item.item_id);
@@ -271,7 +271,7 @@ const ShelfItem = ({ loginNeeded }) => {
         const wrapper = async () => {
            if (!queue.current.Empty()){
                 const item = queue.current.Dequeue();
-                console.log(`locations ${item}`);
+                console.log("locations", item);
                 if (!(!item || !item.item_id)){
                     console.log("not null");
                     await GetAvailableLocations(item.item_id);
