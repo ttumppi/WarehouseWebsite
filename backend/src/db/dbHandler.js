@@ -857,7 +857,7 @@ export const GetShelfItemViaID = async (shelfName, id) => {
 
 
     
-
+    console.log(id);
     const query = `SELECT * FROM "${shelfName}" WHERE id = $1`;
 
     try{
