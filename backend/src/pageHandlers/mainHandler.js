@@ -60,6 +60,7 @@ export const DeleteShelf = async (req, res) => {
 }
 
 export const GetShelfItems = async (req, res, shelf) => {
+    console.log(shelf);
     const result = await dbHandler.GetShelfItems(shelf);
 
     if (!result.success){
