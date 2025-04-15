@@ -7,10 +7,10 @@ const CreateItem = ({ loginNeeded }) => {
     const [message, setMessage] = useState("");
 
 
-    const handleCreation = async () => {
+    const handleCreation = async (e) => {
 
         e.preventDefault();
-        
+
         const creationRes = await fetch(
             `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item`, {
             method: "POST",
@@ -36,6 +36,9 @@ const CreateItem = ({ loginNeeded }) => {
         }
 
         setMessage("");
+        setManufacturer("");
+        setModel("");
+        setSerial("");
     }
 
     return (
