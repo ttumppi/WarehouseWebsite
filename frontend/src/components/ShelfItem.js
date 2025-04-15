@@ -208,7 +208,7 @@ const ShelfItem = ({ loginNeeded }) => {
     const UpdateBalance = async () => {
         try{
 
-            const balanceChange = balance - initialBalance;
+            const balanceChange = balance - initialBalance.current;
             const shelfRes = await fetch(
                 `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/item/balance`, {
                 method: "PUT",
