@@ -172,8 +172,8 @@ const AddItemView = ({ loginNeeded }) => {
                     -- Select a location --
                 </option>
                 {locations.map((loc) => (
-                    <option key={loc} value={loc}>
-                        {loc}
+                    <option key={loc.num} value={loc.num}>
+                        {loc.num}
                     </option>
                 ))}
             </select>
