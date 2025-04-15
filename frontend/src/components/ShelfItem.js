@@ -149,7 +149,6 @@ const ShelfItem = ({ loginNeeded }) => {
             let locationCopy = {};
 
             for (let shelf in locations){
-                console.log(shelf);
                 locationCopy[shelf] = locations[shelf];
             }
 
@@ -252,6 +251,7 @@ const ShelfItem = ({ loginNeeded }) => {
                 console.log(shelfs[i].shelf_id)
                 await GetAvailableLocations(shelfs[i].shelf_id);
             }
+            console.log("Done");
         }
 
         wrapper();
