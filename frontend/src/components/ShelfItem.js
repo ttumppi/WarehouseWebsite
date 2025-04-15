@@ -10,7 +10,7 @@ const ShelfItem = ({ loginNeeded }) => {
     const [location, setLocation] = useState(null);
     const [currentShelf, setCurrentShelf] = useState(shelf);
     const [shelfs, setShelfs] = useState([]);
-    const [locations, setLocations] = useState(null);
+    const [locations, setLocations] = useState({});
     const [item, setItem] = useState(null);
     const [message, setMessage] = useState("");
 
