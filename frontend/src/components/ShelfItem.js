@@ -46,10 +46,14 @@ const ShelfItem = ({ loginNeeded }) => {
 
         setItem(shelfData.item);
 
+        initialBalance = item.balance;
+        initialLocation = item.location;
+        initialShelf = shelf;
+
 
     }
 
-    const getShelfs = async () => {
+    const GetShelfs = async () => {
 
         try{
             const shelfsRes = await fetch(
@@ -110,8 +114,11 @@ const ShelfItem = ({ loginNeeded }) => {
             setMessage("");
                 
                
-    
-            setLocations(shelfData.locations);
+            let locationCopy = locations;
+
+            locationCopy[shelfName] = shelfData.locations;
+
+            setLocations(locationCopy);
         }
     
         catch(error){
@@ -193,6 +200,19 @@ const ShelfItem = ({ loginNeeded }) => {
         await GetItem();
     }
 
+    useEffect(() => {
+        const wrapper = async () => {
+            await GetItem();
+            await GetShelfs();
+
+            for (let i = 0; i < shelfs.length; i++){
+                await GetAvailableLocations(shelfs[i]);
+            }
+        }
+
+        wrapper();
+        
+    }, []);
 
     return (
         <div>
@@ -217,16 +237,12 @@ const ShelfItem = ({ loginNeeded }) => {
             </select>
 
             <select
-                value={location || ""}
                 onChange={(e) => setLocation(e.target.value)}>
+                
+                {(locations == null) ? 
                 <option value="" disabled>
                     -- Select a location --
                 </option>
-                {(locations == null) ? 
-                    <option value="" disabled>
-                        
-                    </option>
-                
                 : locations[currentShelf].map((loc) => (
                     <option key={loc.num} value={loc.num}>
                         {loc.num}
@@ -250,6 +266,8 @@ const ShelfItem = ({ loginNeeded }) => {
                 onClick={UpdateItem}>
                     Save
             </button>
+
+            {message && <p>{message}</p>}
         </div>
     )
 
