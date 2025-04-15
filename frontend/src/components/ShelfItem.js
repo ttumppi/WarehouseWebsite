@@ -277,16 +277,7 @@ const ShelfItem = ({ loginNeeded }) => {
     }, [locations])
 
 
-    useEffect(() => {
-        console.log("Values after render:");
-        console.log("initialBalance:", initialBalance.current);
-        console.log("balance:", balance);
-        console.log("location:", location, typeof location);
-        console.log("initialLocation:", initialLocation.current, typeof initialLocation.current);
-        console.log("initialShelf:", initialShelf.current);
-        console.log("shelf:", currentShelf);
-    }, [initialBalance, balance, initialLocation, location, initialShelf, shelf]);
-
+   
     return (
         <div>
 
@@ -315,7 +306,7 @@ const ShelfItem = ({ loginNeeded }) => {
             <h3>Location</h3>
             <select
             value={location ?? 3}
-                onChange={(e) => setLocation(e.target.value)}>
+                onChange={(e) => setLocation(parseInt(e.target.value))}>
                 disabled={!locations || !locations[currentShelf]}
                 {
                     (!locations || !locations[currentShelf]) ? 
