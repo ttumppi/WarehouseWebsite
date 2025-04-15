@@ -652,7 +652,6 @@ export const  GetItemInfoForShelfItems = async (shelfName) => {
     }
     catch(error){
         console.log("Failed to get items info for shelf items");
-        console.log(error);
         return {success: false,
             reason: "db fail"
         }
