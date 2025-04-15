@@ -12,6 +12,12 @@ const AddItemView = ({ loginNeeded }) => {
     const [itemID, setItemID] = useState(null);
     const [location, setLocation] = useState(null);
     const [balance, setBalance] = useState(0);
+
+
+
+    const redirectToShelfPage = () => {
+        navigate(`/shelf/${shelf}`)
+    }
     
 
 
@@ -143,7 +149,13 @@ const AddItemView = ({ loginNeeded }) => {
 
     return (
         <div>
-            <h2>Add Item to Shelf: {shelf}</h2>
+            <div className="shelf-header">
+                <h2>Add Item to Shelf: {shelf}</h2>
+                <button className="basic-button" 
+                    onClick={redirectToShelfPage}>
+                        Add Item
+                    </button>
+            </div>
 
             {message && <p>{message}</p>}
 
