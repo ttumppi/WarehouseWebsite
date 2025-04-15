@@ -47,9 +47,7 @@ const ShelfView = ({ loginNeeded }) => {
             setMessage("");
             
            
-            console.log(shelfData.items);
             setItems(shelfData.items);
-            console.log(items);
         }
 
         catch(error){
@@ -88,14 +86,11 @@ const ShelfView = ({ loginNeeded }) => {
             <div>
                 <ul>
                     
-                    {items.map((item) => {
-                        <li>
-                            {item.manufacturer}
-                            {item.model}
-                            {item.serial}
-                            {item.balance}
+                    {items.map((item) => (
+                        <li key={item.location}>
+                            {item.manufacturer} - {item.model} - {item.serial} - {item.balance} - {item.location}
                         </li>
-                    })}
+                    ))}
                     
                 </ul>
             </div>
