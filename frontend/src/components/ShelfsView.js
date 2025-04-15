@@ -185,10 +185,7 @@ const ShelfsView = ({ loginNeeded }) => {
                         () => {handleDeleteShelf
                         (shelf.shelf_id);}}>Delete
                     </button>
-                    <button className="basic-button" onClick={ 
-                        () => {handleDeleteShelf
-                        (shelf.shelf_id);}}>Add Item
-                    </button>
+                    
                     <ul>
                         {items.shelf?.id?.map((item) => {
                             <li key={item.id}>{item.model}</li>

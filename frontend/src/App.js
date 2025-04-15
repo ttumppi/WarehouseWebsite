@@ -9,6 +9,7 @@ import Login from './components/Login';
 import ShelfsView from "./components/ShelfsView";
 import CreateItem from "./components/CreateItem";
 import ShelfView from "./components/ShelfView";
+import AddItemView from "./components/AddItemView";
 import "./App.css";
 
 function App() {
@@ -74,6 +75,12 @@ function App() {
             <Route
               path="/shelf/:shelf"
               element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
+              <Navigate to="/"/> }>
+            </Route>
+
+            <Route
+              path="/add-item/:shelf"
+              element={loggedIn ? <AddItemView loginNeeded={setLoginNeeded} /> :
               <Navigate to="/"/> }>
             </Route>
             

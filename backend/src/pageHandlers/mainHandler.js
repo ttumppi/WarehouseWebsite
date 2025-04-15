@@ -91,3 +91,36 @@ export const GetShelfItems = async (req, res, shelf) => {
         items: items
     });
 }
+
+export const GetShelfAvailableLocations = async (req, res, shelf) => {
+    const result = await dbHandler.GetAvailableShelfLocations(shelf);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason}
+        );
+    }
+
+    return res.status(200).json({
+        success: true,
+        locations: result.value.rows
+    });
+}
+
+export const AddItemToShelf = async (req, res, shelf) => {
+    const result = await dbHandler.AddItemToShelf(
+        shelf, req.body.id, req.body.balance, req.body.location
+    );
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason}
+        );
+    }
+
+    return res.status(200).json({
+        success: true
+    });
+}

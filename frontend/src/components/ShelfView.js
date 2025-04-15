@@ -14,6 +14,10 @@ const ShelfView = ({ loginNeeded }) => {
         navigate("/home");
     }
 
+    const redirectToItemSelectPage = () => {
+        navigate(`/add-item/${shelf}`)
+    }
+
 
 
     const GetShelfItems = async (shelfName) => {
@@ -24,6 +28,12 @@ const ShelfView = ({ loginNeeded }) => {
                 headers: { "Content-Type": "application/json" },
                 credentials: "include"
                 });
+
+            if (shelfRes.status == 401){
+                setMessage("Not logged in");
+                loginNeeded();
+                return;
+            }
     
             const shelfData = await shelfRes.json();
 
@@ -64,7 +74,12 @@ const ShelfView = ({ loginNeeded }) => {
 
                 <button className="header-button" 
                 onClick={ redirectToHomePage}>
-                    Create item
+                    Back
+                </button>
+
+                <button className="basic-button" 
+                onClick={redirectToItemSelectPage}>
+                    Add Item
                 </button>
 
             </div>

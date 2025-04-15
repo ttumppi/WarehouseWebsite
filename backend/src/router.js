@@ -51,6 +51,17 @@ export const RegisterRoutes = (server) => {
         return await mainHandler.GetShelfItems(req, res, req.params.shelf);
     })
 
+    server.get("/api/shelf/:shelf/locations", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf/locations GET");
+        return await mainHandler.GetShelfAvailableLocations
+        (req, res, req.params.shelf);
+    })
+
+    server.post("/api/shelf/:shelf/item", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf/item POST");
+        return await mainHandler.AddItemToShelf(req, res, req.params.shelf);
+    })
+
     server.post("/api/item", CheckAuth, async (req, res) => {
         console.log("/api/item POST");
         return await itemHandler.CreateItem(req, res);
