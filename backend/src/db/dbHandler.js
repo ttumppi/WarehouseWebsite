@@ -712,7 +712,6 @@ const ShelfLocationInBounds = async (shelfName, location) => {
 
     const shelfSize = (await GetShelfSize(shelfName)).value.rows[0].size;
 
-    console.log(location, shelfSize);
     return location >= 1 && location <= shelfSize;
 }
 

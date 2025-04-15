@@ -184,7 +184,7 @@ const ShelfItem = ({ loginNeeded }) => {
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify({
-                    currentLocation : initialLocation,
+                    currentLocation : initialLocation.current,
                     targetShelf: currentShelf,
                     targetLocation: location
                 })
@@ -238,10 +238,11 @@ const ShelfItem = ({ loginNeeded }) => {
     }
 
     const UpdateItem = async () => {
-        if (initialBalance != balance){
+        if (initialBalance.current != balance){
             await UpdateBalance();
         }
-        if (initialShelf != currentShelf || initialLocation != location){
+        if (initialShelf.current != currentShelf || 
+            initialLocation.current != location){
             await TransferItem();
         }
         setMessage("Saved");
