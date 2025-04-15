@@ -23,7 +23,13 @@ const ShelfItem = ({ loginNeeded }) => {
         navigate(`shelf/${currentShelf}`);
     }
 
-    const GetShelfItem = async () => {
+  
+    
+   
+
+    const GetItem = async () => {
+      
+      
         const shelfRes = await fetch(
             `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/${id}`, {
             method: "GET",
@@ -49,13 +55,9 @@ const ShelfItem = ({ loginNeeded }) => {
         initialBalance = shelfData.item.balance;
         initialLocation = shelfData.item.location;
         initialShelf = shelfData.shelf;
-    }
-    
-    const GetItemInfo = async () => {
-        
 
         const itemRes = await fetch(
-            `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item/${item.item_id}`, {
+            `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item/${shelfData.item.item_id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: "include"
@@ -77,13 +79,6 @@ const ShelfItem = ({ loginNeeded }) => {
         setItem(itemCopy);
 
         setMessage("");
-    }
-
-    const GetItem = async () => {
-        await GetShelfItem();
-        await GetItemInfo();
-       
-
 
     }
 
