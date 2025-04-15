@@ -14,12 +14,7 @@ export const CreateItem = async (req, res) => {
         );
     }
 
-    if (result.value.rows.length == 0){
-        return res.status(404).json({
-            success: false,
-            message: "Couldn't add item"}
-        );
-    }
+    
 
     return res.status(200).json({
         success:  true
