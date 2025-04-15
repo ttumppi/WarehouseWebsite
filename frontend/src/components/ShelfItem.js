@@ -222,11 +222,11 @@ const ShelfItem = ({ loginNeeded }) => {
             <br/>
 
             <h3>Manufacturer</h3>
-            <p>{item == null ? "--" : item?.manufacturer}</p>
+            <p>{(item == null) ? "--" : item?.manufacturer}</p>
             <h3>Model</h3>
-            <p>{item == null ? "--" : item?.model}</p>
+            <p>{(item == null) ? "--" : item?.model}</p>
             <h3>Serial</h3>
-            <p>{item == null ? "--" : item?.serial}</p>
+            <p>{(item == null) ? "--" : item?.serial}</p>
 
             <h3>Shelf</h3>
             <select
