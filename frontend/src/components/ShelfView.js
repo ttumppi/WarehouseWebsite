@@ -59,7 +59,7 @@ const ShelfView = ({ loginNeeded }) => {
     const DeleteItem = async (location) => {
         try{
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
