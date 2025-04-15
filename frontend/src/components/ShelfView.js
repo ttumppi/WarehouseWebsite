@@ -47,8 +47,9 @@ const ShelfView = ({ loginNeeded }) => {
             setMessage("");
             
            
-
+            console.log(shelfData.items);
             setItems(shelfData.items);
+            console.log(items);
         }
 
         catch(error){
