@@ -44,10 +44,8 @@ const ShelfItem = ({ loginNeeded }) => {
             return;
         }
 
-        console.log(shelfData.item);
         setItem(shelfData.item);
 
-        console.log(item);
         initialBalance = item.balance;
         initialLocation = item.location;
         initialShelf = shelf;
