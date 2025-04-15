@@ -198,6 +198,10 @@ const ShelfItem = ({ loginNeeded }) => {
             }
 
             setMessage("");
+
+            if (currentShelf != shelf){
+                RedirectToShelfView();
+            }
         }
         catch(error){
             setMessage("Failed to transfer item");
