@@ -93,7 +93,7 @@ const AddItemView = ({ loginNeeded }) => {
     const AddItemToShelf = async () => {
         try{
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}/item`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/item`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
