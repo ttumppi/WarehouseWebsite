@@ -4,6 +4,7 @@ const CreateItem = ({ loginNeeded }) => {
     const [manufacturer, setManufacturer] = useState("");
     const [model, setModel] = useState("");
     const [serial, setSerial] = useState("");
+    const [message, setMessage] = useState("");
 
 
     const handleCreation = async () => {
@@ -30,6 +31,8 @@ const CreateItem = ({ loginNeeded }) => {
           if (!creationData.success) {
             setMessage(`Item creation failed : ${creationData.message}`);
         }
+
+        setMessage("");
     }
 
     return (
