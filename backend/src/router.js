@@ -51,6 +51,11 @@ export const RegisterRoutes = (server) => {
         return await mainHandler.GetShelfItems(req, res, req.params.shelf);
     })
 
+    server.delete("/api/shelf/:shelf", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf DELETE");
+        return await mainHandler.DeleteItemFromShelf(req, res, req.params.shelf);
+    })
+
     server.get("/api/shelf/:shelf/locations", CheckAuth, async (req, res) => {
         console.log("/api/shelf/:shelf/locations GET");
         return await mainHandler.GetShelfAvailableLocations

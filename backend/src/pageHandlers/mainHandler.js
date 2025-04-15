@@ -124,3 +124,19 @@ export const AddItemToShelf = async (req, res, shelf) => {
         success: true
     });
 }
+
+export const DeleteItemFromShelf = async (req, res, shelf) => {
+    const result = await dbHandler.DeleteItemFromShelf(shelf, req.body.location);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason}
+        );
+    }
+
+    return res.status(200).json({
+        success: true
+    });
+    
+}

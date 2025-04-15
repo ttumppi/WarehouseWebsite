@@ -56,6 +56,32 @@ const ShelfView = ({ loginNeeded }) => {
         }
     }
 
+    const DeleteItem = async (location) => {
+        try{
+            const shelfRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({location: location})
+                });
+
+            const shelfData = await shelfRes.json();
+
+            if (!shelfData.success){
+                setMessage("Failed to delete item");
+                return;
+            }
+
+            await GetShelfItems();
+        }
+        catch(error){
+            setMessage("Failed to delete item");
+            console.log(`Failed to delete item : ${error}`);
+        }
+        
+    }
+
     useEffect(() => {
 
         const getShelfItemsWrapper = async () => {
@@ -93,6 +119,7 @@ const ShelfView = ({ loginNeeded }) => {
                             <th>Serial</th>
                             <th>Balance</th>
                             <th>Location</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,6 +130,12 @@ const ShelfView = ({ loginNeeded }) => {
                                 <td>{item.serial}</td>
                                 <td>{item.balance}</td>
                                 <td>{item.location}</td>
+                                <td>
+                                    <button className="basic-button"
+                                        onClick={() => {DeleteItem(item.location)}}>
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
