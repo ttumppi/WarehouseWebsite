@@ -45,6 +45,29 @@ export const GetItems = async (req, res) => {
     });
 }
 
+export const GetItem = async (req, res, id) => {
+    const result = await dbHandler.GetItemByID(id);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason
+        });
+    }
+
+    if (result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No item found"
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        item: result.value.rows[0]
+    })
+}
+
 export const DeleteItem = async (req, res, id) => {
     const result = await dbHandler.DeleteItemViaID(id);
 

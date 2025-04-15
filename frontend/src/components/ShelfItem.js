@@ -23,7 +23,7 @@ const ShelfItem = ({ loginNeeded }) => {
         navigate(`shelf/${currentShelf}`);
     }
 
-    const GetItem = async () => {
+    const GetShelfItem = async () => {
         const shelfRes = await fetch(
             `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/${id}`, {
             method: "GET",
@@ -49,6 +49,40 @@ const ShelfItem = ({ loginNeeded }) => {
         initialBalance = item.balance;
         initialLocation = item.location;
         initialShelf = shelf;
+    }
+    
+    const GetItemInfo = async () => {
+        
+
+        const itemRes = await fetch(
+            `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item/${shelfData.item_id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include"
+            });
+
+        const itemData = await itemRes.json();
+
+        if (!itemData.success){
+            setMessage("Failed to get item specific info");
+            return;
+        }
+
+        let itemCopy = item;
+
+        itemCopy["manufacturer"] = itemData.item.manufacturer;
+        itemCopy["model"] = itemData.item.model;
+        itemCopy["serial"] = itemData.item.serial;
+
+        setItem(itemCopy);
+
+        setMessage("");
+    }
+
+    const GetItem = async () => {
+        await GetShelfItem();
+        await GetItemInfo();
+       
 
 
     }
