@@ -131,12 +131,12 @@ const AddItemView = ({ loginNeeded }) => {
     
     useEffect(() => {
     
-        const getShelfItemsWrapper = async () => {
+        const getItemsWrapper = async () => {
             await GetItems();
             await GetAvailableLocations(shelf);
         }
     
-        getShelfItemsWrapper();
+        getItemsWrapper();
     }, []);
 
 
