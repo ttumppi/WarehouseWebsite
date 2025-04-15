@@ -142,7 +142,7 @@ export const DeleteItemFromShelf = async (req, res, shelf) => {
 }
 
 export const GetShelfItem = async (req,  res, shelf, id) => {
-    const result = await dbHandler.GetShelfItem(shelf, id);
+    const result = await dbHandler.GetShelfItemViaID(shelf, id);
 
     if (!result.success){
         return res.status(404).json({
