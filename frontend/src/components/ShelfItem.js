@@ -286,18 +286,16 @@ const ShelfItem = ({ loginNeeded }) => {
             value={location ?? ""}
                 onChange={(e) => setLocation(e.target.value)}>
                 disabled={!locations || !locations[currentShelf]}
-                {!locations || !locations[currentShelf] ? (
-                    <option value="">-- Loading locations... --</option>
-                ) : (
-                    <>
-                    <option value="">-- Select a location --</option>
-                    {locations[currentShelf].map((loc) => (
+                {
+                    (!location || !locations[currentShelf]) ? 
+                    <option> -- loading --</option> :
+                    locations[currentShelf].map((loc) => (
                         <option key={loc.num} value={loc.num}>
                             {loc.num}
                         </option>
-                        ))}
-                    </>
-                )}
+                    ))
+                }
+                
             </select>
 
             <h3>Balance</h3>
