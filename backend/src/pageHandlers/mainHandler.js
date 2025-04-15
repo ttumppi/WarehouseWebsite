@@ -81,9 +81,9 @@ export const GetShelfItems = async (req, res, shelf) => {
     let items = result.value.rows;
 
     for (let i = 0; i < itemsInfo.value.rows.length; i++){
-        items[i][manufacturer] = itemsInfo.value.rows[i].manufacturer;
-        items[i][model] = itemsInfo.value.rows[i].model;
-        items[i][serial] = itemsInfo.value.rows[i].serial;
+        items[i]["manufacturer"] = itemsInfo.value.rows[i].manufacturer;
+        items[i]["model"] = itemsInfo.value.rows[i].model;
+        items[i]["serial"] = itemsInfo.value.rows[i].serial;
     }
 
     return res.status(200).json({
