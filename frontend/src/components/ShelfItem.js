@@ -272,7 +272,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
             <h3>Shelf</h3>
             <select
-                value={(currentShelf == null) ? "N/A" : currentShelf}
+                value={currentShelf}
                 onChange={(e) => setCurrentShelf(e.target.value)}>
                 {shelfs.map((shelf) => (
                     <option key={shelf.id} value={shelf.shelf_id}>
@@ -285,7 +285,7 @@ const ShelfItem = ({ loginNeeded }) => {
             <select
             value={(location == null) ? 3 : location}
                 onChange={(e) => setLocation(e.target.value)}>
-                {(locations == null) ? 
+                {(locations == null || locations[currrentShelf == null]) ? 
                 <option value="" disabled>
                     -- Select a location --
                 </option>
