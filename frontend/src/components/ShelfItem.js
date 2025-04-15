@@ -113,7 +113,9 @@ const ShelfItem = ({ loginNeeded }) => {
             setMessage("");
             setShelfs(shelfData.data)
 
+            console.log("starting Enqueue");
             for (let i = 0; i < shelfData.data.length; i++){
+                console.log(`Enqueueuing ${shelfData.data[i]}`)
                 queue.current.Enqueue(shelfData.data[i]);
             }
         }
