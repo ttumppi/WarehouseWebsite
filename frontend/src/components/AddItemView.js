@@ -161,7 +161,7 @@ const AddItemView = ({ loginNeeded }) => {
 
             <h3>Select an Item</h3>
             <ul>
-                {items.map((item) => (
+                {items.length == 0? <p>No items</p> : items.map((item) => (
                     <li key={item.id}>
                         <label>
                             <input
