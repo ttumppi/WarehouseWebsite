@@ -868,6 +868,7 @@ export const GetShelfItemViaID = async (shelfName, id) => {
     }
     catch(error){
         console.log("Failed to query shelf item");
+        console.log(error);
         return {success: false,
             reason : "db fail"
         }
