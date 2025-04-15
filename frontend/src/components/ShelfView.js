@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -7,6 +8,8 @@ const ShelfView = ({ loginNeeded }) => {
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
     const [items, setItems] = useState({});
+
+    const navigate = useNavigate();
 
     const getShelfs = async () => {
 
@@ -144,8 +147,18 @@ const ShelfView = ({ loginNeeded }) => {
         }
     }
 
+
+
+    const redirectToCreateItem = () => {
+        navigate("/create-item");
+    }
+
     return (
         <div>
+            <button 
+                onClick={ redirectToCreateItem}>Create item
+            </button>
+
             <div className="shelf-header">
                 <h2>Shelves</h2>
                 <button className="header-button" 

@@ -2,6 +2,7 @@ import * as dbHandler from "./db/dbHandler.js"
 import * as loginHandler from "./pageHandlers/loginHandler.js"
 import * as tokenSystem from "./tokenHandling/tokenSystem.js"
 import * as mainHandler from "./pageHandlers/mainHandler.js"
+import * as itemHandler from "./pageHandlers/itemHandler.js"
 
 const CheckAuth = async (req, res, next) => {
     const result = await tokenSystem.VerifyAndGetTokenFromHeaders(req.headers);
@@ -48,6 +49,11 @@ export const RegisterRoutes = (server) => {
     server.get("/api/shelf/:shelf", CheckAuth, async (req, res) => {
         console.log("/api/shelf/:shelf GET");
         return await mainHandler.GetShelfItems(req.params.shelf, res);
+    })
+
+    server.post("/api/item", CheckAuth, async (req, res) => {
+        console.log("/api/item POST");
+        return await itemHandler.CreateItem(req, res);
     })
 }
 
