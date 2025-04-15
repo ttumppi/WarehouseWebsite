@@ -7,7 +7,7 @@ export class Queue{
         this.items.push(item);
     }
 
-    Dequeue(item){
+    Dequeue(){
         const item = this.items[0];
         this.items.shift();
         return item;
