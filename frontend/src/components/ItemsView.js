@@ -7,6 +7,7 @@ const ItemsView = ({ loginNeeded }) => {
     const [serial, setSerial] = useState("");
     const [message, setMessage] = useState("");
     const [items, setItems] = useState([]);
+    
 
     const navigate = useNavigate();
 

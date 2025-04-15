@@ -140,3 +140,59 @@ export const DeleteItemFromShelf = async (req, res, shelf) => {
     });
     
 }
+
+export const GetShelfItem = async (req,  res, shelf, id) => {
+    const result = await dbHandler.GetShelfItem(shelf, id);
+
+    if (!result.success){
+        return res.status(404).json({
+            success:false,
+            message: result.reason
+        });
+    }
+
+    if (result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No item found"
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        item: result.value.rows[0]
+    })
+}
+
+export const TransferItem = async (req, res, shelf) => {
+    const transferResult = await dbHandler.TransferItem(
+        shelf, req.body.currentLocation, req.body.targetShelf,
+        req.body.targetLocation);
+
+    if (!transferResult.success){
+        return res.status(404).json({
+            success: false,
+            message: transferResult.reason
+        });
+    }
+
+    return res.status(200).json({
+        success: true
+    });
+}
+
+export const ChangeItemBalance = async (req, res, shelf) => {
+    const balanceResult = await dbHandler.ChangeItemBalanceViaID(
+        shelf, req.body.amount, req.body.id);
+
+        if (!balanceResult.success){
+            return res.status(404).json({
+                success: false,
+                message: balanceResult.reason
+            });
+        }
+    
+        return res.status(200).json({
+            success: true
+        });
+}

@@ -14,7 +14,7 @@
 
 * Added user level to users table.
 * The dynamic table final schema :
- id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     item_id INT, 
     balance INT,
     location INT UNIQUE,

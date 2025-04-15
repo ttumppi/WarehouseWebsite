@@ -843,6 +843,37 @@ export const GetShelfItem = async (shelfName, item) => {
     
 }
 
+export const GetShelfItemViaID = async (shelfName, id) => {
+
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return {success: false,
+            reason : "shelf name not valid"
+        }
+    }
+
+
+    
+
+    const query = `SELECT * FROM "${shelfName}" WHERE id = $1`;
+
+    try{
+        const result = await db.query(query, [id]);
+        return {success: true,
+            value: result
+        }
+    }
+    catch(error){
+        console.log("Failed to query shelf item");
+        return {success: false,
+            reason : "db fail"
+        }
+    }
+
+    
+}
+
 export const GetShelfItemByLocation = async (shelfName, location) => {
     await ThrowIfDBNotInit();
 
@@ -894,6 +925,40 @@ export const ChangeItemBalance = async (shelfName, amount, item) => {
 
     try{
         const result = await db.query(query, [newBalance, itemData.value.rows[0].id]);
+        return {success: true,
+            value: result
+        };
+    }
+    catch(error){
+        console.log("Failed to change item balance");
+        return {success: false,
+            reason : "db fail"
+        }
+    }
+
+
+
+}
+
+export const ChangeItemBalanceViaID = async (shelfName, amount, id) => {
+
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return {success: false,
+            reason : "shelf name is not valid"
+        }
+    }
+
+    const itemData = await GetShelfItemViaID(shelfName, id);
+
+
+    const newBalance = itemData.value.rows[0].balance + amount;
+
+    const query = `UPDATE "${shelfName}" SET balance = $1 WHERE id = $2`;
+
+    try{
+        const result = await db.query(query, [newBalance, id]);
         return {success: true,
             value: result
         };

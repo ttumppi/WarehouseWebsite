@@ -15,7 +15,11 @@ const ShelfView = ({ loginNeeded }) => {
     }
 
     const redirectToItemSelectPage = () => {
-        navigate(`/add-item/${shelf}`)
+        navigate(`/add-item/${shelf}`);
+    }
+
+    const redirectToShelfItemPage = (id) => {
+        navigate(`/shelf/${shelf}/${id}`);
     }
 
 
@@ -128,7 +132,12 @@ const ShelfView = ({ loginNeeded }) => {
                             <tr key={item.location}>
                                 <td>{item.manufacturer}</td>
                                 <td>{item.model}</td>
-                                <td>{item.serial}</td>
+                                <td>
+                                <span className="clickable-shelf"
+                                    onClick={() => {redirectToShelfItemPage(item.id)}}>
+                                    {item.serial}
+                                </span>
+                                </td>
                                 <td>{item.balance}</td>
                                 <td>{item.location}</td>
                                 <td>

@@ -51,6 +51,13 @@ export const RegisterRoutes = (server) => {
         return await mainHandler.GetShelfItems(req, res, req.params.shelf);
     })
 
+    server.get("/api/shelf/:shelf/:id", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf/:id GET");
+        return await mainHandler.GetShelfItem(req, res, req.params.shelf,
+            req.params.id
+        );
+    })
+
     server.delete("/api/shelf/:shelf", CheckAuth, async (req, res) => {
         console.log("/api/shelf/:shelf DELETE");
         return await mainHandler.DeleteItemFromShelf(req, res, req.params.shelf);
@@ -65,6 +72,16 @@ export const RegisterRoutes = (server) => {
     server.post("/api/shelf/:shelf/item", CheckAuth, async (req, res) => {
         console.log("/api/shelf/:shelf/item POST");
         return await mainHandler.AddItemToShelf(req, res, req.params.shelf);
+    })
+
+    server.put("/api/shelf/:shelf/item/balance", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf/item/balance PUT");
+        return await mainHandler.ChangeItemBalance(req, res, req.params.shelf)
+    })
+
+    server.put("/api/shelf/:shelf/item/transfer", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf/item/transfer PUT");
+        return await mainHandler.TransferItem(req, res, req.params.shelf);
     })
 
     server.post("/api/item", CheckAuth, async (req, res) => {
