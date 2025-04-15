@@ -70,13 +70,13 @@ const ShelfItem = ({ loginNeeded }) => {
             return;
         }
 
-        let itemCopy = item;
+        
 
-        itemCopy["manufacturer"] = itemData.item.manufacturer;
-        itemCopy["model"] = itemData.item.model;
-        itemCopy["serial"] = itemData.item.serial;
+        shelfData.item["manufacturer"] = itemData.item.manufacturer;
+        shelfData.item["model"] = itemData.item.model;
+        shelfData.item["serial"] = itemData.item.serial;
 
-        setItem(itemCopy);
+        setItem(shelfData);
 
         setMessage("");
 
