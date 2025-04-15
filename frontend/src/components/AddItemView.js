@@ -153,7 +153,7 @@ const AddItemView = ({ loginNeeded }) => {
                 <h2>Add Item to Shelf: {shelf}</h2>
                 <button className="basic-button" 
                     onClick={redirectToShelfPage}>
-                        Add Item
+                        Back
                     </button>
             </div>
 
