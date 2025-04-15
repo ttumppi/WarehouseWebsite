@@ -113,9 +113,7 @@ const ShelfItem = ({ loginNeeded }) => {
             setMessage("");
             setShelfs(shelfData.data)
 
-            console.log("starting Enqueue");
             for (let i = 0; i < shelfData.data.length; i++){
-                console.log("Enqueueuing", shelfData.data[i])
                 queue.current.Enqueue(shelfData.data[i]);
             }
         }
@@ -255,11 +253,8 @@ const ShelfItem = ({ loginNeeded }) => {
 
     useEffect(() => {
         const wrapper = async () => {
-            const item = queue.current.Dequeue();
-            console.log("shelfs", item);
-            if (!(!item || !item.shelf_id)){
-                console.log("Not null");
-                await GetAvailableLocations(item.shelf_id);
+            if (!queue.current.Empty()){
+                await GetAvailableLocations(queue.current.Dequeue().shelf_id);
             }
         }
 
@@ -270,13 +265,7 @@ const ShelfItem = ({ loginNeeded }) => {
     useEffect( () => {
         const wrapper = async () => {
            if (!queue.current.Empty()){
-                const item = queue.current.Dequeue();
-                console.log("locations", item);
-                if (!(!item || !item.shelf_id)){
-                    console.log("not null");
-                    await GetAvailableLocations(item.shelf_id);
-                }
-                
+                await GetAvailableLocations(queue.current.Dequeue().shelf_id);
             }
         }
         wrapper();
