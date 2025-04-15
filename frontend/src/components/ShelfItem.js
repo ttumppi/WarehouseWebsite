@@ -149,6 +149,7 @@ const ShelfItem = ({ loginNeeded }) => {
             let locationCopy = {};
 
             for (let shelf in locations){
+                console.log(shelf);
                 locationCopy[shelf] = locations[shelf];
             }
 
