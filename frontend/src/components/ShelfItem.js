@@ -59,8 +59,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
         initialBalance = shelfData.item.balance;
         initialLocation = shelfData.item.location;
-        initialShelf = shelfData.shelf;
-        console.log(initialBalance, initialLocation, initialShelf);
+        initialShelf = shelf;
 
         const itemRes = await fetch(
             `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/item/${shelfData.item.item_id}`, {
