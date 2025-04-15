@@ -13,3 +13,9 @@
 # Database
 
 * Added user level to users table.
+* The dynamic table final schema :
+ id SERIAL PRIMARY KEY,
+    item_id INT, 
+    balance INT,
+    location INT UNIQUE,
+    FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE

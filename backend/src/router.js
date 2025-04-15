@@ -44,6 +44,11 @@ export const RegisterRoutes = (server) => {
         console.log("/api/shelf DELETE");
         return await mainHandler.DeleteShelf(req, res);
     })
+
+    server.get("/api/shelf/:shelf", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf GET");
+        return await mainHandler.GetShelfItems(req.params.shelf, res);
+    })
 }
 
 

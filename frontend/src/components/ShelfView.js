@@ -6,6 +6,7 @@ const ShelfView = ({ loginNeeded }) => {
 
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
+    const [items, setItems] = useState({});
 
     const getShelfs = async () => {
 
@@ -40,10 +41,47 @@ const ShelfView = ({ loginNeeded }) => {
         
     }
 
+    const GetShelfItems = async (shelfName) => {
+        try{
+            const shelfRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+                });
+    
+            const shelfData = await shelfRes.json();
+
+           
+    
+            if (!shelfData.success){
+                setMessage(shelfData.message);
+                return;
+            }
+            
+            setMessage("");
+            
+            let itemsCopy = items;
+
+            itemsCopy[shelfName] = shelfData.items;
+
+            setItems(itemsCopy);
+        }
+
+        catch(error){
+            setMessage("Failed to fetch shelf items");
+            console.log(`Failed to load page: ${error}`);
+        }
+    }
+
     useEffect(() => {
 
         const getShelfsWrapper = async () => {
             await getShelfs();
+
+            for (const shelf in shelfs){
+                await GetShelfItems(shelf.shelf_id);
+            }
         }
         
         getShelfsWrapper();
@@ -119,10 +157,16 @@ const ShelfView = ({ loginNeeded }) => {
             <ul>
                 {shelfs.map((shelf) => (
                 <li key={shelf.id}>{shelf.shelf_id}
-                    <button onClick={ () => {
-                        handleDeleteShelf(shelf.shelf_id);
-                        }
-                        }>Delete</button>
+                    <button onClick={ 
+                        () => {handleDeleteShelf
+                        (shelf.shelf_id);}}>Delete
+                    </button>
+                    <ul>
+                        {items.shelf.id?.map((item) => {
+                            <li key={item.id}>{item.</li>
+                        })}
+                    </ul>
+                    
                 </li>
                 ))}
             </ul>

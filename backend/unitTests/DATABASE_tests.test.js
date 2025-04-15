@@ -257,6 +257,33 @@ test("User's password deletes when user is deleted", async () => {
     expect(userRow.value.rows.length == 0 && passwordRow.value.rows.length == 0).toBe(true);
 })
 
+test("Test getting shelf's item info from items table", async () => {
+    const shelfName = await dbHandler.CreateShelf(50);
+
+    const item = new Item("testMaker1", "testItem1", "TestSerial");
+
+    const itemRow = await dbHandler.GetItem(item);
+
+    const item2 = new Item("testMaker2", "testItem2", "TestSerial2");
+
+    const itemRow2 = await dbHandler.GetItem(item2);
+
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow.value.rows[0].id, 20, 50);
+
+    await dbHandler.AddItemToShelf(shelfName.value, itemRow2.value.rows[0].id, 20, 49);
+
+    const itemInfo = await dbHandler.GetItemInfoForShelfItems(shelfName);
+
+    const itemInfoRows = itemInfo.value.rows;
+
+    const item1ID = itemRow.value.rows[0].id;
+    const item2ID = itemRow.value.rows[1].id;
+
+
+    expect(itemInfoRows[0].id == item1ID && 
+        itemInfoRows[1].id == item2ID).toBe(true);
+})
+
 let lastShelf = null;
 let results = [];
 for (let i = 0; i < 1000; i++){

@@ -599,6 +599,14 @@ const ShelfExists = async (shelfName) => {
 }
 
 export const GetShelfItems = async (shelfName) => {
+
+
+    if (!(await ShelfNameValid(shelfName))){
+        return {success: false,
+            reason : "shelf name not valid"
+        }
+    }
+
     if (!(await ShelfExists(shelfName))){
         console.log("Shelf does not exist");
         return {success: false,
@@ -622,8 +630,43 @@ export const GetShelfItems = async (shelfName) => {
     }
 }
 
+export const  GetItemInfoForShelfItems = async (shelfName) => {
+    await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return {success: false,
+            reason : "shelf name not valid"
+        }
+    }
+
+    const query = `SELECT * FROM items WHERE id IN
+    (SELECT item_id FROM "${shelfName})`
+
+
+    try{
+        const result = await db.query(query);
+        return {
+            success:true,
+            value: result
+        }
+    }
+    catch(error){
+        console.log("Failed to get items info for shelf items");
+        return {success: false,
+            reason: "db fail"
+        }
+    }
+
+}
+
 export const GetShelf = async (shelfName) => {
     await ThrowIfDBNotInit();
+
+    if (!(await ShelfNameValid(shelfName))){
+        return {success: false,
+            reason : "shelf name not valid"
+        }
+    }
 
     try{
         const result = await db.query(GetShelfQuery, [shelfName]);

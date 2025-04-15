@@ -58,3 +58,27 @@ export const DeleteShelf = async (req, res) => {
     });
 
 }
+
+export const GetShelfItems = async (req, res, shelf) => {
+    const result = await dbHandler.GetShelfItems(shelf);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason}
+        );
+    }
+
+    if (result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "no items in shelf"}
+        );
+    }
+
+
+    return res.status(200).json({
+        success: true,
+        items: result.value.rows
+    });
+}
