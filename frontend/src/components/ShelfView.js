@@ -73,7 +73,7 @@ const ShelfView = ({ loginNeeded }) => {
                 return;
             }
 
-            await GetShelfItems();
+            await GetShelfItems(shelf);
         }
         catch(error){
             setMessage("Failed to delete item");
