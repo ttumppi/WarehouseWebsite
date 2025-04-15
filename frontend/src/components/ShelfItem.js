@@ -279,11 +279,11 @@ const ShelfItem = ({ loginNeeded }) => {
 
     useEffect(() => {
         console.log("Values after render:");
-        console.log("initialBalance:", initialBalance);
+        console.log("initialBalance:", initialBalance.current);
         console.log("balance:", balance);
-        console.log("initialLocation:", initialLocation);
+        console.log("initialLocation:", initialLocation.current);
         console.log("location:", location);
-        console.log("initialShelf:", initialShelf);
+        console.log("initialShelf:", initialShelf.current);
         console.log("shelf:", currentShelf);
     }, [initialBalance, balance, initialLocation, location, initialShelf, shelf]);
 
