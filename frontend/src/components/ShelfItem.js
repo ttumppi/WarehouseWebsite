@@ -283,7 +283,7 @@ const ShelfItem = ({ loginNeeded }) => {
             
             <h3>Location</h3>
             <select
-            value={location ?? ""}
+            value={location ?? "a"}
                 onChange={(e) => setLocation(e.target.value)}>
                 disabled={!locations || !locations[currentShelf]}
                 {
