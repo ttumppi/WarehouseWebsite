@@ -107,6 +107,7 @@ const ShelfItem = ({ loginNeeded }) => {
             
             setMessage("");
             setShelfs(shelfData.data)
+            console.log(`shelfs found : ${shelfData.data.length}`)
         }
 
         catch(error){
@@ -235,6 +236,8 @@ const ShelfItem = ({ loginNeeded }) => {
             await GetItem();
             await GetShelfs();
 
+            console.log(shelfs);
+            console.log(shelfs.length);
             for (let i = 0; i < shelfs.length; i++){
                 console.log(shelfs[i].shelf_id);
                 await GetAvailableLocations(shelfs[i].shelf_id);
