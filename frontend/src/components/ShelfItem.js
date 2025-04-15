@@ -285,7 +285,7 @@ const ShelfItem = ({ loginNeeded }) => {
             <select
             value={(location == null) ? 3 : location}
                 onChange={(e) => setLocation(e.target.value)}>
-                {(locations == null || locations[currrentShelf == null]) ? 
+                {(locations == null || locations[currentShelf == null]) ? 
                 <option value="" disabled>
                     -- Select a location --
                 </option>
