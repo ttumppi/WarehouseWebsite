@@ -166,7 +166,7 @@ const ShelfView = ({ loginNeeded }) => {
                         (shelf.shelf_id);}}>Add Item
                     </button>
                     <ul>
-                        {items.shelf.id?.map((item) => {
+                        {items.shelf?.id?.map((item) => {
                             <li key={item.id}>{item.model}</li>
                         })}
                     </ul>
