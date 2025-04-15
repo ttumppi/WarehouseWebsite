@@ -93,3 +93,5 @@ const ShelfView = ({ loginNeeded }) => {
 
 
 }
+
+export default ShelfView;
