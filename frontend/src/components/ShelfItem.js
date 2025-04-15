@@ -257,9 +257,9 @@ const ShelfItem = ({ loginNeeded }) => {
         const wrapper = async () => {
             const item = queue.current.Dequeue();
             console.log("shelfs", item);
-            if (!(!item || !item.item_id)){
+            if (!(!item || !item.shelf_id)){
                 console.log("Not null");
-                await GetAvailableLocations(item.item_id);
+                await GetAvailableLocations(item.shelf_id);
             }
         }
 
@@ -272,9 +272,9 @@ const ShelfItem = ({ loginNeeded }) => {
            if (!queue.current.Empty()){
                 const item = queue.current.Dequeue();
                 console.log("locations", item);
-                if (!(!item || !item.item_id)){
+                if (!(!item || !item.shelf_id)){
                     console.log("not null");
-                    await GetAvailableLocations(item.item_id);
+                    await GetAvailableLocations(item.shelf_id);
                 }
                 
             }
