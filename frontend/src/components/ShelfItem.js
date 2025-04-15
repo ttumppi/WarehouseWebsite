@@ -284,7 +284,7 @@ const ShelfItem = ({ loginNeeded }) => {
         console.log("initialLocation:", initialLocation);
         console.log("location:", location);
         console.log("initialShelf:", initialShelf);
-        console.log("shelf:", shelf);
+        console.log("shelf:", currentShelf);
     }, [initialBalance, balance, initialLocation, location, initialShelf, shelf]);
 
     return (
