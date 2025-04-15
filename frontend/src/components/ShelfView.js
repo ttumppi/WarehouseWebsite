@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetShelf } from "../../../backend/src/db/dbHandler";
 
 const ShelfView = ({ loginNeeded }) => {
     const { shelf } = useParams();
