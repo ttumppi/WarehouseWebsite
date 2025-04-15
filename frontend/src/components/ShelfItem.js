@@ -256,6 +256,7 @@ const ShelfItem = ({ loginNeeded }) => {
             const item = queue.current.Dequeue();
             console.log(item);
             if (!(!item || !item.item_id)){
+                console.log("Not null");
                 await GetAvailableLocations();
             }
         }
@@ -270,6 +271,7 @@ const ShelfItem = ({ loginNeeded }) => {
                 const item = queue.current.Dequeue();
                 console.log(item);
                 if (!(!item || !item.item_id)){
+                    console.log("not null");
                     await GetAvailableLocations();
                 }
                 
