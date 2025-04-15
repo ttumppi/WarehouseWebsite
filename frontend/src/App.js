@@ -7,7 +7,7 @@ import {
 import React, {useState, useEffect} from 'react';
 import Login from './components/Login';
 import ShelfsView from "./components/ShelfsView";
-import Items from "./components/ItemsView";
+import ItemsView from "./components/ItemsView";
 import ShelfView from "./components/ShelfView";
 import AddItemView from "./components/AddItemView";
 import "./App.css";
@@ -68,7 +68,7 @@ function App() {
 
             <Route
               path="/items"
-              element={loggedIn ? <Items loginNeeded={setLoginNeeded} /> :
+              element={loggedIn ? <ItemsView loginNeeded={setLoginNeeded} /> :
               <Navigate to="/"/> }>
             </Route>
 

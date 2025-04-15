@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Items = ({ loginNeeded }) => {
+const ItemsView = ({ loginNeeded }) => {
     const [manufacturer, setManufacturer] = useState("");
     const [model, setModel] = useState("");
     const [serial, setSerial] = useState("");
@@ -117,6 +117,14 @@ const Items = ({ loginNeeded }) => {
         navigate("/home");
     }
 
+    useEffect( () => {{
+        const getItemsWrapper = async () => {
+            await GetItems();
+        }
+
+        getItemsWrapper();
+    }})
+
 
 
     return (
@@ -194,4 +202,4 @@ const Items = ({ loginNeeded }) => {
 
 
 
-export default Items;
+export default ItemsView;
