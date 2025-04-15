@@ -12,6 +12,7 @@ const ShelfItem = ({ loginNeeded }) => {
     const [shelfs, setShelfs] = useState([]);
     const [locations, setLocations] = useState(null);
     const [item, setItem] = useState(null);
+    const [message, setMessage] = useState("");
 
     let initialBalance = null;
     let initialShelf = shelf;
@@ -123,7 +124,7 @@ const ShelfItem = ({ loginNeeded }) => {
     const TransferItem = async () => {
         try{
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}/item/transfer`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/item/transfer`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -134,7 +135,7 @@ const ShelfItem = ({ loginNeeded }) => {
                 })
                 });
 
-            shelfData = await shelfRes.json();
+            const shelfData = await shelfRes.json();
 
             if (!shelfData.success){
                 setMessage("Failed to transfer item");
@@ -154,7 +155,7 @@ const ShelfItem = ({ loginNeeded }) => {
 
             const balanceChange = balance - initialBalance;
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}/item/balance`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/item/balance`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -164,7 +165,7 @@ const ShelfItem = ({ loginNeeded }) => {
                 })
                 });
 
-            shelfData = await shelfRes.json();
+            const shelfData = await shelfRes.json();
 
             if (!shelfData.success){
                 setMessage("Failed to update balance");
