@@ -161,9 +161,13 @@ const ShelfView = ({ loginNeeded }) => {
                         () => {handleDeleteShelf
                         (shelf.shelf_id);}}>Delete
                     </button>
+                    <button onClick={ 
+                        () => {handleDeleteShelf
+                        (shelf.shelf_id);}}>Add Item
+                    </button>
                     <ul>
                         {items.shelf.id?.map((item) => {
-                            <li key={item.id}>{item.</li>
+                            <li key={item.id}>{item.model}</li>
                         })}
                     </ul>
                     
