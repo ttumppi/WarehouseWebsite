@@ -6,8 +6,14 @@ const SearchView = () => {
     const [shelfItems, setShelfItems] = useState({});
     const [message, setMessage] = useState("");
     const {search } = useParams();
+    const navigate = useNavigate();
 
     const { setLoginNeeded } = useContext(StateContext);
+
+
+    const redirectToHomePage = () => {
+        navigate("/");
+    }
 
     const Search = async () => {
     
@@ -56,9 +62,18 @@ const SearchView = () => {
 
     return (
         <div>
+            <div>
+                <button className="default-button"
+                    onClick={redirectToHomePage}>
+                    Back
+                </button>
+            </div>
             {Object.entries(shelfItems).map(([shelf, items]) => (
                 <div>
+                    (items.length != 0) &&
+
                     <h2>{shelf}</h2>
+                    
                     <table border="1" cellPadding="8">
                         <thead>
                             <tr>
@@ -81,6 +96,7 @@ const SearchView = () => {
                             ))}
                         </tbody>
                     </table>
+                    
                 </div>
             ))}
 
