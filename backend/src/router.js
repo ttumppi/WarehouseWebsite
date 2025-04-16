@@ -31,6 +31,12 @@ export const RegisterRoutes = (server) => {
         return await loginHandler.GetSalt(res, req.params.username);
     })
 
+    server.post("/api/change-password", CheckAuth, async (req, res) => {
+        return await loginHandler.ChangePassword(req, res, req.body.username,
+            req.body.password, req.body.salt
+        );
+    })
+
     server.get("/api/shelfs", CheckAuth, async (req, res) => {
         console.log("/api/shelfs GET");
         return await mainHandler.GetShelfs(req, res);

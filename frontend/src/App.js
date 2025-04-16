@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigate
 } from "react-router-dom";
 import React, {useState, useEffect} from 'react';
 import Login from './components/Login';
@@ -20,11 +21,16 @@ function App() {
   const [username, setUsername] = useState(null);
   const [role, setRole] = useState(null);
   
+  const navigate = useNavigate();
 
   const setLoginSuccessfull = (username, role) => {
     setLoginState(true);
     setUsername(username);
     setRole(role);
+  }
+
+  const passwordChangeNeeded = () => {
+    navigate("/change-password");
   }
 
 
@@ -66,7 +72,8 @@ function App() {
 
             <Route path="/" element=
               {loggedIn ? <Navigate to="/home"/> : 
-              <Login loginSuccessfull={setLoginSuccessfull}/>} >
+              <Login loginSuccessfull={setLoginSuccessfull} 
+              changePassword={passwordChangeNeeded}/>} >
             </Route>
 
             <Route

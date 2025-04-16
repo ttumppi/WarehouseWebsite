@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 
-const Login = ({ loginSuccessfull }) => {
+const Login = ({ loginSuccessfull, changePassword}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -10,7 +10,7 @@ const Login = ({ loginSuccessfull }) => {
     e.preventDefault();
 
     try {
-      // 1. Fetch the salt for this username
+      
       const saltRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
       const saltData = await saltRes.json();
@@ -20,12 +20,12 @@ const Login = ({ loginSuccessfull }) => {
         return;
       }
 
-      const salt = saltData.salt; // should be like '8chrsalt'
+      const salt = saltData.salt;
 
-      // 2. Hash password + salt using SHA-256
+     
       const combined = password + salt;
       const hash = CryptoJS.SHA256(combined).toString();
-      // 3. Send login request
+      
       const loginRes = await fetch(
         `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login`, {
         method: "POST",
@@ -35,7 +35,16 @@ const Login = ({ loginSuccessfull }) => {
       });
 
       const loginData = await loginRes.json();
+
+      
+
       if (loginData.success) {
+
+        if (loginData.role.includes("(F)")){
+          changePassword();
+          return;
+        }
+
         setMessage(`Welcome, ${loginData.username}`);
         loginSuccessfull(loginData.username, loginData.role);
 
