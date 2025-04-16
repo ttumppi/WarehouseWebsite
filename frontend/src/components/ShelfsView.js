@@ -82,11 +82,11 @@ const ShelfsView = () => {
                 shelfItemsCopy[item] = shelfItems[item];
             }
 
-            itemsCopy[shelfName] = shelfData.items;
+            shelfItemsCopy[shelfName] = shelfData.items;
             console.log(shelfName);
-            console.log(itemsCopy[shelfName]);
+            console.log(shelfItemsCopy[shelfName]);
 
-            setShelfItems(itemsCopy);
+            setShelfItems(shelfItemsCopy);
         }
 
         catch(error){
