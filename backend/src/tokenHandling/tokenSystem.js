@@ -11,6 +11,8 @@ export const VerifyAndGetTokenFromHeaders = async (headers) => {
         return {success:false}
     }
 
+    console.log(JSON.stringify(unvalidatedTokens));
+    console.log(result.token.id);
     if (unvalidatedTokens.indexOf(result.token.id) != -1){
         return {success:false}
     }
