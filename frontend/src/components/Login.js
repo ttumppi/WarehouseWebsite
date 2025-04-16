@@ -41,7 +41,7 @@ const Login = ({ loginSuccessfull, changePassword}) => {
       if (loginData.success) {
 
         if (loginData.role.includes("(F)")){
-          changePassword();
+          changePassword(username);
           return;
         }
 

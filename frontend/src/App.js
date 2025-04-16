@@ -23,6 +23,8 @@ function App() {
   const [loggedIn, setLoginState] = useState(true);
   const [username, setUsername] = useState(null);
   const [role, setRole] = useState(null);
+
+  const roles = ["Observer", "Warehouse worker", "Admin"];
   
   const navigate = useNavigate();
 
@@ -32,8 +34,8 @@ function App() {
     setRole(role);
   }
 
-  const passwordChangeNeeded = () => {
-    navigate("/change-password");
+  const passwordChangeNeeded = (username) => {
+    navigate(`/change-password/${username}`);
   }
 
 
@@ -106,6 +108,26 @@ function App() {
             <Route
               path="/shelf/:shelf/:id"
               element={loggedIn ? <ShelfItem loginNeeded={setLoginNeeded} /> :
+              <Navigate to="/"/> }>
+            </Route>
+
+            <Route
+              path="/change-password/:username"
+              element={loggedIn ? <ChangePassword loginNeeded={setLoginNeeded} /> :
+              <Navigate to="/"/> }>
+            </Route>
+
+            <Route
+              path="/create-user"
+              element={loggedIn ? <CreateUser loginNeeded={setLoginNeeded}
+              roles={roles} /> :
+              <Navigate to="/"/> }>
+            </Route>
+
+            <Route
+              path="/users"
+              element={loggedIn ? <UsersView loginNeeded={setLoginNeeded}
+              username={username} /> :
               <Navigate to="/"/> }>
             </Route>
             

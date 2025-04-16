@@ -16,8 +16,8 @@ const Navigation = ({ username, role }) => {
             </div>
             <div>
                 <strong>
-                    {role == "admin" ? 
-                    <Link to="/create-user">Create User</Link> :
+                    {role == "Admin" ? 
+                    <Link to="/users">User Management</Link> :
                     ""}
                 </strong>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GenerateRandomString } from "../stringFunctions";
 
-const CreateUser = ({ roles }) => {
+const CreateUser = ({ loginNeeded, roles }) => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [role, setRole] = useState(null);
@@ -27,6 +27,12 @@ const CreateUser = ({ roles }) => {
                     role, salt
                  }),
               });
+
+            if (loginRes.status == 401){
+                setMessage("Not logged in");
+                loginNeeded();
+                return;
+            }
         
             const loginData = await loginRes.json();
         

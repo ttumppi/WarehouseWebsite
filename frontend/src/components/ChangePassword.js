@@ -4,7 +4,7 @@ import { GenerateRandomString } from "../stringFunctions";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const ChangePassword = () => {
+const ChangePassword = ({ loginNeeded }) => {
 
     const {username} = useParams();
     const [oldPassword, setOldPassword] = useState("");
@@ -25,7 +25,14 @@ const ChangePassword = () => {
 
                 const saltRes = await fetch(
                     `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
-                    const saltData = await saltRes.json();
+                    
+
+                if (saltRes.status == 401){
+                    setMessage("Not logged in");
+                    loginNeeded();
+                    return;
+                }
+                const saltData = await saltRes.json();
             
                 if (!saltData.success) {
                 setMessage(saltData.message);

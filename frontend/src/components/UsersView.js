@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UsersView = ({ username }) => {
+const UsersView = ({ loginNeeded, username }) => {
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
@@ -25,6 +25,12 @@ const UsersView = ({ username }) => {
                 credentials: "include"
                 });
     
+
+            if (usersRes.status == 401){
+                setMessage("Not logged in");
+                loginNeeded();
+                return;
+            }
             const usersData = await usersRes.json();
 
            
