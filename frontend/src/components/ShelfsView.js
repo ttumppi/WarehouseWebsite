@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import StateContext from "./StateContext";
-
+import {Queue} from "../queue.js";
 
 const ShelfsView = () => {
 
@@ -12,6 +12,8 @@ const ShelfsView = () => {
     const [search, setSearch] = useState("");
 
     const navigate = useNavigate();
+
+    const queue = useRef(new Queue());
 
     const redirectToSearchPage = () => {
         navigate(`/search/${search}`);
@@ -41,6 +43,10 @@ const ShelfsView = () => {
             
             setMessage("");
             setShelfs(shelfData.data)
+
+            shelfData.data.map((shelf) => {
+                queue.current.Enqueue(shelf);
+            });
         }
 
         catch(error){
@@ -70,7 +76,11 @@ const ShelfsView = () => {
             
             setMessage("");
             
-            let itemsCopy = items;
+            let itemsCopy = {};
+
+            for (let item in items){
+                itemsCopy[item] = items[item];
+            }
 
             itemsCopy[shelfName] = shelfData.items;
 
@@ -95,6 +105,24 @@ const ShelfsView = () => {
         
         getShelfsWrapper();
     }, []);
+
+    useEffect(() => {
+        const wrapper = async () => {
+            if (!queue.current.Empty()){
+                await GetShelfItems(queue.current.Dequeue());
+            }
+        }
+        wrapper();
+    }, [shelfs]);
+
+    useEffect(() => {
+        const wrapper = async () => {
+            if (!queue.current.Empty()){
+                await GetShelfItems(queue.current.Dequeue());
+            }
+        }
+        wrapper();
+    }, [items])
 
     const handleAddShelf = async () => {
 
