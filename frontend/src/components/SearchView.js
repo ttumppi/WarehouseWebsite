@@ -69,11 +69,11 @@ const SearchView = () => {
                 </button>
             </div>
             {Object.entries(shelfItems).map(([shelf, items]) => (
-                <div>
-                    (items.length != 0) &&
 
+                (items.length != 0) && (
+                <div>
                     <h2>{shelf}</h2>
-                    
+
                     <table border="1" cellPadding="8">
                         <thead>
                             <tr>
@@ -98,6 +98,7 @@ const SearchView = () => {
                     </table>
                     
                 </div>
+                )
             ))}
 
             <p>{message}</p>
