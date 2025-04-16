@@ -124,7 +124,7 @@ const ShelfsView = () => {
             }
         }
         wrapper();
-    }, [items])
+    }, [shelfItems])
 
     const handleAddShelf = async () => {
 
@@ -241,7 +241,7 @@ const ShelfsView = () => {
                     </button>}
                     
                     <ul>
-                        {items[shelf.shelf_id].map((item) => {
+                        {shelfItems[shelf.shelf_id].map((item) => {
                             <li key={item.id}> {item.manufacturer} - {item.model} - {item.serial}</li>
                         })}
                     </ul>
