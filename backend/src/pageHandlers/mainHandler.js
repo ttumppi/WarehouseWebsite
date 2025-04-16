@@ -197,3 +197,43 @@ export const ChangeItemBalance = async (req, res, shelf) => {
             success: true
         });
 }
+
+export const GetShelfSize = async (req, res, shelf) => {
+    const result = dbHandler.GetShelfSize(shelf);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason
+        })
+    }
+
+    if (!result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No size found"
+        })
+    }
+
+    return res.status(200).json({
+        success: true,
+        size: result.value.rows[0].size
+    });
+}
+
+export const ChangeShelfSize = async (req, res, shelf, size) => {
+    const result = dbHandler.ChangeShelfSize(shelf, size);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason
+        })
+    }
+
+    return res.status(200).json({
+        success: true,
+    })
+
+
+}

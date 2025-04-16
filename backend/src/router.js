@@ -63,6 +63,18 @@ export const RegisterRoutes = (server) => {
         return await mainHandler.DeleteItemFromShelf(req, res, req.params.shelf);
     })
 
+    server.get("/api/shelf/:shelf/size", CheckAuth, async (req, res) => {
+        console.log("/api/shelf/:shelf/size GET");
+        return await mainHandler.GetShelfSize(req, res, req.params.shelf);
+    })
+
+    server.post("/api/shelf/:shelf/size", CheckAuth, async (req, res) =>{
+        console.log("/api/shelf/:shelf/size POST");
+        return await mainHandler.ChangeShelfSize(req, res, req.params.shelf, 
+            req.body.size
+        ); 
+    })
+
     server.get("/api/shelf/:shelf/locations", CheckAuth, async (req, res) => {
         console.log("/api/shelf/:shelf/locations GET");
         return await mainHandler.GetShelfAvailableLocations
@@ -103,6 +115,8 @@ export const RegisterRoutes = (server) => {
         console.log("/api/item/:id GET");
         return await itemHandler.GetItem(req, res, req.params.id);
     })
+
+    
 }
 
 

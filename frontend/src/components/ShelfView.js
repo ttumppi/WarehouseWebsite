@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ShelfView = ({ loginNeeded }) => {
@@ -8,6 +8,8 @@ const ShelfView = ({ loginNeeded }) => {
 
     const [items, setItems] = useState([]);
     const [message, setMessage] = useState("");
+    const [size, setSize] = useState(null);
+    let initialSize = useRef(null);
 
 
     const redirectToHomePage = () => {
@@ -23,6 +25,81 @@ const ShelfView = ({ loginNeeded }) => {
     }
 
 
+    const GetShelfSize = async (shelfName) => {
+        try{
+            const shelfRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}/size`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+                });
+
+            if (shelfRes.status == 401){
+                setMessage("Not logged in");
+                loginNeeded();
+                return;
+            }
+    
+            const shelfData = await shelfRes.json();
+
+           
+    
+            if (!shelfData.success){
+                setSize(null)
+                setMessage(shelfData.message);
+                return;
+            }
+            
+            setMessage("");
+            
+           
+            initialSize.current =  shelfData.size;
+            setSize(shelfData.size);
+        }
+
+        catch(error){
+            setMessage("Failed to fetch size");
+            console.log(`Failed to fetch size: ${error}`);
+        }
+    }
+
+    const ChangeSize = async () => {
+        try{
+            const shelfRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}/size`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    size: size
+                })
+                });
+
+            if (shelfRes.status == 401){
+                setMessage("Not logged in");
+                loginNeeded();
+                return;
+            }
+    
+            const shelfData = await shelfRes.json();
+
+           
+    
+            if (!shelfData.success){
+                setMessage(shelfData.message);
+                return;
+            }
+            
+            setMessage("Changed size");
+            
+           
+        }
+
+        catch(error){
+            setMessage("Failed to change size");
+            console.log(`Failed to change size: ${error}`);
+        }
+    }
 
     const GetShelfItems = async (shelfName) => {
         try{
@@ -112,6 +189,25 @@ const ShelfView = ({ loginNeeded }) => {
                     Add Item
                 </button>
 
+            </div>
+
+            <div>
+                <h3>Shelf size</h3>
+                <input
+                    type="number"
+                    min="0"
+                    value={(size == null) ? 0 : size}
+                    onChange={(e) => setSize(parseInt(e.target.value))}
+                    />
+
+            <br/>
+
+            <button className="basic-button"
+                disabled={initialSize == size}
+                onClick={ChangeSize}>
+                    Change Size
+                </button>
+            <br/>
             </div>
 
             <div>

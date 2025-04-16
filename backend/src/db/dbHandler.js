@@ -508,7 +508,7 @@ const GetLastShelfName = async () => {
     }
 }
 
-const GetShelfSize = async (shelfName) => {
+export const GetShelfSize = async (shelfName) => {
     await ThrowIfDBNotInit();
 
     try{
