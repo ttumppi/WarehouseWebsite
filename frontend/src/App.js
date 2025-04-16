@@ -13,6 +13,9 @@ import ShelfView from "./components/ShelfView";
 import AddItemView from "./components/AddItemView";
 import ShelfItem from "./components/ShelfItem";
 import Navigation from "./components/Navigation";
+import ChangePassword from "./components/ChangePassword";
+import UsersView from "./components/UsersView";
+import CreateUser from "./components/CreateUser";
 import "./App.css";
 
 function App() {
