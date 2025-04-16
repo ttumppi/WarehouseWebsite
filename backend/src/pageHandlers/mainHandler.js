@@ -89,6 +89,7 @@ export const GetShelfItems = async (req, res, shelf) => {
             items[successfullLoops]["model"] = itemsInfo.value.rows[i].model;
             items[successfullLoops]["serial"] = itemsInfo.value.rows[i].serial;
             i = 0;
+            successfullLoops++;
             continue;
         }
         i++;
