@@ -76,6 +76,7 @@ const ShelfsView = () => {
            
             
             if (!shelfData.success){
+                setShelfItems(shelfItems);
                 setMessage(shelfData.message);
                 return;
             }
