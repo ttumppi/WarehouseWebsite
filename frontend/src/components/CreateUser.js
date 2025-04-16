@@ -68,9 +68,6 @@ const CreateUser = () => {
 
 
 
-    for (let i = 0; i < roles.length; i++){
-        console.log(roles[i]);
-    }
     return (
         <div>
             <h2>Create User</h2>
