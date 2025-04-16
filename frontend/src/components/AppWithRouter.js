@@ -6,7 +6,7 @@ import {
     useNavigate
   } from "react-router-dom";
   import React, {useState, useEffect} from 'react';
-  import Login from './components/Login';
+  import Login from './Login';
   import ShelfsView from "./ShelfsView";
   import ItemsView from "./ItemsView";
   import ShelfView from "./ShelfView";
