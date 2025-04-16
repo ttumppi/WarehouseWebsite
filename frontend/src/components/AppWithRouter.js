@@ -41,6 +41,8 @@ const AppWithRouter = () => {
 
   const setLoginNeeded = () => {
     setLoginState(false);
+    setUsername(null);
+    setRole(null);
   }
 
   const CheckAuth = async () => {
