@@ -11,11 +11,14 @@ import ItemsView from "./components/ItemsView";
 import ShelfView from "./components/ShelfView";
 import AddItemView from "./components/AddItemView";
 import ShelfItem from "./components/ShelfItem";
+import Navigation from "./components/Navigation";
 import "./App.css";
 
 function App() {
 
   const [loggedIn, setLoginState] = useState(true);
+  const [username, setUsername] = useState(null);
+  const [role, setRole] = useState(null);
   
 
   const setLoginSuccessfull = () => {
@@ -54,6 +57,8 @@ function App() {
 
   return (
     <Router>
+
+        <Navigation username={username} role={role}></Navigation>
         <Routes>
 
             <Route path="/" element=
