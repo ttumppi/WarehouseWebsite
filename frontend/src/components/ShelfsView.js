@@ -164,11 +164,11 @@ const ShelfsView = () => {
 
             <div className="shelf-header">
                 <h2>Shelves</h2>
-                {role == "Admin" || role == "Warehouse worker" &&
+                {(role == "Admin" || role == "Warehouse worker") &&
                 <button className="header-button" 
                     onClick={handleAddShelf}>Add Shelf
                 </button>}
-                {role == "Admin" || role == "Warehouse worker" &&
+                {(role == "Admin" || role == "Warehouse worker") &&
                 <button className="header-button" 
                     onClick={ redirectToCreateItem}>
                     Item page
@@ -187,7 +187,7 @@ const ShelfsView = () => {
                         onClick={() => {redirectToShelf(shelf.shelf_id)}}>
                         {shelf.shelf_id}
                     </span>
-                    {role == "Admin" || role == "Warehouse worker" &&
+                    {(role == "Admin" || role == "Warehouse worker") &&
                     <button className="basic-button" onClick={ 
                         () => {handleDeleteShelf
                         (shelf.shelf_id);}}>Delete

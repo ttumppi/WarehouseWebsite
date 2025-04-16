@@ -187,7 +187,7 @@ const ShelfView = () => {
                 onClick={ redirectToHomePage}>
                     Back
                 </button>
-                {role == "Admin" || role == "Warehouse worker" &&
+                {(role == "Admin" || role == "Warehouse worker") &&
                 <button className="basic-button" 
                 onClick={redirectToItemSelectPage}>
                     Add Item
@@ -206,7 +206,7 @@ const ShelfView = () => {
 
             <br/>
             
-            {role == "Admin" || role == "Warehouse worker" &&
+            {(role == "Admin" || role == "Warehouse worker") &&
             <button className="basic-button"
                 disabled={initialSize.current == size}
                 onClick={ChangeSize}>
@@ -225,7 +225,7 @@ const ShelfView = () => {
                             <th>Serial</th>
                             <th>Balance</th>
                             <th>Location</th>
-                            {role == "Admin" || role == "Warehouse worker" &&
+                            {(role == "Admin" || role == "Warehouse worker") &&
                             <th>Delete</th>}
                         </tr>
                     </thead>
@@ -242,7 +242,7 @@ const ShelfView = () => {
                                 </td>
                                 <td>{item.balance}</td>
                                 <td>{item.location}</td>
-                                {role == "Admin" || role == "Warehouse worker" &&
+                                {(role == "Admin" || role == "Warehouse worker") &&
                                 <td>
                                     <button className="basic-button"
                                         onClick={() => {DeleteItem(item.location)}}>

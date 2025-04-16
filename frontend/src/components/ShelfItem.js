@@ -302,7 +302,7 @@ const ShelfItem = () => {
             <h3>Shelf</h3>
             <select
                 value={currentShelf}
-                disable={role != "Admin" && role != "Warehouse worker"}
+                disabled={(role != "Admin" && role != "Warehouse worker")}
                 onChange={(e) => setCurrentShelf(e.target.value)}>
                 {shelfs.map((shelf) => (
                     <option key={shelf.id} value={shelf.shelf_id}>
@@ -314,7 +314,7 @@ const ShelfItem = () => {
             <h3>Location</h3>
             <select
             value={location ?? 3}
-            disable={role != "Admin" && role != "Warehouse worker"}
+            disabled={(role != "Admin" && role != "Warehouse worker")}
                 onChange={(e) => setLocation(parseInt(e.target.value))}>
                 disabled={!locations || !locations[currentShelf]}
                 {
@@ -331,7 +331,7 @@ const ShelfItem = () => {
 
             <h3>Balance</h3>
             <input
-                disable={role != "Admin" && role != "Warehouse worker"}
+                disabled={(role != "Admin" && role != "Warehouse worker")}
                 type="number"
                 min="0"
                 value={(balance == null) ? 0 : balance}
