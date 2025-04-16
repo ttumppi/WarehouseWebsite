@@ -7,7 +7,7 @@ import StateContext from "./StateContext";
 
 const ChangePassword = () => {
 
-    const { loginNeeded } = useContext(StateContext);
+    const { setLoginNeeded } = useContext(StateContext);
 
     const {username} = useParams();
     const [oldPassword, setOldPassword] = useState("");
@@ -32,7 +32,7 @@ const ChangePassword = () => {
 
                 if (saltRes.status == 401){
                     setMessage("Not logged in");
-                    loginNeeded();
+                    setLoginNeeded();
                     return;
                 }
                 const saltData = await saltRes.json();

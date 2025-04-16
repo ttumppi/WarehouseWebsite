@@ -4,7 +4,7 @@ import CryptoJS from "crypto-js";
 import StateContext from "./StateContext";
 const CreateUser = () => {
 
-    const { loginNeeded, roles } = useContext(StateContext);
+    const { setLoginNeeded, roles } = useContext(StateContext);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [role, setRole] = useState(null);
@@ -35,7 +35,7 @@ const CreateUser = () => {
 
             if (loginRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
         

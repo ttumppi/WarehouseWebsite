@@ -4,7 +4,7 @@ import StateContext from "./StateContext";
 import { useNavigate } from "react-router-dom";
 
 const AddItemView = () => {
-    const { loginNeeded } = useContext(StateContext);
+    const { setLoginNeeded } = useContext(StateContext);
     const { shelf } = useParams();
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const AddItemView = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
         
@@ -72,7 +72,7 @@ const AddItemView = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import StateContext from "./StateContext";
 const ItemsView = () => {
-    const { loginNeeded } = useContext(StateContext);
+    const { setLoginNeeded } = useContext(StateContext);
     const [manufacturer, setManufacturer] = useState("");
     const [model, setModel] = useState("");
     const [serial, setSerial] = useState("");
@@ -24,7 +24,7 @@ const ItemsView = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
         
@@ -95,7 +95,7 @@ const ItemsView = () => {
 
           if (creationRes.status == 401){
             setMessage("not logged in");
-            loginNeeded();
+            setLoginNeeded();
             return;
           }
 

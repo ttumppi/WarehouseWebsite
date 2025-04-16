@@ -4,7 +4,7 @@ import StateContext from "./StateContext";
 
 const UsersView = () => {
 
-    const { username, loginNeeded } = useContext(StateContext);
+    const { username, setLoginNeeded } = useContext(StateContext);
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
@@ -31,7 +31,7 @@ const UsersView = () => {
 
             if (usersRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
             const usersData = await usersRes.json();

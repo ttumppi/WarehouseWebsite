@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import StateContext from "./StateContext";
 
 const ShelfView = () => {
-    const { loginNeeded } = useContext(StateContext);
+    const { setLoginNeeded } = useContext(StateContext);
     const { shelf } = useParams();
     const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const ShelfView = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
     
@@ -79,7 +79,7 @@ const ShelfView = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
     
@@ -115,7 +115,7 @@ const ShelfView = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
     

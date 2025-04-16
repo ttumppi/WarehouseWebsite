@@ -5,7 +5,7 @@ import {Queue} from "../queue.js";
 import StateContext from "./StateContext.js";
 
 const ShelfItem = () => {
-    const { loginNeeded} = useContext(StateContext);
+    const { setLoginNeeded} = useContext(StateContext);
     const {shelf, id } = useParams();
     const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const ShelfItem = () => {
 
         if (shelfRes.status == 401){
             setMessage("not logged in");
-            loginNeeded();
+            setLoginNeeded();
             return;
         }
 
@@ -103,7 +103,7 @@ const ShelfItem = () => {
             const shelfData = await shelfsRes.json();
             if (shelfsRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
     
@@ -140,7 +140,7 @@ const ShelfItem = () => {
 
             if (shelfRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
 

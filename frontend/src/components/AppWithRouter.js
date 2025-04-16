@@ -77,6 +77,7 @@ const AppWithRouter = () => {
         <StateContext.Provider value={{
             setLoginSuccessfull,
             passwordChangeNeeded,
+            setLoginNeeded,
             username,
             role,
             roles

@@ -5,7 +5,7 @@ import StateContext from "./StateContext";
 
 const ShelfsView = () => {
 
-    const { loginNeeded } = useContext(StateContext);
+    const { setLoginNeeded } = useContext(StateContext);
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
     const [items, setItems] = useState({});
@@ -25,7 +25,7 @@ const ShelfsView = () => {
             const shelfData = await shelfsRes.json();
             if (shelfsRes.status == 401){
                 setMessage("Not logged in");
-                loginNeeded();
+                setLoginNeeded();
                 return;
             }
     
