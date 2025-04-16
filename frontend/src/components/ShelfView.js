@@ -66,7 +66,7 @@ const ShelfView = ({ loginNeeded }) => {
     const ChangeSize = async () => {
         try{
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}/size`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelf}/size`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -168,6 +168,7 @@ const ShelfView = ({ loginNeeded }) => {
 
         const getShelfItemsWrapper = async () => {
             await GetShelfItems(shelf);
+            await GetShelfSize(shelf);
         }
 
         getShelfItemsWrapper();
