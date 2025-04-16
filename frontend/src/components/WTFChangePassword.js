@@ -18,7 +18,7 @@ const ChangePassword = () => {
         navigate("/");
     }
 
-    const ChangePassword = async (e) => {
+    const ChangePasswordSubmit = async (e) => {
         e.preventDefault();
         
             try {
@@ -99,7 +99,7 @@ const ChangePassword = () => {
         <div>
             <h2>Change password :</h2>
 
-            <form onSubmit={ChangePassword}>
+            <form onSubmit={ChangePasswordSubmit}>
             <input
                     type="password"
                     placeholder="Old Password"
