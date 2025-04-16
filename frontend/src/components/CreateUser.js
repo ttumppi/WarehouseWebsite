@@ -96,7 +96,7 @@ const CreateUser = ({ loginNeeded, roles }) => {
                     ))}
                 </select>
 
-                <button type="submit">Login</button>
+                <button type="submit">Create</button>
             </form>
             <p>{message}</p>
         </div>
