@@ -7,7 +7,7 @@ const CreateUser = () => {
     const { setLoginNeeded, roles } = useContext(StateContext);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState(roles[0]);
     const [message, setMessage] = useState("");
 
     const CreateUserSubmit = async (e) => {
@@ -95,7 +95,7 @@ const CreateUser = () => {
                 /><br/>
 
                 <select
-                    value={ role?? roles[0]}
+                    value={ role}
                     onChange={(e) => setRole(e.target.value)}>
                     
                     {roles.map((role) => (
