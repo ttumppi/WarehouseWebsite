@@ -287,6 +287,7 @@ const ShelfItem = () => {
     if (!role){
         return <p>For fuck's sake ...</p>
     }
+    console.log(role);
    
     return (
         <div>
