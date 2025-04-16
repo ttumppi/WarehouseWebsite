@@ -66,8 +66,8 @@ const ChangePassword = ({ loginNeeded }) => {
                     return;
                 }
              
-                salt = GenerateRandomString(8);   
-                const combined = password + salt;
+                const newSalt = GenerateRandomString(8);   
+                const combined = password + newSalt;
                 const hash = CryptoJS.SHA256(combined).toString();
 
                 const changeRes = await fetch(
@@ -75,7 +75,7 @@ const ChangePassword = ({ loginNeeded }) => {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
-                    body: JSON.stringify({ username, password: hash, salt }),
+                    body: JSON.stringify({ username, password: hash, salt: newSalt }),
                 });
             
                 const changeData = await changeRes.json();
@@ -124,7 +124,7 @@ const ChangePassword = ({ loginNeeded }) => {
                     onChange={e => setPassword(e.target.value)}
                     required>
                 </input>    
-                                
+
                 <br/>
 
                 <input
