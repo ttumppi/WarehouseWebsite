@@ -91,6 +91,7 @@ const ShelfView = ({ loginNeeded }) => {
             }
             
             setMessage("Changed size");
+            initialSize.current = size;
             
            
         }
