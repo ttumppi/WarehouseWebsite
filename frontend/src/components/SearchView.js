@@ -32,7 +32,7 @@ const SearchView = () => {
                 }
                 
                 setMessage("");
-                setShelfs(shelfData.data)
+                setShelfItems(shelfData.data)
             }
     
             catch(error){
