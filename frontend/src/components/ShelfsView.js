@@ -158,6 +158,10 @@ const ShelfsView = () => {
         navigate(`/shelf/${shelf}`);
     }
 
+    if (!role){
+        return <p>For fuck's sake ...</p>
+    }
+
     return (
         <div>
             
