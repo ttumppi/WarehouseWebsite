@@ -53,13 +53,16 @@ const AppWithRouter = () => {
         credentials: "include"
         });
 
+        console.log("W");
 
         if (userRes.status == 401){
-        setLoginNeeded();
-        return;
+            setLoginNeeded();
+            return;
         }
+        console.log("A");
         const userData = await userRes.json();
         setLoginSuccessfull(userData.username, userData.role);
+        console.log("B");
 
     }
 
