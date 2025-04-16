@@ -41,6 +41,7 @@ const Login = ({ loginSuccessfull, changePassword}) => {
       if (loginData.success) {
 
         if (loginData.role.includes("(F)")){
+          console("Redirecting");
           changePassword(username);
           return;
         }
