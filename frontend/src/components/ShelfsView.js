@@ -81,6 +81,7 @@ const ShelfsView = () => {
             let shelfItemsCopy = {};
 
             for (let item in shelfItems){
+                console.log("at loop", item);
                 shelfItemsCopy[item] = shelfItems[item];
             }
 
