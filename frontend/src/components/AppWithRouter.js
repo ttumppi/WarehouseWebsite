@@ -70,11 +70,10 @@ const AppWithRouter = () => {
   }, []);
 
   return (
-    <Router>
 
-        <Navigation username={username} role={role}></Navigation>
+        
         <Routes>
-
+            <Navigation username={username} role={role}></Navigation>
             <Route path="/" element=
               {loggedIn ? <Navigate to="/home"/> : 
               <Login loginSuccessfull={setLoginSuccessfull} 
@@ -133,7 +132,6 @@ const AppWithRouter = () => {
             
 
         </Routes>
-    </Router>
   );
 }
 
