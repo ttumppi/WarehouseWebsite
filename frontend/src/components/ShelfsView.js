@@ -41,10 +41,13 @@ const ShelfsView = () => {
                 return;
             }
             
+            let shelfItemsCopy = {};
             shelfData.data.map((shelf) => {
+                shelfItemsCopy[shelf.shelf_id] = [];
                 queue.current.Enqueue(shelf.shelf_id);
             });
 
+            setShelfItems(shelfItemsCopy);
             setMessage("");
             setShelfs(shelfData.data)
 
@@ -70,7 +73,7 @@ const ShelfsView = () => {
             const shelfData = await shelfRes.json();
 
            
-    
+            
             if (!shelfData.success){
                 setMessage(shelfData.message);
                 return;
@@ -81,7 +84,6 @@ const ShelfsView = () => {
             let shelfItemsCopy = {};
 
             for (let item in shelfItems){
-                console.log("at loop", item);
                 shelfItemsCopy[item] = shelfItems[item];
             }
 
@@ -111,14 +113,12 @@ const ShelfsView = () => {
         const wrapper = async () => {
             if (!queue.current.Empty()){
                 await GetShelfItems(queue.current.Dequeue());
-                console.log("at first", shelfItems);
             }
         }
         wrapper();
     }, [shelfs]);
 
     useEffect(() => {
-        console.log(shelfItems);
         const wrapper = async () => {
             if (!queue.current.Empty()){
                 await GetShelfItems(queue.current.Dequeue());
@@ -242,7 +242,7 @@ const ShelfsView = () => {
                     </button>}
                     
                     <ul>
-                        {(Object.keys(shelfItems).length > 0) && shelfItems[shelf.shelf_id]?.map((item) => (
+                        {(Object.keys(shelfItems).length > 0) && shelfItems[shelf.shelf_id].map((item) => (
                             <li key={item.id}> {item.manufacturer} - {item.model} - {item.serial}</li>
                         ))}
                     </ul>
