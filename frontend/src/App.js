@@ -21,9 +21,12 @@ function App() {
   const [role, setRole] = useState(null);
   
 
-  const setLoginSuccessfull = () => {
+  const setLoginSuccessfull = (username, role) => {
     setLoginState(true);
+    setUsername(username);
+    setRole(role);
   }
+
 
   const setLoginNeeded = () => {
     setLoginState(false);

@@ -36,8 +36,8 @@ const Login = ({ loginSuccessfull }) => {
 
       const loginData = await loginRes.json();
       if (loginData.success) {
-        setMessage(`Welcome, ${loginData.role}`);
-        loginSuccessfull();
+        setMessage(`Welcome, ${loginData.username}`);
+        loginSuccessfull(loginData.username, loginData.role);
 
 
       } else {

@@ -18,9 +18,9 @@ export const VerifyAndGetTokenFromHeaders = async (headers) => {
     return result
 }
 
-export const CreateToken = async (username, expiration) => {
+export const CreateToken = async (username, role, expiration) => {
 
-    return await tokenGranter.CreateToken(username, expiration)
+    return await tokenGranter.CreateToken(username, role, expiration)
 }
 
 export const VerifyAndGetToken = async (token) => {

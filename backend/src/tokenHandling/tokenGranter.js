@@ -17,7 +17,7 @@ let tokenID = 0
 
 
 
-export const CreateToken = async (username, expirationSeconds) => {
+export const CreateToken = async (username, role, expirationSeconds) => {
 
     const ID = tokenID;
     tokenID++;
@@ -25,7 +25,8 @@ export const CreateToken = async (username, expirationSeconds) => {
     return jwt.sign(
         {
         username,
-        ID
+        ID,
+        role
         }, 
     signKey,
      { expiresIn: expirationSeconds});

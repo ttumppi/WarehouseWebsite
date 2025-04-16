@@ -19,6 +19,8 @@ export const CorrectLogin = async (req, res) => {
         );
     }
 
+    const role = usernameResult.value.rows[0].role;
+
     const passwordResult = await dbHandler.GetUserPasswordAndSaltWithUsername(req.body.username);
 
     if (!passwordResult.success){
@@ -37,7 +39,7 @@ export const CorrectLogin = async (req, res) => {
 
     if (passwordResult.value.rows[0].value == req.body.password){
 
-        const token = await tokenSystem.CreateToken(req.body.username, 3600);
+        const token = await tokenSystem.CreateToken(req.body.username, role, 3600);
 
         res.cookie("bearer", token, {
             httpOnly: true,
@@ -47,6 +49,7 @@ export const CorrectLogin = async (req, res) => {
 
 
         return res.status(200).json({success: true,
+            username: usernameResult.value.rows[0].username,
             role: usernameResult.value.rows[0].role
         });
     }
