@@ -139,3 +139,5 @@ const UsersView = ({ loginNeeded, username }) => {
         </div>
     )
 }
+
+export default UsersView;
