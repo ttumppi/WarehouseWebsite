@@ -207,9 +207,8 @@ export const GetShelfSize = async (req, res, shelf) => {
         })
     }
 
-    console.log(result.value.rows);
 
-    if (!result.value.rows.length == 0){
+    if (result.value.rows.length == 0){
         return res.status(404).json({
             success: false,
             message: "No size found"
