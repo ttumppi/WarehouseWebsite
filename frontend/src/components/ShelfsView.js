@@ -116,6 +116,7 @@ const ShelfsView = () => {
     }, [shelfs]);
 
     useEffect(() => {
+        console.log(shelfItems);
         const wrapper = async () => {
             if (!queue.current.Empty()){
                 await GetShelfItems(queue.current.Dequeue());
