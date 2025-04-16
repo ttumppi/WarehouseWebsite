@@ -82,8 +82,9 @@ export const GetShelfItems = async (req, res, shelf) => {
 
    
     let successfullLoops = 0;
+    let i = 0;
     while (successfullLoops < items.length){
-        let i = 0;
+        
         if (items[successfullLoops].item_id == itemsInfo.value.rows[i].id){
             items[successfullLoops]["manufacturer"] = itemsInfo.value.rows[i].manufacturer;
             items[successfullLoops]["model"] = itemsInfo.value.rows[i].model;
