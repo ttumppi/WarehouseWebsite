@@ -199,8 +199,7 @@ export const ChangeItemBalance = async (req, res, shelf) => {
 }
 
 export const GetShelfSize = async (req, res, shelf) => {
-    const result = dbHandler.GetShelfSize(shelf);
-    console.log(result);
+    const result = await dbHandler.GetShelfSize(shelf);
     if (!result.success){
         return res.status(404).json({
             success: false,
@@ -222,7 +221,7 @@ export const GetShelfSize = async (req, res, shelf) => {
 }
 
 export const ChangeShelfSize = async (req, res, shelf, size) => {
-    const result = dbHandler.ChangeShelfSize(shelf, size);
+    const result = await dbHandler.ChangeShelfSize(shelf, size);
 
     if (!result.success){
         return res.status(404).json({
