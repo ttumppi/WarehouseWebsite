@@ -40,14 +40,15 @@ const Login = ({ loginSuccessfull, changePassword}) => {
 
       if (loginData.success) {
 
+        setMessage(`Welcome, ${loginData.username}`);
+        loginSuccessfull(loginData.username, loginData.role);
+
         if (loginData.role.includes("(F)")){
-          console.log("Redirecting");
           changePassword(username);
           return;
         }
 
-        setMessage(`Welcome, ${loginData.username}`);
-        loginSuccessfull(loginData.username, loginData.role);
+        
 
 
       } else {

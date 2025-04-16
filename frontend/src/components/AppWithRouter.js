@@ -35,7 +35,6 @@ const AppWithRouter = () => {
     }
 
     const passwordChangeNeeded = (username) => {
-        console.log("Change password");
         navigate(`/change-password/${username}`);
     }
 
