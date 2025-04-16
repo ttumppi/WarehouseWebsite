@@ -21,121 +21,122 @@ import {
 
 const AppWithRouter = () => {
     const [loggedIn, setLoginState] = useState(true);
-  const [username, setUsername] = useState(null);
-  const [role, setRole] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [role, setRole] = useState(null);
 
-  const roles = ["Observer", "Warehouse worker", "Admin"];
-  
-  const navigate = useNavigate();
-
-  const setLoginSuccessfull = (username, role) => {
-    setLoginState(true);
-    setUsername(username);
-    setRole(role);
-  }
-
-  const passwordChangeNeeded = (username) => {
-    navigate(`/change-password/${username}`);
-  }
-
-
-  const setLoginNeeded = () => {
-    setLoginState(false);
-    setUsername(null);
-    setRole(null);
-  }
-
-  const CheckAuth = async () => {
-    const shelfsRes = await fetch(
-    `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include"
-    });
-
-
-    if (shelfsRes.status == 401){
-      setLoginNeeded();
-      return;
-    }
-    setLoginSuccessfull();
-
-  }
-
-
-  useEffect( () => {
-    const CheckAuthWrapper = async () => {
-      await CheckAuth();
-    }
-    CheckAuthWrapper();
+    const roles = ["Observer", "Warehouse worker", "Admin"];
     
-  }, []);
+    const navigate = useNavigate();
 
-  return (
-    <>
-        <Navigation username={username} role={role}></Navigation>
-        <Routes>
-            
-            <Route path="/" element=
-              {loggedIn ? <Navigate to="/home"/> : 
-              <Login loginSuccessfull={setLoginSuccessfull} 
-              changePassword={passwordChangeNeeded}/>} >
-            </Route>
+    const setLoginSuccessfull = (username, role) => {
+        setLoginState(true);
+        setUsername(username);
+        setRole(role);
+    }
 
-            <Route
-              path="/home"
-              element={loggedIn ? <ShelfsView loginNeeded={setLoginNeeded} /> :
-              <Navigate to="/"/> }>
-            </Route>
+    const passwordChangeNeeded = (username) => {
+        navigate(`/change-password/${username}`);
+    }
 
-            <Route
-              path="/items"
-              element={loggedIn ? <ItemsView loginNeeded={setLoginNeeded} /> :
-              <Navigate to="/"/> }>
-            </Route>
 
-            <Route
-              path="/shelf/:shelf"
-              element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
-              <Navigate to="/"/> }>
-            </Route>
+    const setLoginNeeded = () => {
+        setLoginState(false);
+        setUsername(null);
+        setRole(null);
+    }
 
-            <Route
-              path="/add-item/:shelf"
-              element={loggedIn ? <AddItemView loginNeeded={setLoginNeeded} /> :
-              <Navigate to="/"/> }>
-            </Route>
+    const CheckAuth = async () => {
+        const userRes = await fetch(
+        `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/user`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
+        });
 
-            <Route
-              path="/shelf/:shelf/:id"
-              element={loggedIn ? <ShelfItem loginNeeded={setLoginNeeded} /> :
-              <Navigate to="/"/> }>
-            </Route>
 
-            <Route
-              path="/change-password/:username"
-              element={loggedIn ? <ChangePassword loginNeeded={setLoginNeeded} /> :
-              <Navigate to="/"/> }>
-            </Route>
+        if (userRes.status == 401){
+        setLoginNeeded();
+        return;
+        }
+        const userData = await userRes.json();
+        setLoginSuccessfull(userData.username, userData.role);
 
-            <Route
-              path="/create-user"
-              element={loggedIn ? <CreateUser loginNeeded={setLoginNeeded}
-              roles={roles} /> :
-              <Navigate to="/"/> }>
-            </Route>
+    }
 
-            <Route
-              path="/users"
-              element={loggedIn ? <UsersView loginNeeded={setLoginNeeded}
-              username={username} /> :
-              <Navigate to="/"/> }>
-            </Route>
-            
 
-        </Routes>
-    </>
-  );
+    useEffect( () => {
+        const CheckAuthWrapper = async () => {
+        await CheckAuth();
+        }
+        CheckAuthWrapper();
+        
+    }, []);
+
+    return (
+        <>
+            <Navigation username={username} role={role}></Navigation>
+            <Routes>
+                
+                <Route path="/" element=
+                {loggedIn ? <Navigate to="/home"/> : 
+                <Login loginSuccessfull={setLoginSuccessfull} 
+                changePassword={passwordChangeNeeded}/>} >
+                </Route>
+
+                <Route
+                path="/home"
+                element={loggedIn ? <ShelfsView loginNeeded={setLoginNeeded} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/items"
+                element={loggedIn ? <ItemsView loginNeeded={setLoginNeeded} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/shelf/:shelf"
+                element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/add-item/:shelf"
+                element={loggedIn ? <AddItemView loginNeeded={setLoginNeeded} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/shelf/:shelf/:id"
+                element={loggedIn ? <ShelfItem loginNeeded={setLoginNeeded} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/change-password/:username"
+                element={loggedIn ? <ChangePassword loginNeeded={setLoginNeeded} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/create-user"
+                element={loggedIn ? <CreateUser loginNeeded={setLoginNeeded}
+                roles={roles} /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/users"
+                element={loggedIn ? <UsersView loginNeeded={setLoginNeeded}
+                username={username} /> :
+                <Navigate to="/"/> }>
+                </Route>
+                
+
+            </Routes>
+        </>
+    );
 }
 
 export default AppWithRouter;

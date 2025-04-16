@@ -13,7 +13,8 @@ const CheckAuth = async (req, res, next) => {
         });
     }
 
-    req.user = result.token;
+    req.username = result.token.username;
+    req.role = result.token.role;
     next();
 }
 
@@ -135,6 +136,15 @@ export const RegisterRoutes = (server) => {
     server.post("/api/users", CheckAuth, async (req, res) => {
         console.log("/api/users POST");
         return await loginHandler.AddUser(req, res);
+    })
+
+    server.get("/api/user", CheckAuth, async (req, res) => {
+        console.log("/api/user GET");
+        return res.status(200).json({
+            success: true,
+            username: req.username,
+            role: req.role
+        });
     })
     
 }
