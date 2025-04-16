@@ -45,8 +45,8 @@ const Navigation = () => {
                     ""}
                 </strong>
             </div>
-            <span onClick={Logout}>
-                Logout
+            <span className="clickable-shelf" onClick={Logout}>
+                {!username ? "" : "Logout"}
             </span>
         </nav>
     )
