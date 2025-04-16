@@ -11,8 +11,6 @@ export const VerifyAndGetTokenFromHeaders = async (headers) => {
         return {success:false}
     }
 
-    console.log(JSON.stringify(unvalidatedTokens));
-    console.log(result.token.ID);
     if (unvalidatedTokens.indexOf(result.token.ID) != -1){
         return {success:false}
     }
@@ -27,7 +25,7 @@ export const CreateToken = async (username, role, expiration) => {
 
 export const VerifyAndGetToken = async (token) => {
 
-    if (unvalidatedTokens.indexOf(token.id) != -1){
+    if (unvalidatedTokens.indexOf(token.ID) != -1){
         return {success:false, message:"login required"}
     }
 
@@ -36,5 +34,5 @@ export const VerifyAndGetToken = async (token) => {
 
 export const InvalidateToken = async (token) => {
 
-    unvalidatedTokens.push(token.id)
+    unvalidatedTokens.push(token.ID)
 }
