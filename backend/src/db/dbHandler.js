@@ -803,7 +803,6 @@ export const ChangeShelfSize = async (shelfName, newSize) => {
     const largestLocation = await GetLargestLocationInShelf(shelfName);
 
     if (newSize < largestLocation.value.rows[0].max_location){
-        console.log("Size is too small for existing items");
         return {success: false,
             reason : "new size is too small for existing items"
         }
