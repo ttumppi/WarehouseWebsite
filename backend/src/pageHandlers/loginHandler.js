@@ -241,3 +241,16 @@ export const AddUser = async (req, res) => {
         success: true
     });
 }
+
+export const Logout = async (req, res) => {
+
+    const result = await tokenSystem.VerifyAndGetTokenFromHeaders(req.headers);
+    if (result){
+        await tokenSystem.InvalidateToken(result.token);
+    }
+   
+
+    return res.status(200).json({
+         success: true
+    })
+}

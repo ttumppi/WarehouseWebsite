@@ -146,6 +146,11 @@ export const RegisterRoutes = (server) => {
             role: req.role
         });
     })
+
+    server.get("/api/logout", CheckAuth, async (req, res) => {
+        console.log("/api/logout GET");
+        return await loginHandler.Logout(req, res);
+    })
     
 }
 
