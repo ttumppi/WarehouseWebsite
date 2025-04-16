@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UsersView = () => {
+const UsersView = ({ username }) => {
 
     const [users, setUsers] = useState([]);
+    const [message, setMessage] = useState("");
 
     const navigate = useNavigate();
     
@@ -11,50 +12,124 @@ const UsersView = () => {
         navigate("/");
     }
 
+    const redirectToCreateUserPage = () => {
+        navigate("/create-user");
+    }
+
+    const GetUsers = async () => {
+        try{
+            const usersRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/users`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+                });
+    
+            const usersData = await usersRes.json();
+
+           
+    
+            if (!usersData.success){
+                setMessage(usersData.message);
+                return;
+            }
+            
+            setMessage("");
+
+            usersData.users.map((user) => {
+                if (user.role.includes("(F)")){
+                    user.role = user.role.replace("(F)", "");
+                }
+            })
+            
+           setUsers(usersData.users);
+        }
+
+        catch(error){
+            setMessage("Failed to fetch shelf items");
+            console.log(`Failed to load page: ${error}`);
+        }
+    }
+
+    const DeleteUser = async (username) => {
+        try{
+            const usersRes = await fetch(
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/users/${username}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+                });
+    
+            const usersData = await usersRes.json();
+
+           
+    
+            if (!usersData.success){
+                setMessage(usersData.message);
+                return;
+            }
+
+            setMessage("Successfully deleted user");
+
+            await GetUsers();
+
+        }
+        catch(erro){
+            console.log("Failed to delete user");
+            setMessage("Failed to delete user");
+        }
+    }
+
+    useEffect(() => {
+        const wrapper = async () => {
+            await GetUsers();
+        }
+        wrapper();
+    }, []);
 
 
 
 
     return (
         <div>
+            <button className="basic-button"
+                onClick={redirectToHomePage}>
+                Back
+            </button>
+
+            <button className="basic-button"
+                onClick={redirectToCreateUserPage}>
+                Create User
+            </button>
             <div>
 
                 <table border="1" cellPadding="8">
                     <thead>
                         <tr>
-                            <th>Manufacturer</th>
-                            <th>Model</th>
-                            <th>Serial</th>
-                            <th>Balance</th>
-                            <th>Location</th>
+                            <th>Username</th>
+                            <th>Role</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map((item) => (
-                            <tr key={item.location}>
-                                <td>{item.manufacturer}</td>
-                                <td>{item.model}</td>
-                                <td>
-                                <span className="clickable-shelf"
-                                    onClick={() => {redirectToShelfItemPage(item.id)}}>
-                                    {item.serial}
-                                </span>
-                                </td>
-                                <td>{item.balance}</td>
-                                <td>{item.location}</td>
-                                <td>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.username}</td>
+                                <td>{user.role}</td>
+                                {user.username != username ? <td>
                                     <button className="basic-button"
-                                        onClick={() => {DeleteItem(item.location)}}>
+                                        onClick={() => {DeleteUser(user.username)}}>
                                         Delete
                                     </button>
-                                </td>
+                                </td>: <p>Logged in user, cannot delete</p>}
                             </tr>
                         ))}
                     </tbody>
                 </table>
 
             </div>
+
+            <p>{message}</p>
         </div>
     )
 }

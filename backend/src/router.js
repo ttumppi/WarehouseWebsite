@@ -122,6 +122,20 @@ export const RegisterRoutes = (server) => {
         return await itemHandler.GetItem(req, res, req.params.id);
     })
 
+    server.get("/api/users/", CheckAuth, async (req, res) => {
+        console.log("/api/users GET");
+        return await loginHandler.GetUsers(req, res);
+    })
+
+    server.delete("/api/users/:username", CheckAuth, async (req, res) => {
+        console.log("/api/users/:username DELETE");
+        return await loginHandler.DeleteUser(req, res, req.params.username);
+    })
+
+    server.post("/api/users", CheckAuth, async (req, res) => {
+        console.log("/api/users POST");
+        return await loginHandler.AddUser(req, res);
+    })
     
 }
 

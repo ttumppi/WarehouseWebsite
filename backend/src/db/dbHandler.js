@@ -75,6 +75,8 @@ const FindUserByIDQuery = `SELECT * FROM users WHERE id = $1`;
 
 const FindUserPasswordAndSaltQuery = `SELECT * FROM passwords WHERE id = $1`;
 
+const GetAllUsersQuery = `SELECT * FROM users`;
+
 
 
 const ThrowIfDBNotInit= async () => {
@@ -1151,6 +1153,24 @@ export const DeleteUser = async (user) => {
     }
     catch (error){
         console.log("Couldn't delete user");
+        return {success: false,
+            reason : "db fail"
+        }
+    }
+}
+
+export const GetAllUsers = async () => {
+    await ThrowIfDBNotInit();
+
+    
+    try{
+        const result = await db.query(GetAllUsersQuery);
+        return {success: true,
+            value: result
+        };
+    }
+    catch(error){
+        console.log("Failed to update password");
         return {success: false,
             reason : "db fail"
         }

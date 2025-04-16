@@ -87,7 +87,7 @@ export const GetSalt = async (res, username) => {
     if (!passwordResult.success){
         return res.status(404).json({
             success: false,
-            message: usernameResult.reason}
+            message: passwordResult.reason}
         );
     }
 
@@ -141,6 +141,95 @@ export const ChangePassword = async (req, res, username, password, salt) => {
     if (!result.success){
         return res.status(404).json({
             success:false,
+            message: result.reason
+        });
+    }
+
+    return res.status(200).json({
+        success: true
+    });
+}
+
+export const GetUsers = async (req, res) => {
+    const result = await dbHandler.GetAllUsers();
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: result.reason
+        });
+    }
+
+    if (result.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No users found"
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        users: result.value.rows
+    });
+}
+
+export const DeleteUser = async (req, res, username) => {
+
+    const userResult = await dbHandler.GetUser(username);
+
+    if (!userResult.success){
+        return res.status(404).json({
+            success: false,
+            message: userResult.reason
+        });
+    }
+
+    if (userResult.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "Failed to get user"
+        });
+    }
+
+    const passwordResult = await dbHandler.GetUserPasswordAndSaltWithUsername(username);
+
+    if (!passwordResult.success){
+        return res.status(404).json({
+            success: false,
+            message: passwordResult.reason}
+        );
+    }
+
+    if (passwordResult.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "Couldn't find password"}
+        );
+    }
+    const result = await dbHandler.DeleteUser(new User
+        (username,
+        passwordResult.value.rows[0].value, userResult.value.rows[0].role));
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
+            message: passwordResult.reason
+        });
+    }
+
+    return res.status(200).json({
+        success: true
+    })
+}
+
+export const AddUser = async (req, res) => {
+    const user = new User(req.body.username, req.body.password, req.body.role);
+
+    const result = await dbHandler.SaveUser(user, req.body.salt);
+
+    if (!result.success){
+        return res.status(404).json({
+            success: false,
             message: result.reason
         });
     }
