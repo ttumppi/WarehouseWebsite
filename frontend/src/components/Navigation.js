@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 const Navigation = ({ username, role }) => {
 
+    if (role.includes("(F)")){
+        role = role.replace("(F)", "");
+    }
 
     return (
         <nav className="nav">
