@@ -73,10 +73,10 @@ const SearchView = () => {
                             {items.map((item) => (
                                 <tr key={item.id}>
                                     <td>{item.manufacturer}</td>
-                                    <td>{item.Model}</td>
-                                    <td>{item.Serial}</td>
-                                    <td>{item.Balance}</td>
-                                    <td>{item.Location}</td>
+                                    <td>{item.model}</td>
+                                    <td>{item.serial}</td>
+                                    <td>{item.balance}</td>
+                                    <td>{item.location}</td>
                                 </tr>
                             ))}
                         </tbody>
