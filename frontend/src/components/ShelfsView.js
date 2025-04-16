@@ -159,16 +159,22 @@ const ShelfsView = ({ loginNeeded }) => {
 
     return (
         <div>
-            <button className="header-button" 
-                onClick={ redirectToCreateItem}>
-                    Item page
-            </button>
+            
 
             <div className="shelf-header">
                 <h2>Shelves</h2>
+                
                 <button className="header-button" 
-                onClick={handleAddShelf}>Add Shelf</button>
+                    onClick={handleAddShelf}>Add Shelf
+                </button>
+
+                <button className="header-button" 
+                    onClick={ redirectToCreateItem}>
+                    Item page
+                </button>
             </div>
+
+            
 
             {message && <p>{message}</p>}
 
