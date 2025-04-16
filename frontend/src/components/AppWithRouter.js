@@ -16,8 +16,10 @@ import {
   import ChangePassword from "./ChangePassword";
   import UsersView from "./UsersView";
   import CreateUser from "./CreateUser";
-  import "../App.css";
+  import SearchView from "./SearchView"
   import StateContext from "./StateContext";
+  import "../App.css";
+  
 
 
 const AppWithRouter = () => {
@@ -141,6 +143,12 @@ const AppWithRouter = () => {
                 <Route
                 path="/users"
                 element={loggedIn && adminAccess ? <UsersView  /> :
+                <Navigate to="/"/> }>
+                </Route>
+
+                <Route
+                path="/search/:search"
+                element={loggedIn ? <SearchView /> :
                 <Navigate to="/"/> }>
                 </Route>
                 
