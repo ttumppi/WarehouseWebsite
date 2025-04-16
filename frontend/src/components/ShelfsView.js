@@ -45,7 +45,6 @@ const ShelfsView = () => {
             shelfData.data.map((shelf) => {
                 shelfItemsCopy[shelf.shelf_id] = [];
                 queue.current.Enqueue(shelf.shelf_id);
-                console.log(shelf.shelf_id);
             });
 
             setShelfItems(shelfItemsCopy);
