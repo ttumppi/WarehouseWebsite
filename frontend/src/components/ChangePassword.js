@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CryptoJS from "crypto-js";
 import { GenerateRandomString } from "../stringFunctions";
 import { useParams } from "react-router-dom";
