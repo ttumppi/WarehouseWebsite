@@ -6,8 +6,9 @@ const Navigation = () => {
 
     const { username, role } = useContext(StateContext);
 
+    let modifiedRole = null;
     if (role != null && role.includes("(F)")){
-        role = role.replace("(F)", "");
+        modifiedRole = role.replace("(F)", "");
     }
 
     return (
@@ -17,7 +18,7 @@ const Navigation = () => {
             </div>
             <div>
                 <strong>
-                    {!role ? "" : `Role : ${role}`}
+                    {!role ? "" : `Role : ${modifiedRole?? role}`}
                 </strong>
             </div>
             <div>
