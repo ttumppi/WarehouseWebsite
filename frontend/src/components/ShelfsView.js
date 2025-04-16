@@ -41,12 +41,14 @@ const ShelfsView = () => {
                 return;
             }
             
-            setMessage("");
-            setShelfs(shelfData.data)
-
             shelfData.data.map((shelf) => {
                 queue.current.Enqueue(shelf.shelf_id);
             });
+
+            setMessage("");
+            setShelfs(shelfData.data)
+
+            
         }
 
         catch(error){
@@ -98,9 +100,7 @@ const ShelfsView = () => {
         const getShelfsWrapper = async () => {
             await getShelfs();
 
-            for (const shelf in shelfs){
-                await GetShelfItems(shelf.shelf_id);
-            }
+           
         }
         
         getShelfsWrapper();
