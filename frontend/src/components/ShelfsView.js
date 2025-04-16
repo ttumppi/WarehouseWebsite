@@ -239,7 +239,7 @@ const ShelfsView = () => {
                     </button>}
                     
                     <ul>
-                        {items[shelf].map((item) => {
+                        {items[shelf.shelf_id].map((item) => {
                             <li key={item.id}> {item.manufacturer} - {item.model} - {item.serial}</li>
                         })}
                     </ul>
