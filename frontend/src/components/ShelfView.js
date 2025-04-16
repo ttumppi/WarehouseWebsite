@@ -204,7 +204,7 @@ const ShelfView = ({ loginNeeded }) => {
             <br/>
 
             <button className="basic-button"
-                disabled={initialSize == size}
+                disabled={initialSize.current == size}
                 onClick={ChangeSize}>
                     Change Size
                 </button>
