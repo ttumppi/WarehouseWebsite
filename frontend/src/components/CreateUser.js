@@ -73,7 +73,7 @@ const CreateUser = () => {
     }
     return (
         <div>
-            <h2>Login</h2>
+            <h2>Create User</h2>
             <form onSubmit={CreateUserSubmit}>
 
                 <input
