@@ -511,6 +511,14 @@ const GetLastShelfName = async () => {
 export const GetShelfSize = async (shelfName) => {
     await ThrowIfDBNotInit();
 
+    if (!(await ShelfNameValid(currentShelfName))){
+        return {success: false,
+            reason : "current shelf name not valid"
+        }
+    }
+
+    
+
     try{
         const result = await db.query(GetShelfSizeByNameQuery, [shelfName]);
         return {success:true,

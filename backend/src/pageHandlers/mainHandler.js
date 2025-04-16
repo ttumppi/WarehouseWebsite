@@ -200,7 +200,7 @@ export const ChangeItemBalance = async (req, res, shelf) => {
 
 export const GetShelfSize = async (req, res, shelf) => {
     const result = dbHandler.GetShelfSize(shelf);
-
+    console.log(result);
     if (!result.success){
         return res.status(404).json({
             success: false,
