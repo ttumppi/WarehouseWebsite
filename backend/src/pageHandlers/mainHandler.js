@@ -1,4 +1,5 @@
 import * as dbHandler from "../db/dbHandler.js"
+import { Item } from "../models/Item.js"
 
 export const GetShelfs = async (req, res) => {
     const shelfsResult = await dbHandler.GetAllShelfs();
@@ -59,6 +60,24 @@ export const DeleteShelf = async (req, res) => {
 
 }
 
+const addItemsInfoToShelfRow = (items, shelfRows) => {
+    let successfullLoops = 0;
+    let i = 0;
+    while (successfullLoops < shelfRows.length){
+        
+        if (shelfRows[successfullLoops].item_id == items[i].id){
+            shelfRows[successfullLoops]["manufacturer"] = items[i].manufacturer;
+            shelfRows[successfullLoops]["model"] = items[i].model;
+            shelfRows[successfullLoops]["serial"] = items[i].serial;
+            i = 0;
+            successfullLoops++;
+            continue;
+        }
+        i++;
+    }
+    return shelfRows;
+}
+
 export const GetShelfItems = async (req, res, shelf) => {
     const result = await dbHandler.GetShelfItems(shelf);
 
@@ -78,23 +97,11 @@ export const GetShelfItems = async (req, res, shelf) => {
 
     const itemsInfo = await dbHandler.GetItemInfoForShelfItems(shelf);
 
-    let items = result.value.rows;
 
-   
-    let successfullLoops = 0;
-    let i = 0;
-    while (successfullLoops < items.length){
-        
-        if (items[successfullLoops].item_id == itemsInfo.value.rows[i].id){
-            items[successfullLoops]["manufacturer"] = itemsInfo.value.rows[i].manufacturer;
-            items[successfullLoops]["model"] = itemsInfo.value.rows[i].model;
-            items[successfullLoops]["serial"] = itemsInfo.value.rows[i].serial;
-            i = 0;
-            successfullLoops++;
-            continue;
-        }
-        i++;
-    }
+    const items = await addItemsInfoToShelfRow(
+        itemsInfo.value.rows, result.value.rows)
+
+    
 
     return res.status(200).json({
         success: true,
@@ -246,4 +253,98 @@ export const ChangeShelfSize = async (req, res, shelf, size) => {
     })
 
 
+}
+
+export const Search = async (req, res, criteria) => {
+    const itemsResult = await dbHandler.SearchItems(criteria);
+
+    if (!itemsResult.success){
+        return res.status(404).json({
+            success: false,
+            message: itemsResult.reason
+        });
+    }
+
+    if (itemsResult.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No matching items found"
+        });
+    }
+
+    const shelfsResult = await dbHandler.GetAllShelfs();
+
+    if (!shelfsResult.success){
+        return res.status(404).json({
+            success: false,
+            message: shelfsResult.reason
+        });
+    }
+
+    if (shelfsResult.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "No shelfs found"
+        });
+    }
+
+    const matchingItems = itemsResult.value.rows;
+    const shelfs = shelfsResult.value.rows;
+
+
+  
+
+    // {shelf_id: [rows]}
+    let shelfItems = {};
+
+    // loop through each shelf {shelf_id : a, size : 50}
+    for (let i = 0; i < shelfs.length; i++){
+
+        shelfItems[shelfs[i].shelf_id] = [];
+        // loop through each item that  matches search pattern 
+        // {id: 1, manufacturer: something}
+        for (let itemi = 0; itemi < matchingItems.length; itemi++){
+
+
+            const currentItem = matchingItems[itemi];
+
+            // get items from shelf that match current item id
+            // {id: 1, location: 2, balance: 20}
+            const shelfItemResult = await dbHandler.GetShelfItem( 
+                shelfs[i].shelf_id, 
+            new Item(currentItem.manufacturer,
+                 currentItem.model, currentItem.serial));
+
+            
+            
+            if (!shelfItemResult.success){
+                continue;
+            }
+
+            let shelfItemRows = shelfItemResult.value.rows;
+            if (shelfItemRows.length == 0){
+                continue;
+            }
+
+            // add item attributes to each item found from shelf
+            for (let rowi = 0; rowi < shelfItemRows.length; rowi++){
+                shelfItemRows[rowi]["manufacturer"] = currentItem.manufacturer;
+                shelfItemRows[rowi]["model"] = currentItem.model;
+                shelfItemRows[rowi]["serial"] = currentItem.serial;
+            }
+
+            // merge existing array with shelfItemRows
+            shelfItems[shelfs[i].shelf_id].push(...shelfItemRows);
+            
+        }
+
+       
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: shelfItems
+    });
+
+    
 }

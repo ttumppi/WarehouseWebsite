@@ -9,8 +9,13 @@ const ShelfsView = () => {
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
     const [items, setItems] = useState({});
+    const [search, setSearch] = useState("");
 
     const navigate = useNavigate();
+
+    const redirectToSearchPage = () => {
+        navigate(`/search/${search}`);
+    }
 
     const getShelfs = async () => {
 
@@ -175,6 +180,16 @@ const ShelfsView = () => {
                     onClick={ redirectToCreateItem}>
                     Item page
                 </button>}
+
+                <input
+                type="text"
+                    placeholder="Search For Item"
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}>
+                </input>
+                <button onClick={redirectToSearchPage}>
+                    Search
+                </button>
             </div>
 
             

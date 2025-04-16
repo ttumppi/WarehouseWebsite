@@ -151,6 +151,11 @@ export const RegisterRoutes = (server) => {
         console.log("/api/logout GET");
         return await loginHandler.Logout(req, res);
     })
+
+    server.get("/api/search/:criteria", CheckAuth, async (req, res) => {
+        console.log("/api/search/:criteria GET");
+        return await mainHandler.Search(req, res, req.params.criteria);
+    })
     
 }
 

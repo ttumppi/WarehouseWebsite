@@ -77,6 +77,10 @@ const FindUserPasswordAndSaltQuery = `SELECT * FROM passwords WHERE id = $1`;
 
 const GetAllUsersQuery = `SELECT * FROM users`;
 
+const SearchItemsQuery = `SELECT * FROM items WHERE 
+    manufacturer ILIKE $1 OR model ILIKE $1 OR 
+    serial ILIKE $1`;
+
 
 
 const ThrowIfDBNotInit= async () => {
@@ -1176,6 +1180,25 @@ export const GetAllUsers = async () => {
         }
     }
 }
+
+export const SearchItems = async (criteria) => {
+    await ThrowIfDBNotInit();
+    const searchTerm = `%${criteria}%`
+
+    try{
+        const result = await db.query(SearchItemsQuery, [searchTerm]);
+        return {success: true,
+            value: result
+        };
+    }
+    catch(error){
+        console.log("Failed to search database");
+        return {success: false,
+            reason : "db fail"
+        }
+    }
+}
+
 
 export const ConnectToDatabase = async () => {
 
