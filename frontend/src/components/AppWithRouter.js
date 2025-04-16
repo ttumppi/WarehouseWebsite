@@ -24,6 +24,8 @@ const AppWithRouter = () => {
     const [loggedIn, setLoginState] = useState(true);
     const [username, setUsername] = useState(null);
     const [role, setRole] = useState(null);
+    const [editAccess, setEditAccess] = useState(false);
+    const [adminAccess, setAdminAccess] = useState(false);
 
     const roles = ["Observer", "Warehouse worker", "Admin"];
     
@@ -33,6 +35,8 @@ const AppWithRouter = () => {
         setLoginState(true);
         setUsername(username);
         setRole(role);
+        setEditAccess(role == "Admin" || role == "Warehouse worker");
+        setAdminAccess(role == "Admin");
     }
 
     const passwordChangeNeeded = (username) => {
@@ -44,6 +48,8 @@ const AppWithRouter = () => {
         setLoginState(false);
         setUsername(null);
         setRole(null);
+        setEditAccess(false);
+        setAdminAccess(false);
     }
 
     const CheckAuth = async () => {
@@ -98,7 +104,7 @@ const AppWithRouter = () => {
 
                 <Route
                 path="/items"
-                element={loggedIn ? <ItemsView /> :
+                element={loggedIn && editAccess ? <ItemsView /> :
                 <Navigate to="/"/> }>
                 </Route>
 
@@ -110,7 +116,7 @@ const AppWithRouter = () => {
 
                 <Route
                 path="/add-item/:shelf"
-                element={loggedIn ? <AddItemView /> :
+                element={loggedIn && editAccess ? <AddItemView /> :
                 <Navigate to="/"/> }>
                 </Route>
 
@@ -128,13 +134,13 @@ const AppWithRouter = () => {
 
                 <Route
                 path="/create-user"
-                element={loggedIn ? <CreateUser  /> :
+                element={loggedIn && adminAccess ? <CreateUser  /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/users"
-                element={loggedIn ? <UsersView  /> :
+                element={loggedIn && adminAccess ? <UsersView  /> :
                 <Navigate to="/"/> }>
                 </Route>
                 
