@@ -7,16 +7,16 @@ import {
   } from "react-router-dom";
   import React, {useState, useEffect} from 'react';
   import Login from './components/Login';
-  import ShelfsView from "./components/ShelfsView";
-  import ItemsView from "./components/ItemsView";
-  import ShelfView from "./components/ShelfView";
-  import AddItemView from "./components/AddItemView";
-  import ShelfItem from "./components/ShelfItem";
-  import Navigation from "./components/Navigation";
-  import ChangePassword from "./components/ChangePassword";
-  import UsersView from "./components/UsersView";
-  import CreateUser from "./components/CreateUser";
-  import "./App.css";
+  import ShelfsView from "./ShelfsView";
+  import ItemsView from "./ItemsView";
+  import ShelfView from "./ShelfView";
+  import AddItemView from "./AddItemView";
+  import ShelfItem from "./ShelfItem";
+  import Navigation from "./Navigation";
+  import ChangePassword from "./ChangePassword";
+  import UsersView from "./UsersView";
+  import CreateUser from "./CreateUser";
+  import "../App.css";
 
 
 const AppWithRouter = () => {
