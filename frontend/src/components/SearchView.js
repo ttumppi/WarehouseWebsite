@@ -4,7 +4,10 @@ import StateContext from "./StateContext";
 
 const SearchView = () => {
     const [shelfItems, setShelfItems] = useState({});
+    const [message, setMessage] = useState("");
     const {search } = useParams();
+
+    const { setLoginNeeded } = useContext(StateContext);
 
     const Search = async () => {
     
@@ -80,6 +83,8 @@ const SearchView = () => {
                     </table>
                 </div>
             ))}
+
+            <p>{message}</p>
         </div>
     )
 }
