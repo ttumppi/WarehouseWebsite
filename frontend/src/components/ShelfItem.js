@@ -5,7 +5,7 @@ import {Queue} from "../queue.js";
 import StateContext from "./StateContext.js";
 
 const ShelfItem = () => {
-    const { setLoginNeeded} = useContext(StateContext);
+    const { setLoginNeeded, role} = useContext(StateContext);
     const {shelf, id } = useParams();
     const navigate = useNavigate();
 

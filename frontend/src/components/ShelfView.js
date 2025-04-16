@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import StateContext from "./StateContext";
 
 const ShelfView = () => {
-    const { setLoginNeeded } = useContext(StateContext);
+    const { setLoginNeeded, role } = useContext(StateContext);
     const { shelf } = useParams();
     const navigate = useNavigate();
 
