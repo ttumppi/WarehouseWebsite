@@ -113,15 +113,20 @@ const ChangePassword = ({ loginNeeded }) => {
                     value={oldPassword}
                     onChange={e => setOldPassword(e.target.value)}
                     required>
-                    <br/>
                 </input>
+
+                <br/>
+
                 <input
                     type="password"
                     placeholder="New Password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    required
-                    /><br/>
+                    required>
+                </input>    
+                                
+                <br/>
+
                 <input
                     type="password"
                     placeholder="Retyped New Password"
@@ -129,7 +134,9 @@ const ChangePassword = ({ loginNeeded }) => {
                     onChange={e => setRePassword(e.target.value)}
                     required>
                 </input>
+
                 <br/>
+
                 <button type="submit">Login</button>
             </form>
             <p>{message}</p>
