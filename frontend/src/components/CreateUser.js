@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GenerateRandomString } from "../stringFunctions";
+import CryptoJS from "crypto-js";
 
 const CreateUser = ({ loginNeeded, roles }) => {
     const [username, setUsername] = useState(null);
