@@ -122,8 +122,11 @@ export const ChangePassword = async (req, res, username, password, salt) => {
         });
     }
 
+    console.log(userResult.value.rows[0].role);
     if (userResult.value.rows[0].role.includes("(F)")){
+        console.log(userResult.value.rows[0].role);
         const parsedRole = userResult.value.rows[0].role.replace("(F)", "");
+        console.log(parsedRole);
         const roleResult = await dbHandler.UpdateUserRole(new User(
             username, password, parsedRole));
 

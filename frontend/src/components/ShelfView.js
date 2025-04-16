@@ -177,9 +177,7 @@ const ShelfView = () => {
         getShelfItemsWrapper();
     }, []);
 
-    if (!role){
-        return <p>For fuck's sake ...</p>
-    }
+   
 
     return (
         <div>
