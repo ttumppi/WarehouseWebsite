@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CryptoJS from "crypto-js";
+import StateContext from "./StateContext";
 
-const Login = ({ loginSuccessfull, changePassword}) => {
+const Login = () => {
+  const { passwordChangeNeeded, loginSuccessfull } = useContext(StateContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -44,7 +46,7 @@ const Login = ({ loginSuccessfull, changePassword}) => {
         loginSuccessfull(loginData.username, loginData.role);
 
         if (loginData.role.includes("(F)")){
-          changePassword(username);
+          passwordChangeNeeded(username);
           return;
         }
 

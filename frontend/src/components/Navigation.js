@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
+import StateContext from "./StateContext";
 
-const Navigation = ({ username, role }) => {
+const Navigation = () => {
+
+    const { username, role } = useContext(StateContext);
 
     if (role != null && role.includes("(F)")){
         role = role.replace("(F)", "");

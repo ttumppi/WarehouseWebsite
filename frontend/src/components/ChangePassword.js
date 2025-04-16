@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CryptoJS from "crypto-js";
 import { GenerateRandomString } from "../stringFunctions";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import StateContext from "./StateContext";
 
-const ChangePassword = ({ loginNeeded }) => {
+const ChangePassword = () => {
+
+    const { loginNeeded } = useContext(StateContext);
 
     const {username} = useParams();
     const [oldPassword, setOldPassword] = useState("");

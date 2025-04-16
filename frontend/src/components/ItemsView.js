@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-const ItemsView = ({ loginNeeded }) => {
+import StateContext from "./StateContext";
+const ItemsView = () => {
+    const { loginNeeded } = useContext(StateContext);
     const [manufacturer, setManufacturer] = useState("");
     const [model, setModel] = useState("");
     const [serial, setSerial] = useState("");

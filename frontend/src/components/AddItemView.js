@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import StateContext from "./StateContext";
 import { useNavigate } from "react-router-dom";
 
-const AddItemView = ({ loginNeeded }) => {
+const AddItemView = () => {
+    const { loginNeeded } = useContext(StateContext);
     const { shelf } = useParams();
     const navigate = useNavigate();
 

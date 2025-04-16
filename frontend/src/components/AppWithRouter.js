@@ -17,6 +17,7 @@ import {
   import UsersView from "./UsersView";
   import CreateUser from "./CreateUser";
   import "../App.css";
+  import StateContext from "./StateContext";
 
 
 const AppWithRouter = () => {
@@ -73,69 +74,72 @@ const AppWithRouter = () => {
     }, []);
 
     return (
-        <>
+        <StateContext.Provider value={{
+            setLoginSuccessfull,
+            passwordChangeNeeded,
+            username,
+            role,
+            roles
+        }}>
             <Navigation username={username} role={role}></Navigation>
             <Routes>
                 
                 <Route path="/" element=
                 {loggedIn ? <Navigate to="/home"/> : 
-                <Login loginSuccessfull={setLoginSuccessfull} 
-                changePassword={passwordChangeNeeded}/>} >
+                <Login />} >
                 </Route>
 
                 <Route
                 path="/home"
-                element={loggedIn ? <ShelfsView loginNeeded={setLoginNeeded} /> :
+                element={loggedIn ? <ShelfsView  /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/items"
-                element={loggedIn ? <ItemsView loginNeeded={setLoginNeeded} /> :
+                element={loggedIn ? <ItemsView /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/shelf/:shelf"
-                element={loggedIn ? <ShelfView loginNeeded={setLoginNeeded} /> :
+                element={loggedIn ? <ShelfView /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/add-item/:shelf"
-                element={loggedIn ? <AddItemView loginNeeded={setLoginNeeded} /> :
+                element={loggedIn ? <AddItemView /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/shelf/:shelf/:id"
-                element={loggedIn ? <ShelfItem loginNeeded={setLoginNeeded} /> :
+                element={loggedIn ? <ShelfItem /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/change-password/:username"
-                element={loggedIn ? <ChangePassword loginNeeded={setLoginNeeded} /> :
+                element={loggedIn ? <ChangePassword  /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/create-user"
-                element={loggedIn ? <CreateUser loginNeeded={setLoginNeeded}
-                roles={roles} /> :
+                element={loggedIn ? <CreateUser  /> :
                 <Navigate to="/"/> }>
                 </Route>
 
                 <Route
                 path="/users"
-                element={loggedIn ? <UsersView loginNeeded={setLoginNeeded}
-                username={username} /> :
+                element={loggedIn ? <UsersView  /> :
                 <Navigate to="/"/> }>
                 </Route>
                 
 
             </Routes>
-        </>
+        </StateContext.Provider>
     );
 }
 

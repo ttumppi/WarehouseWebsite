@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import StateContext from "./StateContext";
 
 
+const ShelfsView = () => {
 
-const ShelfsView = ({ loginNeeded }) => {
-
+    const { loginNeeded } = useContext(StateContext);
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
     const [items, setItems] = useState({});

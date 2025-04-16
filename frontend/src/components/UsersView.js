@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import StateContext from "./StateContext";
 
-const UsersView = ({ loginNeeded, username }) => {
+const UsersView = () => {
+
+    const { username, loginNeeded } = useContext(StateContext);
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");

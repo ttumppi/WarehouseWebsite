@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { GenerateRandomString } from "../stringFunctions";
 import CryptoJS from "crypto-js";
+import StateContext from "./StateContext";
+const CreateUser = () => {
 
-const CreateUser = ({ loginNeeded, roles }) => {
+    const { loginNeeded, roles } = useContext(StateContext);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [role, setRole] = useState(null);
