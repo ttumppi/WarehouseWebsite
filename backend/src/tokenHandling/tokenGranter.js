@@ -22,7 +22,6 @@ export const CreateToken = async (username, role, expirationSeconds) => {
     const ID = tokenID;
     tokenID++;
 
-    console.log("new id", ID);
     return jwt.sign(
         {
         username,
