@@ -18,6 +18,8 @@ const CreateUser = ({ loginNeeded, roles }) => {
             const salt = GenerateRandomString(8);
             const combined = password + salt;
             const hash = CryptoJS.SHA256(combined).toString();
+
+            const editedRole = "(F)" + role;
               
             const loginRes = await fetch(
                 `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/users`, {
@@ -25,7 +27,7 @@ const CreateUser = ({ loginNeeded, roles }) => {
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify({ username, password: hash,
-                    role, salt
+                    role: editedRole, salt
                  }),
               });
 
