@@ -8,7 +8,7 @@ const ShelfsView = () => {
     const { setLoginNeeded, role } = useContext(StateContext);
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
-    const [items, setItems] = useState({});
+    const [shelfItems, setShelfItems] = useState({});
     const [search, setSearch] = useState("");
 
     const navigate = useNavigate();
@@ -76,15 +76,17 @@ const ShelfsView = () => {
             
             setMessage("");
             
-            let itemsCopy = {};
+            let shelfItemsCopy = {};
 
-            for (let item in items){
-                itemsCopy[item] = items[item];
+            for (let item in shelfItems){
+                shelfItemsCopy[item] = shelfItems[item];
             }
 
             itemsCopy[shelfName] = shelfData.items;
+            console.log(shelfName);
+            console.log(itemsCopy[shelfName]);
 
-            setItems(itemsCopy);
+            setShelfItems(itemsCopy);
         }
 
         catch(error){
