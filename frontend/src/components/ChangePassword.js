@@ -7,9 +7,9 @@ import StateContext from "./StateContext";
 
 const ChangePassword = () => {
 
-    const { setLoginNeeded } = useContext(StateContext);
+    const { setLoginNeeded, username } = useContext(StateContext);
 
-    const {username} = useParams();
+    const {URLusername} = useParams();
     const [oldPassword, setOldPassword] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -27,7 +27,7 @@ const ChangePassword = () => {
             try {
 
                 const saltRes = await fetch(
-                    `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${username}`);
+                    `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/login/${URLusername}`);
                     
 
                 if (saltRes.status == 401){
@@ -52,7 +52,7 @@ const ChangePassword = () => {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
-                    body: JSON.stringify({ username, password: oldHash }),
+                    body: JSON.stringify({ URLusername, password: oldHash }),
                   });
             
                   const oldLoginData = await oldLoginRes.json();
@@ -78,7 +78,7 @@ const ChangePassword = () => {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
-                    body: JSON.stringify({ username, password: hash, salt: newSalt }),
+                    body: JSON.stringify({ URLusername, password: hash, salt: newSalt }),
                 });
             
                 const changeData = await changeRes.json();
@@ -93,7 +93,7 @@ const ChangePassword = () => {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         credentials: "include",
-                        body: JSON.stringify({ username, password: hash }),
+                        body: JSON.stringify({ URLusername, password: hash }),
                         });
 
                     redirectToHomePage();
@@ -112,6 +112,12 @@ const ChangePassword = () => {
             setMessage("Error during password change");
             }
     }
+
+    useEffect(() => {
+        if (URLusername != username){
+            redirectToHomePage();
+        }
+    })
 
     return (
         <div>
