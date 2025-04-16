@@ -94,7 +94,7 @@ const CreateUser = ({ loginNeeded, roles }) => {
                     onChange={(e) => setRole(e.target.value)}>
                     
                     {roles.map((role) => (
-                        <option>{role}</option>
+                        <option key={role}>{role}</option>
                     ))}
                 </select>
 
