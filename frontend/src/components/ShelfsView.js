@@ -75,7 +75,15 @@ const ShelfsView = () => {
            
             
             if (!shelfData.success){
-                setShelfItems(shelfItems);
+
+                let shelfItemsCopy = {};
+
+                for (let item in shelfItems){
+                    shelfItemsCopy[item] = shelfItems[item];
+                }
+
+                shelfItemsCopy[shelfName] = [];
+                setShelfItems(shelfItemsCopy);
                 setMessage(shelfData.message);
                 return;
             }
