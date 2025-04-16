@@ -5,7 +5,7 @@ import StateContext from "./StateContext";
 
 const ShelfsView = () => {
 
-    const { setLoginNeeded } = useContext(StateContext);
+    const { setLoginNeeded, role } = useContext(StateContext);
     const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
     const [items, setItems] = useState({});
@@ -164,15 +164,15 @@ const ShelfsView = () => {
 
             <div className="shelf-header">
                 <h2>Shelves</h2>
-                
+                {role == "Admin" || role == "Warehouse worker" &&
                 <button className="header-button" 
                     onClick={handleAddShelf}>Add Shelf
-                </button>
-
+                </button>}
+                {role == "Admin" || role == "Warehouse worker" &&
                 <button className="header-button" 
                     onClick={ redirectToCreateItem}>
                     Item page
-                </button>
+                </button>}
             </div>
 
             
@@ -187,11 +187,11 @@ const ShelfsView = () => {
                         onClick={() => {redirectToShelf(shelf.shelf_id)}}>
                         {shelf.shelf_id}
                     </span>
-
+                    {role == "Admin" || role == "Warehouse worker" &&
                     <button className="basic-button" onClick={ 
                         () => {handleDeleteShelf
                         (shelf.shelf_id);}}>Delete
-                    </button>
+                    </button>}
                     
                     <ul>
                         {items.shelf?.id?.map((item) => {
