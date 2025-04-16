@@ -110,6 +110,7 @@ const ShelfsView = () => {
         const wrapper = async () => {
             if (!queue.current.Empty()){
                 await GetShelfItems(queue.current.Dequeue());
+                console.log("at first", shelfItems);
             }
         }
         wrapper();
