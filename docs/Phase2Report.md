@@ -285,17 +285,66 @@ has been no energy to crunch refactoring shelfs page to this version.
 
 ## 6. Functionalities
 
-All functionalities of the application has been done that were specified in the initial plan:
+One function was forgotten to implement (prompt user to move to existing item page to change balance on item creation) with small differences marked with *:
+
+## Creating storage space
+* User wants to create shelfs and shelf locations for each shelf
+* User selects shelf count and amount of shelf space in each shelf
+* Each shelf is displayed seperately with shelf space set to the general user set amount and the shelf space can additionally be modified for each shelf <br />
+***User needs to create each shelf seperately and then move into the shelf's page to change the shelf size**
+
+## Adding a new item to an empty shelf space
+* User wants to add a new item to an empty shelf space
+* User fills out item info and selects shelf and shelf space that the item will be stored in
+* If item already exists, prompt a question to change existing item balance <br />
+***There is no prompt to move to existing item page**
+
+## Transferring item from shelf space to another
+* User first selects the item to be transferred
+* User selects new shelf and shelf space for the item
+* Clarified workflow : item page -> transfer item -> transfer to new empty location <br />
+***No popup dialog, shelf and location is selected from dropdown list.**
+
+## Adding balance to shelf space
+* User searches for the shelf space or for the item
+* User adds new balance to the shelf space <br />
+***User cannot search for a shelf space, but user can search for an item and this will return all shelfs with the item in it's shelf**
+
+## Searching for items
+* User wants to search if required item is available in the warehouse
+* User searches the item by model from the system
+* Item page displays the balance of the item <br />
+***User can search the item by manufacturer, model or serial**
+
+## Additional things from original plan
+* The original plan specifies that you can search an item based on item attributes or item shelf location.
+item shelf location search has not been implemented, for if user wants to see what item is in a shelf location, they can just navigate to the shelf to see all shelf locations.
+
 
 
 ## 7. Code quality and documentation
 
-Add something
+Code itself has not been documented in any way, besides this report and initial design file. The code has been created with a principal of :
+function does only one function, and these functions are used in a "driver" function that is exposed. <br />
+This enables function names to be descriptive for what they do.
+
 
 ## 8. Testing and error handling
 
-Add something
+### Backend
+Backend has unit tests made for most of the database functionalities, declared in backend/src/unitTests/DATABASE_tests.test.js <br />
+This has enabled the development of backend seperately from frontend and to confirm correct functionality of backend.
+
+### Frontend
+Frontend has been tested via action flows described in the initial project plan, and also by mixing each page's input order (in which order values are changed).
+The website has had few outside users also to give their opinion and for the developer to monitor how easily new user's can grasp how the application works.
 
 ## 9. User interface and interaction
 
-Add something
+The UI and UX experience has been developed with a principle of ("If you shouldn't be able to do it, you can't do it").
+<br />
+Example would be going into a shelf's item page where you have the ability to change item's location, balance and shelf.
+<br />
+If you haven't changed any of the values, you also shouldn't be able to save the item changes, so the save button is disabled.
+
+For the UI, all of the pages have been made to try to keep them simple and informative what each element does/mean.
