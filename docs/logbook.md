@@ -13,3 +13,4 @@
 | 14.04.2025 | 9    | Added homepage with get post delete for shelfs | UI has been progressed, and website uses tokens | 
 | 15.04.2025 | 14  | Frontend | Made additional functionality available on the frontend, item list, item creation, adding item to shelf and deleting item from shelf and item transfer and item balance change |
 | 16.04.2025 | 13 | Frontend | Added user level and user creation and did a search function |
+| 17.04.2025 | 4 | documentation | Added 2nd phase documentation |
