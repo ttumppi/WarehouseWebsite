@@ -76,6 +76,8 @@ const ShelfsView = () => {
             
             if (!shelfData.success){
 
+                // Functional state update something something....
+                // Don't ask me, seems to be react thingy
                 setShelfItems(prev => ({
                     ...prev,
                     [shelfName]: []
@@ -86,6 +88,8 @@ const ShelfsView = () => {
             
             setMessage("");
             
+            // Functional state update something something....
+            // Don't ask me, seems to be react thingy
             setShelfItems(prev => ({
                 ...prev,
                 [shelfName]: shelfData.items

@@ -12,4 +12,4 @@
 | 13.04.2025 | 11   | Finished backend database functionalities| Added frontend login page | 
 | 14.04.2025 | 9    | Added homepage with get post delete for shelfs | UI has been progressed, and website uses tokens | 
 | 15.04.2025 | 14  | Frontend | Made additional functionality available on the frontend, item list, item creation, adding item to shelf and deleting item from shelf and item transfer and item balance change |
-| 16.04.2025 | 12 | Frontend | Added user level and user creation and did a search function |
+| 16.04.2025 | 13 | Frontend | Added user level and user creation and did a search function |
