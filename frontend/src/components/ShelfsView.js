@@ -253,7 +253,7 @@ const ShelfsView = () => {
                     <ul>
                         {Object.keys(shelfItems).map((shelfItemKey) => (
                             shelfItems[shelfItemKey].map((item) => (
-                                <li key={item.id}> {item.manufacturer} - {item.model} - {item.serial}</li>
+                                (shelfItemKey == shelf.shelf_id) && <li key={item.id}> {item.manufacturer} - {item.model} - {item.serial}</li>
                             ))
                             
                         ))}
