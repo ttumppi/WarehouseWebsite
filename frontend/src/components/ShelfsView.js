@@ -76,29 +76,20 @@ const ShelfsView = () => {
             
             if (!shelfData.success){
 
-                let shelfItemsCopy = {};
-
-                for (let item in shelfItems){
-                    shelfItemsCopy[item] = shelfItems[item];
-                }
-
-                shelfItemsCopy[shelfName] = [];
-                setShelfItems(shelfItemsCopy);
+                setShelfItems(prev => ({
+                    ...prev,
+                    [shelfName]: []
+                }));
                 setMessage(shelfData.message);
                 return;
             }
             
             setMessage("");
             
-            let shelfItemsCopy = {};
-
-            for (let item in shelfItems){
-                shelfItemsCopy[item] = shelfItems[item];
-            }
-
-            shelfItemsCopy[shelfName] = shelfData.items;
-
-            setShelfItems(shelfItemsCopy);
+            setShelfItems(prev => ({
+                ...prev,
+                [shelfName]: shelfData.items
+            }));
         }
 
         catch(error){
