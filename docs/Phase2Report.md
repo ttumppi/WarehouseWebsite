@@ -1,5 +1,9 @@
 # Project phase 2
-This Report outlines the created product's results and what changes might have been done differently from the initial project plan.
+This Report outlines the created product's results and what changes might have been done differently from the initial project plan. <br /> 
+# The website can be accessed from : 
+## http://ec2-54-204-100-237.compute-1.amazonaws.com/
+
+I have sent credentials to the teacher via email (forgot to include in return of the assignment, oops ) (tuomas.lamminniemi@centria.fi, subject : Warehouse tunnukset)
 
 ## 1. Environment
 
