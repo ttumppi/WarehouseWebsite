@@ -33,12 +33,14 @@ export const RegisterRoutes = (server) => {
     })
 
     server.post("/api/change-password", CheckAuth, async (req, res) => {
+        console.log("/api/change-password POST");
         return await loginHandler.ChangePassword(req, res, req.body.username,
             req.body.password, req.body.salt
         );
     })
 
     server.get("/api/shelfs-and-items", CheckAuth, async (req, res) => {
+        console.log("/api/shelfs-and-items GET");
         return await mainHandler.GetAllShelfsAndShelfItems(req, res);
     })
 
