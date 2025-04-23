@@ -1,70 +1,26 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import StateContext from "./StateContext";
-import {Queue} from "../queue.js";
 
 const ShelfsView = () => {
 
     const { setLoginNeeded, role } = useContext(StateContext);
-    const [shelfs, setShelfs] = useState([]);
     const [message, setMessage] = useState("");
     const [shelfItems, setShelfItems] = useState({});
     const [search, setSearch] = useState("");
 
     const navigate = useNavigate();
 
-    const queue = useRef(new Queue());
 
     const redirectToSearchPage = () => {
         navigate(`/search/${search}`);
     }
 
-    const getShelfs = async () => {
-
-        try{
-            const shelfsRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include"
-                });
-    
-            const shelfData = await shelfsRes.json();
-            if (shelfsRes.status == 401){
-                setMessage("Not logged in");
-                setLoginNeeded();
-                return;
-            }
-    
-            if (!shelfData.success){
-                setMessage(shelfData.message);
-                return;
-            }
-            
-            let shelfItemsCopy = {};
-            shelfData.data.map((shelf) => {
-                shelfItemsCopy[shelf.shelf_id] = [];
-                queue.current.Enqueue(shelf.shelf_id);
-            });
-
-            setShelfItems(shelfItemsCopy);
-            setMessage("");
-            setShelfs(shelfData.data)
-
-            
-        }
-
-        catch(error){
-            setMessage("Failed to fetch shelfs");
-            console.log(`Failed to load page: ${error}`);
-        }
-        
-    }
-
-    const GetShelfItems = async (shelfName) => {
+   
+    const GetShelfItems = async () => {
         try{
             const shelfRes = await fetch(
-                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelf/${shelfName}`, {
+                `http://ec2-54-204-100-237.compute-1.amazonaws.com:5000/api/shelfs-and-items`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include"
@@ -76,24 +32,14 @@ const ShelfsView = () => {
             
             if (!shelfData.success){
 
-                // Functional state update something something....
-                // Don't ask me, seems to be react thingy
-                setShelfItems(prev => ({
-                    ...prev,
-                    [shelfName]: []
-                }));
+                setShelfItems({});
                 setMessage(shelfData.message);
                 return;
             }
             
             setMessage("");
             
-            // Functional state update something something....
-            // Don't ask me, seems to be react thingy
-            setShelfItems(prev => ({
-                ...prev,
-                [shelfName]: shelfData.items
-            }));
+           setShelfItems(shelfData.data);
         }
 
         catch(error){
@@ -105,7 +51,7 @@ const ShelfsView = () => {
     useEffect(() => {
 
         const getShelfsWrapper = async () => {
-            await getShelfs();
+            await GetShelfItems();
 
            
         }
@@ -113,23 +59,6 @@ const ShelfsView = () => {
         getShelfsWrapper();
     }, []);
 
-    useEffect(() => {
-        const wrapper = async () => {
-            if (!queue.current.Empty()){
-                await GetShelfItems(queue.current.Dequeue());
-            }
-        }
-        wrapper();
-    }, [shelfs]);
-
-    useEffect(() => {
-        const wrapper = async () => {
-            if (!queue.current.Empty()){
-                await GetShelfItems(queue.current.Dequeue());
-            }
-        }
-        wrapper();
-    }, [shelfItems])
 
     const handleAddShelf = async () => {
 
@@ -232,27 +161,29 @@ const ShelfsView = () => {
             {message && <p>{message}</p>}
 
             <ul>
-                {shelfs.map((shelf) => (
-                <li key={shelf.id}>
+                {Object.keys(shelfItems).map((shelf) => ( 
+                    <li key={shelf}>
 
-                    <span className="clickable-shelf"
-                        onClick={() => {redirectToShelf(shelf.shelf_id)}}>
-                        {shelf.shelf_id}
-                    </span>
-                    {(role == "Admin" || role == "Warehouse worker") &&
-                    <button className="basic-button" onClick={ 
-                        () => {handleDeleteShelf
-                        (shelf.shelf_id);}}>Delete
-                    </button>}
-                    
-                    <ul>
-                        {Object.keys(shelfItems).map((shelfItemKey) => (
-                            shelfItems[shelfItemKey].map((item) => (
-                                (shelfItemKey == shelf.shelf_id) && <li key={item.id}> {item.manufacturer} - {item.model} - {item.serial}</li>
-                            ))
+                        <span className="clickable-shelf"
+                            onClick={() => {redirectToShelf(shelf)}}>
+                            {shelf}
+                        </span>
+                        {(role == "Admin" || role == "Warehouse worker") &&
+                        <button className="basic-button" onClick={ 
+                            () => {handleDeleteShelf
+                            (shelf);}}>Delete
+                        </button>}
+                        
+                        <ul>
                             
-                        ))}
-                    </ul>
+                            {shelfItems[shelf].map((item) => (
+                                    <li key={item.id}>
+                                         {item.manufacturer} - {item.model} - {item.serial}
+                                    </li>
+                                ))    
+                                
+                            }
+                        </ul>
                     
                 </li>
                 ))}

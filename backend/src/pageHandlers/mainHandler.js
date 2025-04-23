@@ -348,3 +348,41 @@ export const Search = async (req, res, criteria) => {
 
     
 }
+
+export const GetAllShelfsAndShelfItems = async (req, res) => {
+    const shelfsResult = await dbHandler.GetAllShelfs();
+
+    if (!shelfsResult.success){
+        return res.status(404).json({
+            success : false,
+            message: shelfsResult.reason
+        });
+    }
+
+    if (shelfsResult.value.rows.length == 0){
+        return res.status(404).json({
+            success: false,
+            message: "Couldn't find any shelfs"
+        });
+    }
+
+    let shelfsAndItems = {};
+
+    shelfsResult.value.rows.forEach(async (shelf) => {
+        const itemsResult = await dbHandler.GetItemInfoForShelfItems(shelf.shelf_id);
+
+        if (!itemsResult.success){
+            return res.status(404).json({
+                success: false,
+                message: itemsResult.reason
+            });
+        }
+
+        shelfsAndItems[shelf.shelf_id] = itemsResult.value.rows;
+    })
+
+    return res.status(200).json({
+        success: true,
+        data: shelfsAndItems
+    });
+}

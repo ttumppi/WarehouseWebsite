@@ -38,6 +38,10 @@ export const RegisterRoutes = (server) => {
         );
     })
 
+    server.get("/api/shelfs-and-items", CheckAuth, async (req, res) => {
+        return await mainHandler.GetAllShelfsAndShelfItems(req, res);
+    })
+
     server.get("/api/shelfs", CheckAuth, async (req, res) => {
         console.log("/api/shelfs GET");
         return await mainHandler.GetShelfs(req, res);
