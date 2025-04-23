@@ -369,7 +369,7 @@ export const GetAllShelfsAndShelfItems = async (req, res) => {
     let shelfsAndItems = {};
 
 
-    for (shelf of shelfsResult.value.rows){
+    for (const shelf of shelfsResult.value.rows){
 
         const itemsResult = await dbHandler.GetItemInfoForShelfItems(shelf.shelf_id);
 
@@ -382,7 +382,7 @@ export const GetAllShelfsAndShelfItems = async (req, res) => {
 
         shelfsAndItems[shelf.shelf_id] = itemsResult.value.rows;
     }
-    
+
 
     return res.status(200).json({
         success: true,
