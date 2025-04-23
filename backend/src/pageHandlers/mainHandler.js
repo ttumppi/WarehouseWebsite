@@ -370,7 +370,7 @@ export const GetAllShelfsAndShelfItems = async (req, res) => {
 
     console.log(shelfsResult.value.rows);
 
-    shelfsResult.value.rows.forEach(async (shelf) => {
+    await shelfsResult.value.rows.forEach(async (shelf) => {
         const itemsResult = await dbHandler.GetItemInfoForShelfItems(shelf.shelf_id);
 
         if (!itemsResult.success){
