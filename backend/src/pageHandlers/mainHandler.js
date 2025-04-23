@@ -368,9 +368,9 @@ export const GetAllShelfsAndShelfItems = async (req, res) => {
 
     let shelfsAndItems = {};
 
-    console.log(shelfsResult.value.rows);
 
-    await shelfsResult.value.rows.forEach(async (shelf) => {
+    for (shelf of shelfsResult.value.rows){
+
         const itemsResult = await dbHandler.GetItemInfoForShelfItems(shelf.shelf_id);
 
         if (!itemsResult.success){
@@ -379,12 +379,11 @@ export const GetAllShelfsAndShelfItems = async (req, res) => {
                 message: itemsResult.reason
             });
         }
-        console.log(shelf.shelf_id);
 
         shelfsAndItems[shelf.shelf_id] = itemsResult.value.rows;
-    })
+    }
+    
 
-    console.log(shelfsAndItems);
     return res.status(200).json({
         success: true,
         data: shelfsAndItems
