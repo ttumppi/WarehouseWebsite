@@ -3,7 +3,6 @@ name: Auto update host machine
 on:
   push:
     branches:
-      - master
       - dev-three
 jobs:
   pull-new-version:
@@ -13,5 +12,5 @@ jobs:
       - name: pull code
         run: |
           cd ~/WarehouseWebsite
-          git pull WarehouseWebsite master
+          git checkout dev-three
           git pull WarehouseWebsite dev-three
