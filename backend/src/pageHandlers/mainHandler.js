@@ -381,6 +381,7 @@ export const GetAllShelfsAndShelfItems = async (req, res) => {
         shelfsAndItems[shelf.shelf_id] = itemsResult.value.rows;
     })
 
+    console.log(shelfsAndItems);
     return res.status(200).json({
         success: true,
         data: shelfsAndItems
