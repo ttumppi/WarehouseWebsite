@@ -76,7 +76,7 @@ const ShelfsView = () => {
                 setMessage(shelfData.message);
             }
 
-            await getShelfs();
+            await GetShelfItems();
 
         }
         catch(error){
@@ -102,13 +102,9 @@ const ShelfsView = () => {
                 setMessage(shelfData.message);
             }
 
-            let modifiedShelfs = shelfs;
-            modifiedShelfs.splice(
-                modifiedShelfs.indexOf(shelfName), 1);
+           
             
-            setShelfs(modifiedShelfs);
-            
-            await getShelfs();
+            await GetShelfItems();
 
         }
         catch(error){
