@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - dev-three
 jobs:
   pull-new-version:
     runs-on: self-hosted
@@ -13,3 +14,4 @@ jobs:
         run: |
           cd ~/WarehouseWebsite
           git pull WarehouseWebsite master
+          git pull WarehouseWebsite dev-three
