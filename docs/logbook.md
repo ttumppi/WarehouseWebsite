@@ -14,3 +14,4 @@
 | 15.04.2025 | 14  | Frontend | Made additional functionality available on the frontend, item list, item creation, adding item to shelf and deleting item from shelf and item transfer and item balance change |
 | 16.04.2025 | 13 | Frontend | Added user level and user creation and did a search function |
 | 17.04.2025 | 4 | documentation | Added 2nd phase documentation |
+| 23.04.2025 | 3 | Improvement | Sped up main page shelf data retrieval |
