@@ -65,3 +65,5 @@ The backend api is not role protected, which could cause problems if someone wer
 | 23.04.2025 | 3 | Improvement | Sped up main page shelf data retrieval |
 
 # Video link
+
+https://centriafi-my.sharepoint.com/:v:/g/personal/tuomas_lamminniemi_centria_fi/EfRVBbRwhGJMtcUaTEGBDu4BUaCOZa96bQAGaJSeLYpaZA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=sWkvGn
